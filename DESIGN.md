@@ -23,7 +23,7 @@ Set by `js/theme.js` from `ekg.prefs.v1.theme`: `system` (default), `light`, `da
 | `--brand` | `#0a64c0` | `#5aa9ff` | active tab, links, focus, selected |
 | `--brand-2` | `#0a7f88` | `#35c6c9` | teal companion, brand mark |
 | `--brand-grad` | `#0a64c0 → #08757e` | `#2a6fd0 → #0f7a82` | primary buttons, bars, timer |
-| `--orange` / `--orange-text` | `#f26a1b` / `#a84508` | `#ff8a3d` / `#ff9c5c` | accent only: active-tab dot, intro progress, greeting, the icon's pen dot, future mastery glow |
+| `--orange` / `--orange-text` | `#f26a1b` / `#a84508` | `#ff8a3d` / `#ff9c5c` | accent only: intro progress, greeting, the icon's pen dot, future mastery glow |
 | `--ok` | `#0f7343` | `#3fd98a` | correct, accuracy 85%+ |
 | `--danger` | `#c42a3c` | `#ff6b78` | wrong, lethal |
 | `--warn` | `#8f5b00` | `#ffc53d` | "pending nurse review", low accuracy |
@@ -57,8 +57,22 @@ A high-contrast strip theme is a later option.
 ## Tokens (step 2b)
 - Space, 4 px grid: `--sp-1` 4, `--sp-2` 8, `--sp-3` 12, `--sp-4` 16, `--sp-5` 20, `--sp-6` 24, `--sp-8` 32.
 - Radius: `--r-sm` 10, `--r-md` 14 (buttons, choices), `--r-lg` 20 (cards), `--r-xl` 28 (sheets), `--r-pill`.
-- Elevation: `--hairline` (1 px top highlight), `--elev-1` (cards), `--elev-2` (sheets, intro
-  screenshots), `--glow-trace` (primary button only).
+- Elevation: `--elev-1` (light cards), `--elev-2` (sheets, intro screenshots), `--glow-brand`
+  (primary button only).
+
+## Buttons and outlines (step 3d, owner's pick 2026-11-19)
+- One outline system per theme: light cards float on a shadow with no border; dark cards get a
+  1 px `--line` border and no shadow (`--card-line`, `--card-shadow`). Progress tiles follow it.
+- No boxes inside boxes: inside a card, items are rows with hairline dividers (Accuracy by
+  group, Today's numbers) or flat `--bg-2` tiles with no border or shadow.
+- Three button levels, nothing else: primary (`.btn.primary`, brand gradient, white text, one
+  per screen area), secondary (`.btn`, `--brand-dim` tint, `--brand` text, no border), tertiary
+  (`.btn.ghost`, text only). A pressed toggle is solid `--brand` with white text.
+- Things you pick keep a 1.5 px `--line` border: answer choices and the rhythm-set select.
+- Header buttons are plain icons with a 44 px tap area (no circle); a press shows a soft circle.
+- Icon chips are one tint (`--brand-dim` / `--brand`) everywhere; color is not used to tell
+  them apart.
+- Home no longer repeats the tab bar (the Learn / Practice / Exam tiles were removed).
 - Motion: `--dur-1` 120 ms (press), `--dur-2` 200 ms (color, tab pill), `--dur-3` 320 ms
   (view and feedback entrance), `--dur-4` 700 ms (bars); rings fill in 900 ms.
   Easing `--ease-out` cubic-bezier(.2,.8,.2,1); `--ease-spring` cubic-bezier(.34,1.4,.64,1) for
@@ -86,19 +100,29 @@ A high-contrast strip theme is a later option.
 ## Layout
 - One column, 16 px side padding, max width 560 px centered on bigger screens.
 - Bottom tab bar (thumb reach): Home, Learn, Practice, Exam, Progress. 60 px tall plus the
-  safe area; the active tab gets a green pill behind its icon.
+  safe area; the active tab gets a `--brand-dim` pill behind its icon, and the icon draws itself.
 - Answer buttons: full width, at least 48 px tall, 10 px gap, big enough for gloves.
 - Feedback slides up from the bottom: verdict, the rhythm's 5 criteria, why the other
   choices were wrong, source tag.
 - No horizontal scroll at 360 px. Respect the iPhone safe areas.
 
 ## Motion
-- Short and quiet. Primary buttons carry a slow sheen every few seconds; the intro icon floats
-  gently; the active tab gets an orange dot that pops in. View change: 320 ms fade and 8 px rise. Correct answer: one green pulse
+- Short and calm. The intro icon floats gently. View change: 320 ms fade and 8 px rise. Correct answer: one green pulse
   ring. Wrong answer: a 380 ms shake. Press: scale to 0.97. Progress rings and bars fill once.
   No confetti, no streak pressure.
 - `prefers-reduced-motion` turns every animation and transition off; live sweeps (Home
-  header, Monitor view) become static strips.
+  header, Monitor view) become static strips, and the alive icons below stay whole and still.
+
+## Alive icons (step 3d, owner's ask 2026-11-19: "more alive, like Home's live monitor strip")
+- Icons move the way the monitor strip does: a trace with a small erase gap sweeping left to
+  right, soft teal glow (`--brand-glow`). Every sprite shape has `pathLength="100"` so one dash
+  pattern (`88 12`, or `100 100` to draw in) fits every icon.
+- Always running: the logo in the header (2.6 s), the group waveforms in Accuracy by group
+  (2.8 s, each on its own timing, drawn 24 px in `--brand-2`), the Practice tab icon while
+  Practice is open (2.4 s), and a faint white trace (18%) running under the label of primary
+  buttons (3 s; replaces the old sheen).
+- Once: the tab you open draws its icon (550 ms); icon chips draw themselves when a screen opens.
+- All of it sits inside `@media (prefers-reduced-motion: no-preference)`.
 
 ## Night unit backdrop (step 3b)
 - Home's start card sits on a generated picture of a generic unit at night (`img/unit/`).

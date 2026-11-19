@@ -57,8 +57,11 @@
   --hairline: inset 0 1px 0 rgba(255, 255, 255, 0.7);
   --elev-1: 0 1px 2px rgba(16, 38, 64, 0.06), 0 6px 18px rgba(16, 38, 64, 0.06);
   --elev-2: 0 2px 8px rgba(16, 38, 64, 0.08), 0 20px 48px rgba(16, 38, 64, 0.16);
-  --glow-brand: 0 6px 18px rgba(10, 100, 192, 0.28);
-  --brand-glow: none;
+  --glow-brand: 0 4px 12px rgba(10, 100, 192, 0.22);
+  --brand-glow: drop-shadow(0 0 3px rgba(11, 143, 152, 0.35));
+  /* Outline system: light cards float on a shadow, no border */
+  --card-line: transparent;
+  --card-shadow: var(--elev-1);
 }
 :root[data-theme="dark"] {
   color-scheme: dark;
@@ -99,8 +102,11 @@
   --hairline: inset 0 1px 0 rgba(255, 255, 255, 0.045);
   --elev-1: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.28);
   --elev-2: inset 0 1px 0 rgba(255, 255, 255, 0.045), 0 2px 6px rgba(0, 0, 0, 0.45), 0 18px 44px rgba(0, 0, 0, 0.5);
-  --glow-brand: 0 6px 22px rgba(42, 111, 208, 0.35);
+  --glow-brand: 0 4px 16px rgba(42, 111, 208, 0.3);
   --brand-glow: drop-shadow(0 0 4px rgba(53, 198, 201, 0.5));
+  /* Outline system: dark cards get a border, no shadow */
+  --card-line: var(--line);
+  --card-shadow: none;
 }
 
 /* Strip themes, independent of the app theme. Monitor colors drive live sweeps. */
@@ -157,11 +163,7 @@ p { margin: 0 0 var(--sp-3); }
   width: 40px; height: 40px; border-radius: 12px; flex: none;
   display: grid; place-items: center;
   background: var(--brand-dim); color: var(--brand);
-  box-shadow: inset 0 0 0 1px var(--brand-ring);
 }
-.ic-chip.blue { background: var(--teal-dim); color: var(--brand-2); box-shadow: inset 0 0 0 1px var(--teal-ring); }
-.ic-chip.red { background: var(--danger-dim); color: var(--danger); box-shadow: inset 0 0 0 1px var(--danger-ring); }
-.ic-chip.amber, .ic-chip.orange { background: var(--orange-dim); color: var(--orange-text); box-shadow: inset 0 0 0 1px var(--orange-ring); }
 
 /* Top bar */
 .topbar {
@@ -180,10 +182,10 @@ p { margin: 0 0 var(--sp-3); }
 .icon-btn {
   width: 44px; height: 44px; border-radius: 50%;
   display: grid; place-items: center;
-  background: var(--surface); border: 1px solid var(--line); color: var(--muted);
-  cursor: pointer; transition: transform var(--dur-1) var(--ease-out), color var(--dur-2);
+  background: transparent; border: 0; color: var(--text);
+  cursor: pointer; transition: transform var(--dur-1) var(--ease-out), background var(--dur-2);
 }
-.icon-btn:active { transform: scale(0.92); color: var(--text); }
+.icon-btn:active { transform: scale(0.92); background: var(--surface-3); }
 
 /* Layout */
 main {
@@ -195,9 +197,9 @@ main {
 @keyframes viewIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 .card {
   background: var(--surface);
-  border: 1px solid var(--line-soft);
+  border: 1px solid var(--card-line);
   border-radius: var(--radius); padding: var(--sp-4);
-  box-shadow: var(--elev-1);
+  box-shadow: var(--card-shadow);
 }
 .card.flush { padding: 10px 0 10px; overflow: hidden; }
 .row { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
@@ -228,33 +230,21 @@ main {
 }
 .tabs button:active .tab-ic { transform: scale(0.9); }
 .tabs button[aria-current="page"] { color: var(--brand); }
-.tabs button[aria-current="page"] .tab-ic { background: var(--brand-dim); position: relative; }
-.tabs button[aria-current="page"] .tab-ic::after {
-  content: ""; position: absolute; top: -1px; left: 50%; width: 5px; height: 5px; margin-left: -2.5px; border-radius: 50%;
-  background: var(--orange); box-shadow: 0 0 6px var(--orange); animation: dotIn var(--dur-3) var(--ease-spring);
-}
-@keyframes dotIn { from { transform: scale(0); } }
+.tabs button[aria-current="page"] .tab-ic { background: var(--brand-dim); }
 
 /* Buttons */
 .btn {
   min-height: 50px; padding: 10px 18px; border-radius: var(--r-md);
-  border: 1px solid var(--line); background: var(--surface-2);
+  border: 0; background: var(--brand-dim); color: var(--brand);
   font-weight: 600; cursor: pointer;
   display: inline-flex; align-items: center; justify-content: center; gap: var(--sp-2);
-  transition: transform var(--dur-1) var(--ease-out), background var(--dur-2), border-color var(--dur-2), box-shadow var(--dur-2);
-  box-shadow: var(--hairline);
+  transition: transform var(--dur-1) var(--ease-out), background var(--dur-2), box-shadow var(--dur-2);
 }
 .btn:active:not(:disabled) { transform: scale(0.97); }
-.btn.primary { background: var(--brand-grad); border-color: transparent; color: var(--on-brand); box-shadow: var(--glow-brand); position: relative; overflow: hidden; }
-.btn.primary::after {
-  content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(105deg, transparent 35%, rgba(255, 255, 255, 0.28) 50%, transparent 65%);
-  transform: translateX(-120%); animation: sheen 5.5s var(--ease-out) 1.2s infinite;
-}
-@keyframes sheen { 0%, 70% { transform: translateX(-120%); } 100% { transform: translateX(120%); } }
+.btn.primary { background: var(--brand-grad); color: var(--on-brand); box-shadow: var(--glow-brand); }
 .btn.primary:active:not(:disabled) { box-shadow: 0 2px 8px rgba(10, 100, 192, 0.25); }
-.btn.ghost { background: transparent; box-shadow: none; }
-.btn.small { min-height: 44px; padding: 6px 12px; font-size: 15px; font-weight: 550; border-radius: 12px; gap: 6px; }
+.btn.ghost { background: transparent; }
+.btn.small { min-height: 44px; padding: 6px 12px; font-size: 15px; font-weight: 550; border-radius: var(--r-md); gap: 6px; }
 .btn.small .ic { width: 18px; height: 18px; }
 .btn.block { width: 100%; }
 .btn:disabled { opacity: 0.5; }
@@ -263,10 +253,10 @@ main {
   outline: 2px solid var(--accent); outline-offset: 2px;
 }
 .danger-text { color: var(--danger); }
-.toggle[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.toggle[aria-pressed="true"] { color: var(--on-brand); background: var(--brand); }
 
 /* Segmented control */
-.seg { display: flex; background: var(--bg-2); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 3px; gap: 3px; }
+.seg { display: flex; background: var(--bg-2); border: 0; border-radius: var(--r-md); padding: 3px; gap: 3px; }
 .seg button {
   flex: 1; min-height: 44px; border: 0; border-radius: 11px; background: transparent; cursor: pointer;
   color: var(--muted); font-size: 15px; font-weight: 550;
@@ -307,9 +297,8 @@ main {
 .choices { display: flex; flex-direction: column; gap: 10px; }
 .choice {
   min-height: 54px; text-align: left; padding: 12px 16px; border-radius: var(--r-md);
-  border: 1px solid var(--line); background: var(--surface); font-size: var(--fs-base); font-weight: 550;
+  border: 1.5px solid var(--line); background: var(--surface); font-size: var(--fs-base); font-weight: 550;
   display: flex; align-items: center; justify-content: space-between; gap: 10px; cursor: pointer;
-  box-shadow: var(--hairline);
   transition: transform var(--dur-1) var(--ease-out), background var(--dur-2), border-color var(--dur-2);
 }
 .choice:active:not(:disabled) { background: var(--surface-2); transform: scale(0.985); }
@@ -390,7 +379,7 @@ main {
 
 /* Progress */
 .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-.tile { background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 12px 14px; box-shadow: var(--elev-1); }
+.tile { background: var(--surface); border: 1px solid var(--card-line); border-radius: var(--r-md); padding: 12px 14px; box-shadow: var(--card-shadow); }
 .tile .k { font-size: 13px; color: var(--muted); }
 .tile .v { font-size: 30px; font-weight: 700; font-family: var(--font-mono); font-variant-numeric: tabular-nums; line-height: 1.15; letter-spacing: -0.02em; }
 .tile .s { font-size: 13px; color: var(--muted); }
@@ -430,7 +419,7 @@ dialog.sheet::backdrop { background: var(--scrim); backdrop-filter: blur(4px); -
 .learn-card { border-top: 1px solid var(--line-soft); margin-top: 16px; padding-top: 16px; }
 .select {
   min-height: 44px; flex: 1 1 180px; min-width: 0; padding: 8px 12px; border-radius: var(--r-md);
-  border: 1px solid var(--line); background: var(--surface-2); color: var(--text); font: inherit; font-size: 16px;
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--text); font: inherit; font-size: 16px;
 }
 
 /* ---------- Home dashboard ---------- */
@@ -489,7 +478,7 @@ dialog.sheet::backdrop { background: var(--scrim); backdrop-filter: blur(4px); -
 .rec .why { font-size: var(--fs-sm); color: var(--muted); margin: 2px 0 0; }
 .rec .chev, .tile-btn .chev { color: var(--muted); }
 button.card { font: inherit; color: inherit; transition: transform var(--dur-1) var(--ease-out), border-color var(--dur-2); }
-button.card:active { transform: scale(0.985); border-color: var(--line); }
+button.card:active { transform: scale(0.985); }
 
 .chips { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 .chip {
@@ -500,39 +489,41 @@ button.card:active { transform: scale(0.985); border-color: var(--line); }
 }
 .chip:active { transform: scale(0.96); }
 
-.rings { display: grid; grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); gap: var(--sp-2); }
+.rings { display: flex; flex-direction: column; }
 .ring-btn {
-  background: var(--bg-2); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 12px 6px 10px; cursor: pointer;
-  display: flex; flex-direction: column; align-items: center; gap: 6px; min-height: 44px;
+  background: transparent; border: 0; border-top: 1px solid var(--line-soft); padding: 10px 0; cursor: pointer; color: inherit; font: inherit;
+  display: flex; align-items: center; gap: var(--sp-3); min-height: 56px; text-align: left; width: 100%;
   transition: transform var(--dur-1) var(--ease-out);
 }
-.ring-btn:active { transform: scale(0.96); }
-.ring { position: relative; width: 64px; height: 64px; }
-.ring > svg { width: 64px; height: 64px; transform: rotate(-90deg); }
-.ring .track { fill: none; stroke: var(--surface-3); stroke-width: 5; }
-.ring .val { fill: none; stroke: var(--ok); stroke-width: 5; stroke-linecap: round; transition: stroke-dashoffset 900ms var(--ease-out); }
+.ring-btn:first-child { border-top: 0; }
+.ring-btn:active { transform: scale(0.98); }
+.ring { position: relative; width: 44px; height: 44px; flex: none; }
+.ring > svg { width: 44px; height: 44px; transform: rotate(-90deg); }
+.ring .track { fill: none; stroke: var(--surface-3); stroke-width: 6; }
+.ring .val { fill: none; stroke: var(--ok); stroke-width: 6; stroke-linecap: round; transition: stroke-dashoffset 900ms var(--ease-out); }
 .ring .val.mid { stroke: var(--brand); }
 .ring .val.low { stroke: var(--warn); }
-.ring .track.none { stroke-dasharray: 2 5; stroke: var(--line); }
 .ring .in { position: absolute; inset: 0; display: grid; place-items: center; }
-.ring .in .ic { width: 26px; height: 26px; color: var(--muted); }
-.ring-btn .nm { font-size: 13px; font-weight: 600; }
-.ring-btn .pc { font: 600 13px var(--font-mono); color: var(--text); }
-.ring-btn .pc.none { font-family: var(--font); font-weight: 500; color: var(--muted); font-size: 12px; }
+.ring .in .ic { width: 24px; height: 24px; color: var(--brand-2); }
+.ring-btn .nm { font-size: var(--fs-base); font-weight: 600; flex: 1; min-width: 0; }
+.ring-btn .pc { font: 600 15px var(--font-mono); font-variant-numeric: tabular-nums; color: var(--text); }
+.ring-btn .pc.none { font-family: var(--font); font-weight: 500; color: var(--muted); font-size: var(--fs-sm); }
+.ring-btn .chev { color: var(--muted); width: 18px; height: 18px; }
 
 .shortcuts { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-2); }
 .tile-btn {
-  background: var(--surface); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 14px 8px; cursor: pointer;
+  background: var(--bg-2); border: 0; border-radius: var(--r-md); padding: 14px 8px; cursor: pointer; color: inherit;
   display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; min-height: 44px;
-  box-shadow: var(--elev-1); transition: transform var(--dur-1) var(--ease-out);
+  transition: transform var(--dur-1) var(--ease-out);
 }
 .tile-btn:active { transform: scale(0.96); }
 .honest { font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; margin: 0; }
 .honest .ic { width: 16px; height: 16px; margin-top: 2px; }
 
 /* ---------- Step 3: Today card, sessions, mastery ---------- */
-.tstats { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-2); }
-.tstat { background: var(--bg-2); border: 1px solid var(--line-soft); border-radius: var(--r-md); padding: 10px 8px; text-align: center; }
+.tstats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line-soft); border-bottom: 1px solid var(--line-soft); }
+.tstat { padding: 10px 8px; text-align: center; }
+.tstat + .tstat { border-left: 1px solid var(--line-soft); }
 .tstat b { display: block; font: 700 24px var(--font-mono); font-variant-numeric: tabular-nums; line-height: 1.1; }
 .tstat span { font-size: 12px; color: var(--muted); }
 .shortcuts.two { grid-template-columns: 1fr 1fr; }
@@ -640,7 +631,7 @@ html.start-on body { overflow: hidden; }
 .st-tag { margin: 8px 0 0; font-size: var(--fs-base); color: var(--st-soft); }
 .st-actions { display: flex; flex-direction: column; gap: 12px; }
 .st-actions .btn { min-height: 54px; font-size: var(--fs-md); }
-.st-quiet { background: rgba(8, 14, 20, 0.6); border-color: var(--st-line); color: var(--st-text); box-shadow: none; }
+.st-quiet { background: rgba(8, 14, 20, 0.6); border: 1px solid var(--st-line); color: var(--st-text); box-shadow: none; }
 .st-fine { margin: 4px 0 0; font-size: var(--fs-xs); line-height: 1.4; text-align: center; color: var(--st-soft); }
 
 .st-over { position: absolute; inset: 0; pointer-events: none; }
@@ -664,3 +655,31 @@ html.start-on body { overflow: hidden; }
   border-radius: var(--r-pill); border: 1px solid var(--st-line); background: rgba(5, 9, 13, 0.55); color: var(--st-text); font-weight: 600; cursor: pointer; }
 .st-skip:focus-visible, .st-quiet:focus-visible { outline: 2px solid var(--st-text); outline-offset: 2px; }
 @media (prefers-reduced-motion: reduce) { .st-menu .st-mark path { animation: none; } }
+
+/* ---------- Alive icons (step 3d): icons move like the live monitor strip ----------
+   A sweep is a trace with a small erase gap running left to right, as on a bedside
+   monitor. Sprite shapes carry pathLength="100", so one dash pattern fits every icon.
+   Only with motion allowed: under Reduce Motion the icons stay whole and still. */
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes sweep { from { stroke-dashoffset: 100; } to { stroke-dashoffset: 0; } }
+  @keyframes traceRun { from { background-position: 0 100%, 0 0; } to { background-position: -120px 100%, 0 0; } }
+  /* The logo runs all the time, like a small monitor */
+  .brand-mark path { stroke-dasharray: 88 12; animation: sweep 2.6s linear infinite; }
+  /* Group waveforms in Accuracy by group, each on its own timing */
+  .ring .in .ic { stroke-dasharray: 88 12; animation: sweep 2.8s linear infinite; filter: var(--brand-glow); }
+  .ring-btn:nth-child(2) .ring .in .ic { animation-delay: -0.6s; }
+  .ring-btn:nth-child(3) .ring .in .ic { animation-delay: -1.3s; }
+  .ring-btn:nth-child(4) .ring .in .ic { animation-delay: -1.9s; }
+  .ring-btn:nth-child(5) .ring .in .ic { animation-delay: -2.4s; }
+  /* The tab you open draws its icon; Practice keeps sweeping while it is open */
+  .tabs button[aria-current="page"] .tab-ic .ic { stroke-dasharray: 100 100; animation: sweep 0.55s var(--ease-out) both; }
+  .tabs button[data-view="practice"][aria-current="page"] .tab-ic .ic { stroke-dasharray: 88 12; animation: sweep 2.4s linear infinite; }
+  /* Icon chips draw themselves when a screen opens */
+  .view.enter .ic-chip .ic { stroke-dasharray: 100 100; animation: sweep 0.7s var(--ease-out) 0.15s both; }
+  /* Main buttons: a faint trace runs behind the words */
+  .btn.primary {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='24'%3E%3Cpath d='M0 19h30c2 0 3-3 5-3s3 3 5 3h6l3-13 4 17 2-4h8c3 0 4-3 7-3s4 3 7 3h40' fill='none' stroke='white' stroke-opacity='.18' stroke-width='1.5'/%3E%3C/svg%3E"), var(--brand-grad);
+    background-repeat: repeat-x, no-repeat; background-size: 120px 24px, 100% 100%; background-position: 0 100%, 0 0;
+    animation: traceRun 3s linear infinite;
+  }
+}

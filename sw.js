@@ -1,6 +1,6 @@
 /* Offline support: serve from cache, refresh the cache in the background.
    Bump VERSION whenever app files change so phones pick up the update. */
-const VERSION = "ekg-v8";
+const VERSION = "ekg-v9";
 const MEDIA = "ekg-media-v1"; // the hallway clips (js/unit.js) and the opening film (js/start.js); kept across updates
 const FILES = [
   "./", "index.html", "styles.css", "manifest.webmanifest",
