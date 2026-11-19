@@ -27,7 +27,8 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
 ## Next
 - Owner chose (2026-11-19): **step 3d, Evidence screen, review mode and pitch clip**
   (`docs/phases/7-evidence-and-pitch.md`), ahead of the campus. Evidence screen and
-  review mode built on `claude/adoring-ptolemy-xoi9ka`, waiting for the owner's "push".
+  review mode merged and live (pull request #5). The nurse can start reviewing (About,
+  How this was built, Review the cards).
   Next: the pitch clip (real Playwright recordings, ffmpeg, the film's score). Then step 5, campus research and blockout
   (`docs/future/3d-campus.md`); Three.js needs owner approval as the first dependency.
 - "3,069,123 checks" = assertions in one full `node tests/run.js`: 20,800 generated strips
