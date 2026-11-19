@@ -96,3 +96,5 @@ The one telemetry / stepdown nurse. It should feel like his shift.
   the app still opens if `js/start.js` fails to load.
 - Known and left: the film is downloaded twice on the very first visit (once to play, once
   to store, about 4 MB in all).
+- Merged and live 2026-11-19 (pull request #4); on the live site in Chromium at 390 px the
+  menu showed, the film played with sound and ended on Home.

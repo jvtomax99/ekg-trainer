@@ -19,10 +19,10 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
   2026-11-19. Details: `docs/phases/5-night-unit-start.md`. Runway has about 700 credits
   left. Owner hasn't checked it on the real iPhone yet (does Safari start the clip?).
 
-## Waiting for the owner's "push"
-- Step 3c, start menu and opening film (`docs/phases/6-start-menu-film.md`): built and
-  checked in Chromium on branch `claude/hopeful-mccarthy-d4uvot`. Runway has 780 credits
-  left. Owner should listen to the music and check it on the real iPhone.
+## Also done (2)
+- Step 3c, start menu and opening film (`docs/phases/6-start-menu-film.md`): merged and live
+  2026-11-19 (pull request #4). Runway has 780 credits left. Owner hasn't listened to the
+  music on the real iPhone yet (does Safari start the film with sound, how loud is it).
 
 ## Next
 - Owner chose: **step 5, campus research and blockout** (`docs/future/3d-campus.md`,
