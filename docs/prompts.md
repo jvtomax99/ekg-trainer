@@ -43,6 +43,12 @@ Three.js dependency first."
 real-location fountain if verified, mastery-driven illumination from step 3 data, iPhone
 performance budget."
 
+## Step 3d: Evidence screen, review mode, pitch clip
+"Start step 3d. Read CLAUDE.md, HANDOFF.md, docs/phases/7-evidence-and-pitch.md and
+docs/sources.md (S30 to S33). Build A (Evidence screen) and B (review mode) as the doc says,
+counts computed from the code, then the clip from real Playwright recordings with ffmpeg.
+Every caption must match the doc's table; no logos, endorsement words or unsourced numbers."
+
 ## Step 7: Cinematic intro
 "Start step 7. Read docs/future/cinematic-intro.md. Storyboard, Playwright captures of real
 features, Remotion edit with the campus flyover, sound with mute, in-app first-launch
