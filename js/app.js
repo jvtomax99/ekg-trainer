@@ -894,7 +894,13 @@
           unit.off(); document.querySelectorAll(".on-unit").forEach(function (n) { n.classList.remove("on-unit", "lit", "night"); });
           if (current === "home") renderHome();
         }, "Unit backdrop")),
-      h("p", { class: "small muted", style: "margin:0", text: "A unit hallway behind Home's start card, and a short walk between practice strips. Auto goes by the clock: lights on from 7 in the morning to 7 at night, dimmed overnight. Computer generated, not a real unit. Never shown in exams. It also stays still when your phone is set to Reduce Motion." }));
+      h("p", { class: "small muted", style: "margin:0", text: "A unit hallway behind Home's start card, and a short walk between practice strips. Auto goes by the clock: lights on from 7 in the morning to 7 at night, dimmed overnight. Computer generated, not a real unit. Never shown in exams. It also stays still when your phone is set to Reduce Motion." }),
+      h("div", { class: "setting" }, h("span", { class: "lbl", text: "Opening film" }),
+        seg([{ value: "always", label: "Every start" }, { value: "day", label: "Once a day" }, { value: "off", label: "Off" }],
+          f.film === "day" || f.film === "off" ? f.film : "always", function (x) {
+          const g = progress.prefs(); g.film = x; progress.savePrefs(g);
+        }, "Opening film")),
+      h("p", { class: "small muted", style: "margin:0", text: "The start screen and the short film when the app opens. Once a day keeps the start screen and plays the film on the first open of the day. Off opens straight to Home. Replay it any time from About. Computer generated, not a real unit. No film when your phone is set to Reduce Motion." }));
   }
   document.getElementById("settingsBtn").addEventListener("click", function () { renderSettings(); settings.showModal(); });
   settings.querySelector("[data-close]").addEventListener("click", function () { settings.close(); });
@@ -913,11 +919,25 @@
     });
   }
   document.getElementById("replayBtn").addEventListener("click", function () { about.close(); startTour(); });
+  // The opening film replays from Home only, so it never covers a running strip or exam.
+  // If js/start.js didn't load, the app must still open: drop the cover theme.js put up.
+  const start = window.EKG.start || { active: function () { return false; }, whenDone: function (fn) { fn(); }, replay: function () {} };
+  if (!window.EKG.start) document.documentElement.classList.remove("start-on");
+  const filmBtn = document.getElementById("filmBtn");
+  document.getElementById("aboutBtn").addEventListener("click", function () {
+    filmBtn.disabled = current !== "home";
+    filmBtn.lastChild.textContent = current === "home" ? "Play the opening film" : "Play the opening film (from Home)";
+  });
+  filmBtn.addEventListener("click", function () {
+    if (current !== "home") return;
+    about.close(); unit.leaveHome(); start.replay();
+    start.whenDone(function () { if (current === "home") renderHome(); document.getElementById("aboutBtn").focus({ preventScroll: true }); });
+  });
 
   // Number keys 1 to 4 pick a choice (handy on a laptop).
   document.addEventListener("keydown", function (ev) {
     const n = Number(ev.key);
-    if (!(n >= 1 && n <= 4)) return;
+    if (!(n >= 1 && n <= 4) || start.active()) return;
     const v = views[current];
     const btns = v.querySelectorAll(".choice:not(:disabled)");
     if (btns[n - 1]) btns[n - 1].click();
@@ -925,7 +945,10 @@
 
   // ---------- start ----------
   show("home");
-  if ((progress.prefs().tour || 0) < window.EKG.tour.VERSION && document.getElementById("tourDlg").showModal) startTour();
+  // The first-launch intro waits for the start menu and the opening film to finish.
+  if ((progress.prefs().tour || 0) < window.EKG.tour.VERSION && document.getElementById("tourDlg").showModal) start.whenDone(startTour);
+  // Home's hallway walk starts once the start menu is out of the way.
+  if (start.active()) start.whenDone(function () { if (current === "home") renderHome(); });
   if ("serviceWorker" in navigator && /^https?:/.test(location.protocol)) {
     navigator.serviceWorker.register("sw.js").catch(function () { /* offline install is optional */ });
   }

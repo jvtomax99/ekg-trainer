@@ -40,7 +40,7 @@ async function webp(page, png, file) {
   const ctx = await browser.newContext(Object.assign({}, devices["iPhone 13"], { deviceScaleFactor: 2, serviceWorkers: "block", colorScheme: "light" }));
   await ctx.addInitScript(function (p) {
     localStorage.setItem("ekg.progress.v1", JSON.stringify(p));
-    localStorage.setItem("ekg.prefs.v1", JSON.stringify({ ack: true, tour: 99, exam: { count: 20, seconds: 45, passMark: 85, lethal: true, showTimer: true } }));
+    localStorage.setItem("ekg.prefs.v1", JSON.stringify({ ack: true, tour: 99, film: "off", exam: { count: 20, seconds: 45, passMark: 85, lethal: true, showTimer: true } }));
   }, sample());
   const page = await ctx.newPage();
   const conv = await browser.newPage();

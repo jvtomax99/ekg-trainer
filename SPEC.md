@@ -67,6 +67,14 @@ Mastery, Trends and Exams views: accuracy and speed per rhythm, this week vs bef
 history.
 - Done when: after a month of answers, all three views fill in with no errors.
 
+### Start menu and opening film
+Each open shows a start menu (unit doors at night, "Start" and "Start without sound"), then
+a 14.5 second film with music: a nurse walks the unit, a strip comes up, the dash, the
+title, Home. Skip from the first second; Settings: every start, once a day, off.
+- Done when: on a phone, "Start" plays the film with sound and lands on Home, Skip opens
+  Home at once, airplane mode still plays it after one online visit, and the app opens
+  anyway when the film can't load or the phone is set to Reduce Motion.
+
 ### Intro and install
 A short skippable intro with real screenshots (replay from About), a coded app icon,
 light and dark themes (System default) and three strip themes. Works offline after the
@@ -110,6 +118,7 @@ offline and usable without any of the heavy modules.
 | 2b | Premium UI: app icon, icon system, design language, home dashboard, first-launch onboarding (replaces old step 8) | `docs/phases/3-premium-ui.md` | done and live; owner checked it on a real iPhone: "looks perfect" |
 | 3 | Adaptive learning: FSRS spaced repetition, mastery, contrast and boundary practice, practice vs exam tracking | `docs/phases/4-adaptive-learning.md` | done and live (merged 2026-11-19, live site checked in Chromium); real-iPhone check pending |
 | 3b | Night unit start screen and Rounds: generated unit-at-night backdrop on Home, hallway movement between practice cards (owner's pick 2026-11-19, ahead of the campus) | `docs/phases/5-night-unit-start.md` | done and live (merged 2026-11-19, live site checked in Chromium); real-iPhone check pending |
+| 3c | Start menu and opening film: a menu at each open, then a 14.5 s film with music of a nurse moving through the unit (owner's ask 2026-11-19, ahead of the campus; step 7 stays separate) | `docs/phases/6-start-menu-film.md` | built 2026-11-19, checked in Chromium; waiting for the owner's "push"; real-iPhone check pending |
 | 4 | Photo import (optional): educational images, on-device, privacy-first | `docs/future/photo-import.md` | when rules can be met |
 | 5 | Campus research and blockout: reference boards, ambiguity log, accurate massing | `docs/future/3d-campus.md` | next (owner's pick) |
 | 6 | Campus mastery visualization: detailed models, lighting, mastery-driven illumination | `docs/future/3d-campus.md` | |

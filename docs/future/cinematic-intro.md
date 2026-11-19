@@ -3,6 +3,11 @@
 Status: **documented only.** Produce after the core features and the 3D campus are built
 and tested, so the video only shows real, working features.
 
+Note, 2026-11-19: a short opening film (14.5 s, generated footage of a generic unit, the
+app's own strip drawn over it) was built early as step 3c, at the owner's request
+(`docs/phases/6-start-menu-film.md`). This longer piece, with real app captures and the
+campus, is still to come and would replace or extend it.
+
 ## Goal
 30 to 45 seconds, premium and cinematic. An experienced nurse should think: "this is a
 seriously sophisticated ECG trainer built for someone like me." Not childish, generic or

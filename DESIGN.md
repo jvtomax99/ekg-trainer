@@ -113,8 +113,21 @@ A high-contrast strip theme is a later option.
 - Movement only between cards. Nothing in Exam or Learn. Off with Reduce Motion, Data
   Saver or the Settings switch.
 
+## Start menu and opening film (step 3c)
+- Always a night screen, in both app themes: background `#05090d`, text `#f2f6f9`, soft text
+  the same at 82%, outline at 28%, trace green `#3cf08c` (the monitor green) with a soft glow.
+- The menu is the film's first frame under a dark gradient (heaviest at the top and bottom,
+  where the words and buttons sit). Name 34 px, tagline 17 px, buttons 54 px tall, the
+  primary button in the brand gradient, fine print 12 px.
+- In the film: captions 22 px semibold, centered, low on the screen, with a dark shadow; the
+  strip sits in a monitor box (14 px corners, green hairline, soft green glow); Skip is a
+  44 px pill at the top right from the first second.
+- On a wide screen the film stays a phone-shaped column in the middle, dark at the sides.
+
 ## Sound
-- Off by default. Optional soft beep per QRS in live mode, phase 7.
+- Only the opening film has sound, and only after tapping "Start" ("Start without sound"
+  is always beside it). No monitor beeps or alarm sounds in it.
+- Elsewhere off. Optional soft beep per QRS in live mode, phase 7.
 
 ## App icon (step 2b, revised)
 Drawn in code by `tools/make-icons.js` (one SVG master, PNGs rendered with the local

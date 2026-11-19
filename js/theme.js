@@ -42,6 +42,12 @@
 
   pref = readPrefs();
   apply();
+  // The start menu (js/start.js) covers the app from the first paint, unless Settings turned
+  // the opening film off. ?start=0 skips it (dev scripts).
+  try {
+    const f = JSON.parse(root.localStorage.getItem("ekg.prefs.v1") || "{}");
+    if (f.film !== "off" && !/[?&]start=0(&|$)/.test(root.location.search)) doc.classList.add("start-on");
+  } catch (e) { doc.classList.add("start-on"); }
   root.EKG = root.EKG || {};
   root.EKG.theme = {
     apply: apply, resolved: resolved,
