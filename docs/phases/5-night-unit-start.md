@@ -94,3 +94,8 @@ From memory and `docs/research.md`; not re-checked on 2026-11-19.
   theme shows the lit hallway with a light scrim and dark text; the dark theme keeps the
   night look. Files: `img/unit/unit-lit.webp`, `img/unit/walk-lit.mp4`. About 305 more
   Runway credits (about 395 left).
+- 2026-11-19, owner: both pictures, chosen by time of day instead of by app theme. Auto
+  goes by the phone's clock: lit from 7:00 to 18:59, night look otherwise (the hours are
+  our choice, not a hospital rule). Settings "Unit backdrop": Auto, Lit, Night, Off.
+  The scrim and text color follow the look, not the app theme. Checked at 10:00 and
+  22:00 in both themes.

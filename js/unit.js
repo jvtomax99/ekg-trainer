@@ -1,18 +1,24 @@
 /* Night unit backdrop (step 3b, docs/phases/5-night-unit-start.md).
-   A generated picture of a generic unit hallway (lit in the light theme, dimmed for night
-   in the dark theme) behind Home's start card, and "Rounds":
+   A generated picture of a generic unit hallway (lit by day, dimmed at night) behind Home's start card, and "Rounds":
    a hallway clip that moves about one second as each practice card comes up, then holds.
    Optional in every way: the picture is precached, the clip is fetched after the app is
    open and the app works the same if it never arrives. Never used in Exam. */
 (function (root) {
   "use strict";
   const doc = root.document;
-  // Two looks of the same hallway: lights on for the light theme, dimmed for the dark one.
+  // Two looks of the same hallway: lights on by day, dimmed at night. "Auto" goes by the
+  // phone's clock (lit from 7 in the morning to 7 at night); Settings can pin either one.
   const LOOKS = {
-    light: { still: "img/unit/unit-lit.webp", clip: "img/unit/walk-lit.mp4" },
-    dark: { still: "img/unit/unit.webp", clip: "img/unit/walk.mp4" }
+    lit: { name: "lit", still: "img/unit/unit-lit.webp", clip: "img/unit/walk-lit.mp4" },
+    night: { name: "night", still: "img/unit/unit.webp", clip: "img/unit/walk.mp4" }
   };
-  function look() { return LOOKS[root.document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark"]; }
+  function lookName(now) {
+    const u = root.EKG.progress.prefs().unit;
+    if (u === "lit" || u === "night") return u;
+    const hr = (now || new Date()).getHours();
+    return hr >= 7 && hr < 19 ? "lit" : "night";
+  }
+  function look() { return LOOKS[lookName()]; }
   const MEDIA = "ekg-media-v1"; // its own offline store, so app updates don't throw the clip away
   const STEP = 1; // seconds of walking per card
   const clipUrl = {}, clipWait = {};
@@ -75,7 +81,7 @@
   function homeLayer() {
     leaveHome();
     if (!enabled()) return null;
-    const box = el("div", "unit-bg");
+    const box = el("div", "unit-bg " + look().name);
     box.append(still());
     if (canMove()) loadClip().then(function (url) {
       if (!url || !box.isConnected || !canMove() || url !== clipUrl[look().clip]) return;
@@ -100,10 +106,11 @@
   let rounds = null;
   function roundsBanner() {
     if (!canMove()) return null;
+    if (rounds && rounds.look !== look().name) off(); // day turned to night, or Settings changed
     if (!rounds) {
-      const box = el("div", "rounds");
+      const box = el("div", "rounds " + look().name);
       const v = video();
-      const me = rounds = { box: box, v: v, ready: false, timer: 0, asked: 0 };
+      const me = rounds = { box: box, v: v, ready: false, timer: 0, asked: 0, look: look().name };
       box.append(still(), v);
       // A card that asked to walk a moment ago still gets its step; a late load does not.
       v.addEventListener("loadedmetadata", function () { me.ready = true; if (Date.now() - me.asked < 500) step(); });
@@ -146,5 +153,5 @@
   });
 
   root.EKG = root.EKG || {};
-  root.EKG.unit = { enabled: enabled, canMove: canMove, homeLayer: homeLayer, leaveHome: leaveHome, roundsBanner: roundsBanner, step: step, restart: restart, off: off };
+  root.EKG.unit = { lookName: lookName, enabled: enabled, canMove: canMove, homeLayer: homeLayer, leaveHome: leaveHome, roundsBanner: roundsBanner, step: step, restart: restart, off: off };
 })(window);
