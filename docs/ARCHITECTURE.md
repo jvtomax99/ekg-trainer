@@ -9,7 +9,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   first paint has the right theme), holds the SVG icon sprite (`<symbol id="i-...">`), one
   `<section id="view-...">` per tab (home, learn, practice, exam, progress), the tab bar
   and dialogs, then the other scripts in this order: rhythms, ecg, quiz, strip, fsrs,
-  progress, tour, unit, app. Each script adds itself to `window.EKG`.
+  progress, tour, unit, start, app. Each script adds itself to `window.EKG`.
 - `styles.css`: the whole look. Tokens on `:root` per theme (`data-theme`, `data-strip`);
   values come from `DESIGN.md`.
 - `js/rhythms.js`: the rhythm library, data only (criteria, generator ranges, teaching
@@ -31,18 +31,26 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   pinned in Settings) and `walk.mp4` / `walk-lit.mp4` (fetched after the app is open,
   stored by `unit.js` itself in the `ekg-media-v1` offline store, which survives app
   updates; never required).
+- `js/start.js`: the start menu and the opening film (step 3c). The menu covers the app on
+  each open (`js/theme.js` adds `start-on` to `<html>` before the first paint unless the
+  film is off in Settings; `?start=0` skips it). The film is `img/film/open.mp4` (14.5 s,
+  with its music; cut by `tools/make-open-film.sh`): streamed the first time, then stored in
+  `ekg-media-v1` and played from there. The menu picture `img/film/open.webp` is the film's
+  first frame (precached). The strip and every word in the film are drawn by `start.js`
+  over it, timed by `FILM` there, which must match the cut. Never required: the app opens
+  without it.
 - `js/app.js` (about 900 lines): all the screens. Sections by banner comment
   (`// ---------- Exam ----------`): helpers, strip widget, feedback, tabs, Home
   dashboard, adaptive sessions, Learn, Practice, Exam, Progress (Mastery, Trends, Exams),
   dialogs (About, Settings), start.
 - `sw.js`: the offline copy. `FILES` lists every file the app loads; bump `VERSION`
-  (`ekg-v7` now) whenever an app file changes, or phones keep the old one.
+  (`ekg-v8` now) whenever an app file changes, or phones keep the old one.
 - `manifest.webmanifest`, `icons/`: install info and app icons (made by
   `tools/make-icons.js`).
 - `tests/run.js`: the checks (`node tests/run.js`, `N=200` for a quick run).
   `tests/fsrs-vectors.json`: numbers from py-fsrs that `js/fsrs.js` must match.
 - `tools/`: dev-only scripts, never loaded by the app: `make-icons.js` (icons),
-  `capture-tour.js` (intro screenshots), `fsrs-vectors.py` (test vectors).
+  `capture-tour.js` (intro screenshots), `make-open-film.sh` (cuts the opening film from the source shots; needs ffmpeg), `fsrs-vectors.py` (test vectors).
 - `.github/site-check.cjs` and `.github/workflows/site-check.yml`: the checks GitHub runs
   on every pull request and push to `main` (quick tests, then the page at phone and
   desktop width).
@@ -62,7 +70,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
     sessions, and FSRS items (`r:<rhythm>`, `b:<rhythm>` near a cutoff, confused pairs).
   - `ekg.progress.v1`: the old key, replayed once into v2 and left untouched.
   - `ekg.prefs.v1`: disclaimer seen, intro version seen, theme, strip theme, exam
-    settings, unit backdrop (auto, lit, night or off). New fields are additive with defaults, so no key bump.
+    settings, unit backdrop (auto, lit, night or off), opening film (`film`: always, day or off; `filmDay`: the last day it played). New fields are additive with defaults, so no key bump.
 - **Offline**: `sw.js` caches `FILES` on install, then serves from the cache and
   refreshes it in the background.
 - No accounts, no names, no patient data, no network calls besides loading the app.
