@@ -26,9 +26,9 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
 
 ## Next
 - Owner chose (2026-11-19): **step 3d, Evidence screen, review mode and pitch clip**
-  (`docs/phases/7-evidence-and-pitch.md`), ahead of the campus. Plan written, sources
-  S30 to S33 added from PubMed abstracts; waiting for the owner's OK on the plan and his
-  answers to its open questions. Then step 5, campus research and blockout
+  (`docs/phases/7-evidence-and-pitch.md`), ahead of the campus. Evidence screen and
+  review mode built on `claude/adoring-ptolemy-xoi9ka`, waiting for the owner's "push".
+  Next: the pitch clip (real Playwright recordings, ffmpeg, the film's score). Then step 5, campus research and blockout
   (`docs/future/3d-campus.md`); Three.js needs owner approval as the first dependency.
 - "3,069,123 checks" = assertions in one full `node tests/run.js`: 20,800 generated strips
   (800 x 26 rhythms) measured from the waveform, plus quiz and FSRS tests. Proves strips

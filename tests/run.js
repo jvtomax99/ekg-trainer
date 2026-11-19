@@ -6,9 +6,12 @@ require("../js/rhythms.js");
 require("../js/ecg.js");
 require("../js/quiz.js");
 require("../js/fsrs.js");
-const { rhythms, ecg, quiz } = globalThis.EKG;
+require("../js/evidence.js");
+const { rhythms, ecg, quiz, evidence } = globalThis.EKG;
 
-const N = Number(process.env.N || 800);
+// The Evidence screen says how many strips a full run draws; it must match this default.
+const DEFAULT_N = 800;
+const N = Number(process.env.N || DEFAULT_N);
 let checks = 0;
 function ok(cond, msg) { checks++; assert.ok(cond, msg); }
 const FEATS = ["reg", "atrial", "pr", "qrs", "ectopy", "shape"];
@@ -158,13 +161,37 @@ function checkStrip(R, st, tag) {
 
 // Data sanity.
 for (const R of rhythms.list) {
-  ok(R.review === "pending", R.id + ": pending review");
+  ok(R.review === "pending" || (R.review === "reviewed" && /^an? [a-z]/.test(R.reviewed.by) && /^[A-Z][a-z]{2} \d{4}$/.test(R.reviewed.date)),
+    R.id + ": review is pending, or reviewed with a role and a month (never a name)");
   ok(R.sources.length && R.sources.every((s) => rhythms.sources[s]), R.id + ": sources exist");
   ok(R.lookalikes.every((id) => rhythms.byId[id] && id !== R.id), R.id + ": lookalikes exist");
   for (const f of FEATS) ok(Array.isArray(R.criteria[f]) && R.criteria[f].length, R.id + ": criteria " + f);
   ok(rhythms.groups.some((g) => g.id === R.group), R.id + ": group");
 }
 ok(rhythms.list.length === 26, "26 rhythms");
+
+// Evidence screen: every number it shows is computed and true.
+ok(evidence.TESTS.perRhythm === DEFAULT_N, "Evidence screen strip count matches the full test run");
+ok(evidence.strips() === DEFAULT_N * rhythms.list.length, "Evidence total strips");
+ok(/^\d{4}-\d{2}-\d{2}$/.test(evidence.TESTS.lastRun), "Evidence last run is a date");
+{
+  const st = evidence.refStats(), k = st.kinds;
+  const cited = new Set(); rhythms.list.forEach((R) => R.sources.forEach((s) => cited.add(s)));
+  ok(st.total === cited.size, "Evidence counts the references the cards cite");
+  ok(k.guideline + k.statpearls + k.litfl + k.review + k.other === st.total, "Evidence kinds add up");
+  ok(k.other === 0, "every cited reference has a known kind");
+  ok(!cited.has("S10") && !["S30", "S31", "S32", "S33"].some((s) => cited.has(s)), "design and waveform sources are not counted as rhythm references");
+  const sent = evidence.refSentence(st);
+  ok(sent.includes(st.total + " published references") && !/undefined|NaN/.test(sent), "Evidence sentence: " + sent);
+  ["S30", "S31", "S32", "S33"].forEach((s) => ok(rhythms.sources[s] && /^https:\/\/pubmed\.ncbi\.nlm\.nih\.gov\/\d+\/$/.test(rhythms.sources[s].url), s + " links to PubMed"));
+  const rv = evidence.reviewStats();
+  ok(rv.total === 26 && rv.reviewed === rhythms.list.filter((R) => R.review === "reviewed").length, "review count is computed");
+  const txt = evidence.reviewText({ nsr: { ok: true, note: "" }, vt: { ok: false, note: "  rate seems slow " }, afib: { ok: null, note: "x" } }, { date: "2026-11-19" });
+  ok(txt.includes("Marked 2 of 26.") && txt.includes("- " + rhythms.byId.vt.name + ": rate seems slow") && txt.includes("Not marked yet (24)"), "review text groups marks");
+  ok(!/undefined|NaN|null/.test(txt), "review text is clean");
+  const empty = evidence.reviewText({}, {});
+  ok(empty.includes("Marked 0 of 26.") && empty.includes("Not marked yet (26)"), "empty review text");
+}
 ok(rhythms.list.filter((r) => r.lethal).map((r) => r.id).sort().join() === "asystole,torsades,vf,vt", "lethal set");
 
 for (const R of rhythms.list) {

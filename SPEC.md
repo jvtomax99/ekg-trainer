@@ -75,7 +75,7 @@ title, Home. Skip from the first second; Settings: every start, once a day, off.
   Home at once, airplane mode still plays it after one online visit, and the app opens
   anyway when the film can't load or the phone is set to Reduce Motion.
 
-### Evidence and review (step 3d, planned)
+### Evidence and review (step 3d)
 A "How this was built" screen in About (shown once after the first film or intro): what
 the rhythm rules cite, how every strip is tested, why missed rhythms come back (PULSE trial,
 spacing and recall research), the review status, and what isn't covered yet. A review mode
@@ -128,7 +128,7 @@ offline and usable without any of the heavy modules.
 | 3 | Adaptive learning: FSRS spaced repetition, mastery, contrast and boundary practice, practice vs exam tracking | `docs/phases/4-adaptive-learning.md` | done and live (merged 2026-11-19, live site checked in Chromium); real-iPhone check pending |
 | 3b | Night unit start screen and Rounds: generated unit-at-night backdrop on Home, hallway movement between practice cards (owner's pick 2026-11-19, ahead of the campus) | `docs/phases/5-night-unit-start.md` | done and live (merged 2026-11-19, live site checked in Chromium); real-iPhone check pending |
 | 3c | Start menu and opening film: a menu at each open, then a 14.5 s film with music of a nurse moving through the unit (owner's ask 2026-11-19, ahead of the campus; step 7 stays separate) | `docs/phases/6-start-menu-film.md` | done, merged to main 2026-11-19 (pull request #4); real-iPhone check pending |
-| 3d | Evidence screen, nurse review mode and a standalone pitch clip: credibility from what the nurse can check, every claim sourced (owner's ask 2026-11-19, ahead of the campus) | `docs/phases/7-evidence-and-pitch.md` | planned; sources S30 to S33 added; waiting for the owner's OK on the plan |
+| 3d | Evidence screen, nurse review mode and a standalone pitch clip: credibility from what the nurse can check, every claim sourced (owner's ask 2026-11-19, ahead of the campus) | `docs/phases/7-evidence-and-pitch.md` | Evidence screen and review mode built 2026-11-19, checked in Chromium; waiting for the owner's "push"; pitch clip next |
 | 4 | Photo import (optional): educational images, on-device, privacy-first | `docs/future/photo-import.md` | when rules can be met |
 | 5 | Campus research and blockout: reference boards, ambiguity log, accurate massing | `docs/future/3d-campus.md` | after 3d (owner, 2026-11-19) |
 | 6 | Campus mastery visualization: detailed models, lighting, mastery-driven illumination | `docs/future/3d-campus.md` | |

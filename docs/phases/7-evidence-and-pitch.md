@@ -11,7 +11,7 @@ Owner's decisions, 2026-11-19 (after Claude's case below):
   is a standalone clip Jose sends him, not played in the app. The walkthrough stays step 7.
 - **Order:** evidence groundwork first (sources, this doc), ahead of the campus.
 
-Status: **planned, waiting for the owner's OK on this doc.** No app code yet.
+Status: see the bottom of this file.
 
 ## Why this shape (Claude's case, kept for the record)
 - An experienced nurse believes what he can check, not what a video tells him. A video can
@@ -111,3 +111,29 @@ shares it. Jose sends the clip.
 - Should review answers be kept on the phone, or only copied?
 - The clip's music: reuse the film's score (no credits) or a new take (ElevenLabs credits)?
 - Clip for him only, or for coworkers too (changes the first caption's tone)?
+
+## Owner's answers (2026-11-19)
+- Build A (Evidence screen) and B (review mode) now; the clip (C) after.
+- The nurse reviews the cards himself (no second reviewer for now).
+- Review marks are saved on the phone (`ekg.review.v1`).
+- The clip reuses the opening film's score.
+
+## Status
+- 2026-11-19: A and B built on branch `claude/adoring-ptolemy-xoi9ka`. `js/evidence.js`
+  holds the numbers (all computed or test-checked); the screens are in `js/app.js`.
+  About has a "How this was built" button; the screen also opens once by itself after the
+  film (and after the intro on a first launch). Review mode opens from it.
+- Wording changes from the plan: "the gain had not held 15 months later" (the abstract
+  says "not sustained", which is not the same as gone); LITFL is described as written by
+  clinicians and not formally peer-reviewed; the footer adds "professional organization"
+  to "not affiliated with or endorsed by".
+- In review mode the strip has Measure and Zoom but no full screen (it would open behind
+  the dialog). Number keys no longer answer a practice strip while any dialog is open or
+  while typing.
+- Checked in Chromium at 390 px and 360 px, light and dark: no sideways scroll, no script
+  errors; the screen shows once and not after a reload; marks and notes survive a reload;
+  review reopens at the first unmarked card; "Copy my review" puts the grouped text on the
+  clipboard; typing digits in a note doesn't touch practice. `node tests/run.js`
+  (3,069,139 checks) and the site check pass.
+- Not checked: a real iPhone (Safari clipboard, the sticky buttons with the keyboard up).
+- C (the clip) not started.

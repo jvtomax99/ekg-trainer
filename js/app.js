@@ -64,7 +64,10 @@
     });
     return b;
   }
-  function reviewTag() { return h("span", { class: "tag warn", title: "Not yet checked by a nurse" }, icon("i-review"), "Pending nurse review"); }
+  function reviewTag(R) {
+    if (R && R.review === "reviewed") return h("span", { class: "tag ok", title: "Checked by a nurse" }, icon("i-check"), "Reviewed by " + R.reviewed.by + ", " + R.reviewed.date);
+    return h("span", { class: "tag warn", title: "Not yet checked by a nurse" }, icon("i-review"), "Pending nurse review");
+  }
 
   // ---------- strip widget ----------
   const widgets = new Set();
@@ -89,7 +92,7 @@
     const tools = opts.tools === false ? null : h("div", { class: "strip-tools" },
       toggleBtn("Measure", false, function (on) { cal.set(on); }, "i-measure"),
       toggleBtn("Zoom", false, function (on) { zoom = on ? 2 : 1; w.redraw(); }, "i-zoom"),
-      h("button", { type: "button", class: "btn small", "aria-label": "Full screen strip", onclick: function () { expandStrip(w.strip); } }, icon("i-expand"))
+      opts.expand === false ? null : h("button", { type: "button", class: "btn small", "aria-label": "Full screen strip", onclick: function () { expandStrip(w.strip); } }, icon("i-expand"))
     );
     const card = h("div", { class: "card flush" },
       wrap,
@@ -169,7 +172,7 @@
     }
     box.append(h("div", { class: "section-title", text: "Tell it apart" }), h("p", { class: "small", text: R.tellApart }));
     if (R.note) box.append(h("p", { class: "note", text: R.note }));
-    box.append(h("div", { class: "row", style: "margin-top:8px" }, reviewTag(),
+    box.append(h("div", { class: "row", style: "margin-top:8px" }, reviewTag(R),
       R.sources.map(function (sid) {
         const s = rhythms.sources[sid];
         return h("a", { class: "small", href: s.url, target: "_blank", rel: "noopener", text: sid });
@@ -450,8 +453,9 @@
       v.append(d);
     });
   }
-  function learnCard(R) {
-    const w = stripCard(ecg.generate(R.id), { tools: true });
+  // opts.expand false: no full-screen button (inside a dialog it would open behind it).
+  function learnCard(R, opts) {
+    const w = stripCard(ecg.generate(R.id), { tools: true, expand: !(opts && opts.expand === false) });
     let liveOn = false, liveStop = null;
     const liveCanvas = h("canvas", { role: "img", "aria-label": "Live monitor view" });
     const liveWrap = h("div", { class: "strip-wrap", hidden: true }, liveCanvas);
@@ -485,7 +489,7 @@
       table,
       h("p", { class: "small", style: "margin:10px 0 0", text: R.tellApart }),
       R.note ? h("p", { class: "note", text: R.note }) : null,
-      h("div", { class: "row", style: "margin-top:10px" }, reviewTag()),
+      h("div", { class: "row", style: "margin-top:10px" }, reviewTag(R)),
       h("ul", { class: "sources" }, R.sources.map(function (sid) {
         const s = rhythms.sources[sid];
         return h("li", null, h("a", { href: s.url, target: "_blank", rel: "noopener", text: s.label }));
@@ -911,11 +915,160 @@
     if (current === "home") renderHome();
   });
 
-  function startTour() {
+  // ---------- How this was built (Evidence) ----------
+  // Every number here comes from js/evidence.js (computed from the code or checked by
+  // tests/run.js); every claim links to its source (docs/sources.md).
+  const E = window.EKG.evidence;
+  const evDlg = document.getElementById("evidenceDlg");
+  function srcLinks(ids) {
+    return h("ul", { class: "sources" }, ids.map(function (sid) {
+      const s = rhythms.sources[sid];
+      return h("li", null, h("a", { href: s.url, target: "_blank", rel: "noopener", text: s.label }));
+    }));
+  }
+  function evSec(ic, title) {
+    const sec = h("section", { class: "ev-sec" }, h("h3", { class: "ev-h" }, icon(ic, "accent"), title));
+    for (let i = 2; i < arguments.length; i++) add(sec, arguments[i]);
+    return sec;
+  }
+  function usDate(iso) {
+    const p = String(iso).split("-").map(Number);
+    return new Date(p[0], p[1] - 1, p[2]).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+  }
+  function renderEvidence() {
+    const body = document.getElementById("evidenceBody");
+    clear(body);
+    const st = E.refStats(), rv = E.reviewStats(), T = E.TESTS;
+    body.append(
+      h("p", { class: "muted", style: "margin-top:0", text: "What's behind the strips and the answers, so you can check it yourself." }),
+      evSec("i-sources", "Every rhythm rule cites a reference",
+        h("p", { text: E.refSentence(st) }),
+        h("p", { class: "small muted", text: "Each rhythm card in Learn links to its own references; About lists them all. LITFL is a free emergency and critical care reference written by clinicians. It is not formally peer-reviewed." })),
+      evSec("i-measure", "Every strip is checked by a second program",
+        h("p", { text: "Strips are drawn by code, never copied from a book or website. Each full test run draws " + E.strips().toLocaleString("en-US") + " strips (" + T.perRhythm + " of each rhythm) and measures every one from the waveform itself: rate, the 1500-rule rate, PR, QRS and regularity. If a number shown on screen crosses a published cutoff, the run fails." }),
+        h("p", { class: "small muted", text: "Last full run: " + usDate(T.lastRun) + ", passed. This shows the strips match the app's criteria. Whether the criteria are right is what the references and the nurse review are for." })),
+      evSec("i-review", "Why missed rhythms come back",
+        h("p", { text: "In the PULSE trial (3,013 nurses, 65 cardiac units, 17 hospitals), online ECG monitoring education raised nurses' knowledge scores right away, but the gain had not held 15 months later." }),
+        h("p", { text: "In studies of word and text recall, spacing practice out over time, and recalling an answer instead of rereading it, improve long-term memory. So this app schedules every rhythm with FSRS-6, an open-source spaced-repetition scheduler, and brings back the ones you miss." }),
+        h("p", { class: "small muted", text: "The AHA's 2017 practice standards for ECG monitoring in hospitals include a section on staff education. None of these studies tested this app." }),
+        srcLinks(["S31", "S32", "S33", "S30"])),
+      evSec("i-check", "Who has reviewed it",
+        h("p", { text: rv.reviewed
+          ? "Reviewed by a nurse: " + rv.reviewed + " of " + rv.total + " rhythm cards (" + rv.dates.join(", ") + "). Each card shows its own status."
+          : "Not yet reviewed by a nurse: 0 of " + rv.total + " rhythm cards so far. Each card says \u201cPending nurse review\u201d until it is. If you are a nurse, you can check them here:" }),
+        h("button", { type: "button", id: "reviewOpen", class: "btn block", onclick: openReview }, icon("i-check"), "Review the cards")),
+      evSec("i-more", "Not covered yet",
+        h("p", { text: "Pacing wires and post-op heart surgery strips (CTICU), ACLS next-step scenarios, and 12-lead ECGs. Each will come with its own references." })),
+      h("p", { class: "small muted ev-foot", text: "Study aid only. Not affiliated with or endorsed by any hospital, exam provider or professional organization. Not for patient care decisions. Follow your unit's protocols and provider orders." }));
+  }
+  function showEvidence() { renderEvidence(); evDlg.showModal(); evDlg.scrollTop = 0; document.getElementById("evidenceTitle").focus({ preventScroll: true }); }
+  // Shown once by itself (after the film and the first-launch intro), then from About.
+  function evidenceOnce() {
+    if ((progress.prefs().evidence || 0) >= E.VERSION || document.querySelector("dialog[open]") || !evDlg.showModal) return;
+    showEvidence();
+  }
+  evDlg.addEventListener("close", function () {
+    const f = progress.prefs();
+    if ((f.evidence || 0) < E.VERSION) { f.evidence = E.VERSION; progress.savePrefs(f); }
+  });
+  evDlg.querySelector("[data-close]").addEventListener("click", function () { evDlg.close(); });
+  document.getElementById("evidenceBtn").addEventListener("click", function () { about.close(); showEvidence(); });
+
+  // ---------- Review mode (a nurse checks each rhythm card) ----------
+  // Marks are saved on this phone (ekg.review.v1) and only leave it when the nurse copies
+  // them. Nothing is sent.
+  const rvDlg = document.getElementById("reviewDlg");
+  let rvIdx = 0;
+  function openReview() {
+    if (evDlg.open) evDlg.close();
+    const marks = progress.review().marks;
+    const firstOpen = rhythms.list.findIndex(function (r) { return !marks[r.id] || marks[r.id].ok == null; });
+    rvIdx = firstOpen >= 0 ? firstOpen : 0;
+    renderReview();
+    rvDlg.showModal(); rvDlg.scrollTop = 0; document.getElementById("reviewTitle").focus({ preventScroll: true });
+  }
+  function markedCount(marks) { return rhythms.list.filter(function (r) { return marks[r.id] && marks[r.id].ok != null; }).length; }
+  function renderReview() {
+    if (stopLive) stopLive();
+    const body = document.getElementById("reviewBody");
+    clear(body);
+    const RV = progress.review(), marks = RV.marks, list = rhythms.list, R = list[rvIdx];
+    const cur = marks[R.id] || { ok: null, note: "", at: 0 };
+    const status = h("p", { class: "small muted", style: "margin:0", "aria-live": "polite" });
+    const warn = h("p", { class: "small warn-text", hidden: true, text: "This phone didn't save that. Copy your review now so it isn't lost." });
+    function paintStatus() { status.textContent = "Card " + (rvIdx + 1) + " of " + list.length + " · " + markedCount(marks) + " marked"; }
+    function save() { warn.hidden = progress.saveReview(RV) !== false; }
+    const jump = h("select", { class: "select", "aria-label": "Go to a rhythm card" });
+    list.forEach(function (r, k) {
+      const m = marks[r.id];
+      jump.append(h("option", { value: String(k), text: (m && m.ok === true ? "\u2713 " : m && m.ok === false ? "\u2717 " : "\u2003 ") + r.name }));
+    });
+    jump.value = String(rvIdx);
+    jump.addEventListener("change", function () { rvIdx = Number(jump.value); renderReview(); body.parentElement.scrollTop = 0; });
+    const note = h("textarea", { class: "note-input", rows: "3", maxlength: "600", "aria-label": "Note on " + R.name, placeholder: "What's wrong or missing? Optional if it looks right." });
+    note.value = cur.note || "";
+    note.addEventListener("input", function () {
+      const m = marks[R.id] || (marks[R.id] = { ok: null, note: "", at: 0 });
+      m.note = note.value.slice(0, 600); m.at = Date.now(); save();
+    });
+    const okBtn = h("button", { type: "button", class: "btn mark-ok", "aria-pressed": String(cur.ok === true) }, icon("i-check"), "Looks right");
+    const offBtn = h("button", { type: "button", class: "btn mark-off", "aria-pressed": String(cur.ok === false) }, icon("i-x"), "Something's off");
+    function mark(val) {
+      const m = marks[R.id] || (marks[R.id] = { ok: null, note: "", at: 0 });
+      m.ok = m.ok === val ? null : val; m.note = note.value.slice(0, 600); m.at = Date.now();
+      okBtn.setAttribute("aria-pressed", String(m.ok === true));
+      offBtn.setAttribute("aria-pressed", String(m.ok === false));
+      jump.options[rvIdx].textContent = (m.ok === true ? "\u2713 " : m.ok === false ? "\u2717 " : "\u2003 ") + R.name;
+      save(); paintStatus();
+      if (m.ok === false) note.focus();
+    }
+    okBtn.addEventListener("click", function () { mark(true); });
+    offBtn.addEventListener("click", function () { mark(false); });
+    function go(d) { rvIdx = (rvIdx + d + list.length) % list.length; renderReview(); body.parentElement.scrollTop = 0; }
+    paintStatus();
+    body.append(
+      h("p", { class: "small muted", style: "margin-top:0", text: "For a nurse checking the content: is each card's description, criteria and strip right? Your marks stay on this phone. \u201cCopy my review\u201d copies them as text for you to send; the app sends nothing." }),
+      h("div", { class: "row" }, jump),
+      status, warn,
+      learnCard(R, { expand: false }),
+      h("label", { class: "section-title", text: "Your note" }), note,
+      h("div", { class: "review-bar" },
+        h("div", { class: "review-marks" }, okBtn, offBtn),
+        h("div", { class: "review-nav" },
+          h("button", { type: "button", class: "btn small", onclick: function () { go(-1); } }, h("span", { "aria-hidden": "true", text: "\u2039 " }), "Previous"),
+          h("button", { type: "button", class: "btn small", onclick: function () { go(1); } }, "Next", h("span", { "aria-hidden": "true", text: " \u203a" })))));
+  }
+  function copyReview() {
+    const today = new Date();
+    const iso = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
+    const text = E.reviewText(progress.review().marks, { date: iso });
+    const msg = document.getElementById("reviewCopyMsg");
+    const fallback = document.getElementById("reviewCopyText");
+    function manual() {
+      fallback.hidden = false; fallback.value = text; fallback.focus(); fallback.select();
+      msg.textContent = "Copy didn't work here. The text is selected below: copy it and paste it into a message.";
+    }
+    fallback.hidden = true;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(function () { msg.textContent = "Copied. Paste it into a text or an email."; }, manual);
+    } else manual();
+  }
+  document.getElementById("reviewCopy").addEventListener("click", copyReview);
+  rvDlg.querySelector("[data-close]").addEventListener("click", function () { rvDlg.close(); });
+  rvDlg.addEventListener("close", function () {
+    if (stopLive) stopLive();
+    document.getElementById("reviewCopyMsg").textContent = "";
+    document.getElementById("reviewCopyText").hidden = true;
+  });
+
+  function startTour(after) {
     window.EKG.tour.open(document.getElementById("tourDlg"), {
       standalone: !!(navigator.standalone || (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches)),
       reduceMotion: reduceMotion(),
-      onDone: function () { const f = progress.prefs(); f.ack = true; f.tour = window.EKG.tour.VERSION; progress.savePrefs(f); }
+      onDone: function () {
+        const f = progress.prefs(); f.ack = true; f.tour = window.EKG.tour.VERSION; progress.savePrefs(f);
+        if (typeof after === "function") after();
+      }
     });
   }
   document.getElementById("replayBtn").addEventListener("click", function () { about.close(); startTour(); });
@@ -937,7 +1090,8 @@
   // Number keys 1 to 4 pick a choice (handy on a laptop).
   document.addEventListener("keydown", function (ev) {
     const n = Number(ev.key);
-    if (!(n >= 1 && n <= 4) || start.active()) return;
+    if (!(n >= 1 && n <= 4) || start.active() || document.querySelector("dialog[open]")) return;
+    if (ev.target && /^(INPUT|TEXTAREA|SELECT)$/.test(ev.target.tagName)) return;
     const v = views[current];
     const btns = v.querySelectorAll(".choice:not(:disabled)");
     if (btns[n - 1]) btns[n - 1].click();
@@ -946,7 +1100,9 @@
   // ---------- start ----------
   show("home");
   // The first-launch intro waits for the start menu and the opening film to finish.
-  if ((progress.prefs().tour || 0) < window.EKG.tour.VERSION && document.getElementById("tourDlg").showModal) start.whenDone(startTour);
+  // Then "How this was built" once (also for people who already saw the intro).
+  if ((progress.prefs().tour || 0) < window.EKG.tour.VERSION && document.getElementById("tourDlg").showModal) start.whenDone(function () { startTour(evidenceOnce); });
+  else start.whenDone(evidenceOnce);
   // Home's hallway walk starts once the start menu is out of the way.
   if (start.active()) start.whenDone(function () { if (current === "home") renderHome(); });
   if ("serviceWorker" in navigator && /^https?:/.test(location.protocol)) {
