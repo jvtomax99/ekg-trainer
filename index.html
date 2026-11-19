@@ -124,6 +124,7 @@
     <p>Not affiliated with or endorsed by any hospital or exam provider, not clinically validated,
       and not a copy of any specific exam. Content is marked "pending nurse review" until checked.</p>
     <p>Your progress stays on this phone (browser storage). Nothing is sent anywhere.</p>
+    <button type="button" id="evidenceBtn" class="btn primary block" style="margin-bottom:8px"><svg class="ic"><use href="#i-sources"/></svg>How this was built</button>
     <button type="button" id="replayBtn" class="btn block"><svg class="ic"><use href="#i-play"/></svg>Replay the intro</button>
     <button type="button" id="filmBtn" class="btn block" style="margin-top:8px"><svg class="ic"><use href="#i-play"/></svg>Play the opening film</button>
     <div class="sheet-head sub"><svg class="ic accent" aria-hidden="true"><use href="#i-sources"/></svg><h3>Sources</h3></div>
@@ -133,6 +134,23 @@
     <div class="row-end">
       <button type="button" id="resetBtn" class="btn ghost danger-text">Reset progress</button>
       <button type="button" class="btn primary" data-close>Close</button>
+    </div>
+  </dialog>
+
+  <dialog id="evidenceDlg" class="sheet" aria-labelledby="evidenceTitle">
+    <div class="sheet-head"><svg class="ic lg accent" aria-hidden="true"><use href="#i-sources"/></svg><h2 id="evidenceTitle" tabindex="-1" autofocus>How this was built</h2></div>
+    <div id="evidenceBody"></div>
+    <div class="row-end"><button type="button" class="btn primary" data-close>Close</button></div>
+  </dialog>
+
+  <dialog id="reviewDlg" class="sheet review" aria-labelledby="reviewTitle">
+    <div class="sheet-head"><svg class="ic lg accent" aria-hidden="true"><use href="#i-check"/></svg><h2 id="reviewTitle" tabindex="-1" autofocus>Review the cards</h2></div>
+    <div id="reviewBody"></div>
+    <p id="reviewCopyMsg" class="small" aria-live="polite"></p>
+    <textarea id="reviewCopyText" class="note-input" rows="8" readonly hidden aria-label="Your review as text"></textarea>
+    <div class="row-end">
+      <button type="button" id="reviewCopy" class="btn">Copy my review</button>
+      <button type="button" class="btn primary" data-close>Done</button>
     </div>
   </dialog>
 
@@ -157,6 +175,7 @@
   <script src="js/progress.js"></script>
   <script src="js/tour.js"></script>
   <script src="js/unit.js"></script>
+  <script src="js/evidence.js"></script>
   <script src="js/start.js"></script>
   <script src="js/app.js"></script>
 </body>

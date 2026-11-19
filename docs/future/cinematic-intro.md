@@ -8,6 +8,11 @@ app's own strip drawn over it) was built early as step 3c, at the owner's reques
 (`docs/phases/6-start-menu-film.md`). This longer piece, with real app captures and the
 campus, is still to come and would replace or extend it.
 
+Note, 2026-11-19 (later): the owner split credibility from this piece. A standalone pitch
+clip and an in-app Evidence screen come first as step 3d (`docs/phases/7-evidence-and-pitch.md`);
+this step 7 piece is the feature walkthrough and must keep the same rule: every claim true
+and sourced.
+
 ## Goal
 30 to 45 seconds, premium and cinematic. An experienced nurse should think: "this is a
 seriously sophisticated ECG trainer built for someone like me." Not childish, generic or

@@ -19,15 +19,23 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
   2026-11-19. Details: `docs/phases/5-night-unit-start.md`. Runway has about 700 credits
   left. Owner hasn't checked it on the real iPhone yet (does Safari start the clip?).
 
-## Waiting for the owner's "push"
-- Step 3c, start menu and opening film (`docs/phases/6-start-menu-film.md`): built and
-  checked in Chromium on branch `claude/hopeful-mccarthy-d4uvot`. Runway has 780 credits
-  left. Owner should listen to the music and check it on the real iPhone.
+## Also merged
+- Step 3c, start menu and opening film (`docs/phases/6-start-menu-film.md`): merged to main
+  (pull request #4). Runway has 780 credits left. Owner should listen to the music and check
+  it on the real iPhone.
 
 ## Next
-- Owner chose: **step 5, campus research and blockout** (`docs/future/3d-campus.md`,
-  prompt in docs/prompts.md). Video comes after the campus so it's made once with real
-  features. Three.js needs owner approval as the first dependency (ask with buttons).
+- Owner chose (2026-11-19): **step 3d, Evidence screen, review mode and pitch clip**
+  (`docs/phases/7-evidence-and-pitch.md`), ahead of the campus. Evidence screen and
+  review mode built on `claude/adoring-ptolemy-xoi9ka`, waiting for the owner's "push".
+  Next: the pitch clip (real Playwright recordings, ffmpeg, the film's score). Then step 5, campus research and blockout
+  (`docs/future/3d-campus.md`); Three.js needs owner approval as the first dependency.
+- "3,069,123 checks" = assertions in one full `node tests/run.js`: 20,800 generated strips
+  (800 x 26 rhythms) measured from the waveform, plus quiz and FSRS tests. Proves strips
+  match the app's criteria, not that the criteria are right. Don't show the raw number to
+  nurses.
+- PubMed abstracts: `curl "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=<PMID>&rettype=abstract&retmode=text"`
+  works when pubmed.ncbi.nlm.nih.gov shows a cookie check.
 - Video tools: HyperFrames compose/render are disabled from Claude Code; Canva is
   connected (video quality untested); Playwright records the real app; Remotion needs npm
   and owner approval, dev-only.

@@ -9,11 +9,13 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   first paint has the right theme), holds the SVG icon sprite (`<symbol id="i-...">`), one
   `<section id="view-...">` per tab (home, learn, practice, exam, progress), the tab bar
   and dialogs, then the other scripts in this order: rhythms, ecg, quiz, strip, fsrs,
-  progress, tour, unit, start, app. Each script adds itself to `window.EKG`.
+  progress, tour, unit, evidence, start, app. Each script adds itself to `window.EKG`.
 - `styles.css`: the whole look. Tokens on `:root` per theme (`data-theme`, `data-strip`);
   values come from `DESIGN.md`.
 - `js/rhythms.js`: the rhythm library, data only (criteria, generator ranges, teaching
-  text, source ids, `review: "pending"`). Clinical content lives here and nowhere else.
+  text, source ids, `review: "pending"` or a `reviewed: { by, date }` role and month).
+  Clinical content lives here and nowhere else. Its `sources` also hold S30 to S33, the
+  design evidence shown on the Evidence screen (not rhythm criteria).
 - `js/ecg.js`: the waveform generator. Builds events first (P waves, conduction, drops,
   ectopic beats), then draws each beat as a sum of Gaussian waves, then reports the
   features it built.
@@ -23,6 +25,10 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   calipers, live sweep).
 - `js/fsrs.js`: FSRS-6 scheduler, a port of py-fsrs 6.3.3. Pure math.
 - `js/progress.js`: everything stored (keys below), mastery, trends.
+- `js/evidence.js` (step 3d): data and plain functions for the "How this was built"
+  screen (reference counts computed from the cards, the test-run facts `TESTS`, review
+  counts) and the nurse's review text. `tests/run.js` checks `TESTS.perRhythm` against its
+  own default, so the screen can't drift from the real run.
 - `js/theme.js`: app theme and strip colors from the prefs.
 - `js/tour.js`: the first-launch intro (8 cards, screenshots in `img/tour/`).
 - `js/unit.js`: the night unit backdrop (step 3b): the picture behind Home's start card
@@ -42,9 +48,9 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
 - `js/app.js` (about 900 lines): all the screens. Sections by banner comment
   (`// ---------- Exam ----------`): helpers, strip widget, feedback, tabs, Home
   dashboard, adaptive sessions, Learn, Practice, Exam, Progress (Mastery, Trends, Exams),
-  dialogs (About, Settings), start.
+  dialogs (About, Settings), How this was built (Evidence), review mode, start.
 - `sw.js`: the offline copy. `FILES` lists every file the app loads; bump `VERSION`
-  (`ekg-v8` now) whenever an app file changes, or phones keep the old one.
+  (`ekg-v9` now) whenever an app file changes, or phones keep the old one.
 - `manifest.webmanifest`, `icons/`: install info and app icons (made by
   `tools/make-icons.js`).
 - `tests/run.js`: the checks (`node tests/run.js`, `N=200` for a quick run).
@@ -70,7 +76,11 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
     sessions, and FSRS items (`r:<rhythm>`, `b:<rhythm>` near a cutoff, confused pairs).
   - `ekg.progress.v1`: the old key, replayed once into v2 and left untouched.
   - `ekg.prefs.v1`: disclaimer seen, intro version seen, theme, strip theme, exam
-    settings, unit backdrop (auto, lit, night or off), opening film (`film`: always, day or off; `filmDay`: the last day it played). New fields are additive with defaults, so no key bump.
+    settings, unit backdrop (auto, lit, night or off), opening film (`film`: always, day or off; `filmDay`: the last day it played), Evidence
+    screen version seen (`evidence`). New fields are additive with defaults, so no key bump.
+  - `ekg.review.v1`: a nurse's content review from review mode (`marks`: per rhythm, looks
+    right or something's off, a note, when). Separate from progress: "Reset progress"
+    leaves it. Leaves the phone only when the nurse copies it.
 - **Offline**: `sw.js` caches `FILES` on install, then serves from the cache and
   refreshes it in the background.
 - No accounts, no names, no patient data, no network calls besides loading the app.

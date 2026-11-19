@@ -416,6 +416,32 @@ dialog.sheet::backdrop { background: var(--scrim); backdrop-filter: blur(4px); -
 .sheet-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
 .sheet-head.sub { margin: 18px 0 4px; }
 
+/* How this was built (Evidence) and review mode */
+.ev-sec { border-top: 1px solid var(--line-soft); padding-top: 14px; margin-top: 14px; }
+.ev-sec p { margin: 6px 0 0; }
+.ev-h { display: flex; align-items: center; gap: 8px; font-size: var(--fs-md); font-weight: 650; margin: 0 0 2px; }
+.ev-sec .btn.block { margin-top: 12px; }
+.warn-text { color: var(--warn); margin: 6px 0 0; }
+.note-input {
+  display: block; width: 100%; box-sizing: border-box; min-height: 88px; padding: 10px 12px; resize: vertical;
+  border: 1px solid var(--line); border-radius: var(--r-md); background: var(--surface-2); color: var(--text);
+  font: inherit; font-size: 16px; line-height: 1.4;
+}
+.note-input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+dialog.review .learn-card { border-top: 0; margin-top: 8px; padding-top: 0; }
+.review-bar {
+  position: sticky; bottom: calc(-1 * var(--sp-5)); z-index: 1; margin: 14px calc(-1 * var(--sp-5)) 0;
+  padding: 10px var(--sp-5) 12px; background: var(--surface); border-top: 1px solid var(--line-soft);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.review-marks, .review-nav { display: flex; gap: 8px; }
+.review-marks .btn, .review-nav .btn { flex: 1 1 0; min-width: 0; min-height: 44px; }
+.review-bar .btn { padding: 6px 10px; font-size: 15px; gap: 6px; white-space: nowrap; }
+.review-bar .btn .ic { width: 18px; height: 18px; }
+.ev-foot { margin-top: 18px; }
+.review-marks .btn[aria-pressed="true"].mark-ok { color: var(--ok); background: var(--ok-dim); border-color: currentColor; }
+.review-marks .btn[aria-pressed="true"].mark-off { color: var(--danger); background: var(--danger-dim); border-color: currentColor; }
+
 .empty { text-align: center; padding: 26px 14px; }
 .empty .big { margin: 0 auto 10px; width: 52px; height: 52px; }
 .empty .big .ic { width: 28px; height: 28px; }
