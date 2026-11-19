@@ -1,16 +1,21 @@
 /* Night unit backdrop (step 3b, docs/phases/5-night-unit-start.md).
-   A generated picture of a generic unit at night behind Home's start card, and "Rounds":
+   A generated picture of a generic unit hallway (lit in the light theme, dimmed for night
+   in the dark theme) behind Home's start card, and "Rounds":
    a hallway clip that moves about one second as each practice card comes up, then holds.
    Optional in every way: the picture is precached, the clip is fetched after the app is
    open and the app works the same if it never arrives. Never used in Exam. */
 (function (root) {
   "use strict";
   const doc = root.document;
-  const STILL = "img/unit/unit.webp";
-  const CLIP = "img/unit/walk.mp4";
+  // Two looks of the same hallway: lights on for the light theme, dimmed for the dark one.
+  const LOOKS = {
+    light: { still: "img/unit/unit-lit.webp", clip: "img/unit/walk-lit.mp4" },
+    dark: { still: "img/unit/unit.webp", clip: "img/unit/walk.mp4" }
+  };
+  function look() { return LOOKS[root.document.documentElement.getAttribute("data-theme") === "light" ? "light" : "dark"]; }
   const MEDIA = "ekg-media-v1"; // its own offline store, so app updates don't throw the clip away
   const STEP = 1; // seconds of walking per card
-  let clipUrl = null, clipWait = null;
+  const clipUrl = {}, clipWait = {};
 
   function prefs() { return root.EKG.progress.prefs(); }
   function enabled() { return prefs().unit !== "off"; }
@@ -20,7 +25,7 @@
 
   // The clip is fetched whole, kept in the phone's offline store and played from memory
   // (a phone asks for video in pieces, which a stored copy can't answer).
-  function fetchClip() {
+  function fetchClip(CLIP) {
     const net = function () { return root.fetch(CLIP).then(function (r) { if (!r.ok) throw new Error("no clip"); return r; }); };
     if (!root.caches) return net();
     return root.caches.open(MEDIA).then(function (c) {
@@ -30,13 +35,14 @@
     }, net);
   }
   function loadClip() {
-    if (clipUrl) return Promise.resolve(clipUrl);
-    if (!clipWait) {
-      clipWait = fetchClip().then(function (r) { return r.blob(); })
-        .then(function (b) { clipUrl = root.URL.createObjectURL(b); return clipUrl; })
-        .catch(function () { clipWait = null; return null; });
+    const k = look().clip;
+    if (clipUrl[k]) return Promise.resolve(clipUrl[k]);
+    if (!clipWait[k]) {
+      clipWait[k] = fetchClip(k).then(function (r) { return r.blob(); })
+        .then(function (b) { clipUrl[k] = root.URL.createObjectURL(b); return clipUrl[k]; })
+        .catch(function () { clipWait[k] = null; return null; });
     }
-    return clipWait;
+    return clipWait[k];
   }
   function el(tag, cls) { const n = doc.createElement(tag); if (cls) n.className = cls; return n; }
   function video() {
@@ -49,7 +55,7 @@
   }
   function still() {
     const i = el("img");
-    i.src = STILL; i.alt = ""; i.decoding = "async"; i.setAttribute("aria-hidden", "true");
+    i.src = look().still; i.alt = ""; i.decoding = "async"; i.setAttribute("aria-hidden", "true");
     i.addEventListener("error", function () { i.remove(); });
     return i;
   }
@@ -72,7 +78,7 @@
     const box = el("div", "unit-bg");
     box.append(still());
     if (canMove()) loadClip().then(function (url) {
-      if (!url || !box.isConnected || !canMove()) return;
+      if (!url || !box.isConnected || !canMove() || url !== clipUrl[look().clip]) return;
       const v = video();
       const me = home = { v: v, timer: 0 };
       const start = function () {
@@ -103,7 +109,7 @@
       v.addEventListener("loadedmetadata", function () { me.ready = true; if (Date.now() - me.asked < 500) step(); });
     }
     const me = rounds;
-    if (!me.v.getAttribute("src")) loadClip().then(function (url) { if (url && !me.v.getAttribute("src")) me.v.src = url; });
+    if (!me.v.getAttribute("src")) loadClip().then(function (url) { if (url && rounds === me && !me.v.getAttribute("src")) me.v.src = url; });
     return me.box;
   }
   // Walk one step. Called after the backdrop is back on the page for the next card.

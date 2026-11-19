@@ -88,3 +88,9 @@ From memory and `docs/research.md`; not re-checked on 2026-11-19.
   publishing your own outputs and no labeling requirement.
 - Merged and live 2026-11-19 (pull request #2); live site checked in Chromium at 390 px.
 - Not checked: a real iPhone (Safari autoplay of the muted clip, battery).
+- 2026-11-19, the nurse's feedback on the first version: a hospital hallway is lit, so the
+  dark one fits a dark mode but not the default. Added a second look of the same hallway
+  with the lights on (the dark still relit with Runway, then its own 10 s walk). The light
+  theme shows the lit hallway with a light scrim and dark text; the dark theme keeps the
+  night look. Files: `img/unit/unit-lit.webp`, `img/unit/walk-lit.mp4`. About 305 more
+  Runway credits (about 395 left).

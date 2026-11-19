@@ -893,14 +893,17 @@
           if (x === "off") { unit.off(); document.querySelectorAll(".on-unit").forEach(function (n) { n.classList.remove("on-unit"); }); }
           if (current === "home") renderHome();
         }, "Unit backdrop")),
-      h("p", { class: "small muted", style: "margin:0", text: "A night-shift hallway behind Home's start card, and a short walk between practice strips. Computer generated, not a real unit. Never shown in exams. It also stays still when your phone is set to Reduce Motion." }));
+      h("p", { class: "small muted", style: "margin:0", text: "A unit hallway behind Home's start card (lights on in the light theme, dimmed in the dark theme), and a short walk between practice strips. Computer generated, not a real unit. Never shown in exams. It also stays still when your phone is set to Reduce Motion." }));
   }
   document.getElementById("settingsBtn").addEventListener("click", function () { renderSettings(); settings.showModal(); });
   settings.querySelector("[data-close]").addEventListener("click", function () { settings.close(); });
   window.EKG.theme.onChange(function () {
     widgets.forEach(function (w) { if (!w.el.isConnected) widgets.delete(w); else w.redraw(); });
     if (expanded) S.draw(expandCanvas, expanded, {});
-    if (stopLive) { stopLive(); if (current === "home") renderHome(); }
+    unit.off(); // the hallway has a lit and a night look; the next screen picks the right one
+    document.querySelectorAll(".on-unit").forEach(function (n) { n.classList.remove("on-unit"); });
+    if (stopLive) stopLive();
+    if (current === "home") renderHome();
   });
 
   function startTour() {

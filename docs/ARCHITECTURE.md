@@ -27,7 +27,8 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
 - `js/tour.js`: the first-launch intro (8 cards, screenshots in `img/tour/`).
 - `js/unit.js`: the night unit backdrop (step 3b): the picture behind Home's start card
   and "Rounds", the hallway clip that moves one step between practice cards. Files in
-  `img/unit/`: `unit.webp` (precached) and `walk.mp4` (fetched after the app is open,
+  `img/unit/`: `unit.webp` and `unit-lit.webp` (precached; night look for the dark theme, lit look for
+  the light theme) and `walk.mp4` / `walk-lit.mp4` (fetched after the app is open,
   stored by `unit.js` itself in the `ekg-media-v1` offline store, which survives app
   updates; never required).
 - `js/app.js` (about 900 lines): all the screens. Sections by banner comment
@@ -35,7 +36,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   dashboard, adaptive sessions, Learn, Practice, Exam, Progress (Mastery, Trends, Exams),
   dialogs (About, Settings), start.
 - `sw.js`: the offline copy. `FILES` lists every file the app loads; bump `VERSION`
-  (`ekg-v5` now) whenever an app file changes, or phones keep the old one.
+  (`ekg-v6` now) whenever an app file changes, or phones keep the old one.
 - `manifest.webmanifest`, `icons/`: install info and app icons (made by
   `tools/make-icons.js`).
 - `tests/run.js`: the checks (`node tests/run.js`, `N=200` for a quick run).
