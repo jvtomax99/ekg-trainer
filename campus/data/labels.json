@@ -1,0 +1,57 @@
+{
+  "_note": "Hand-written. Only names confirmed in docs/campus/boards and the 2024 campus map, each with its basis. Keys are ids in campus.json (OSM ids, or new_tower / south_block / main_rest from tools/campus-heights.py). Anything not listed shows as 'Campus building'.",
+  "streets": ["Prospect Avenue", "Atlantic Street", "2nd Street", "Essex Street", "1st Street", "South Prospect Avenue"],
+  "buildings": {
+    "main_rest": {
+      "priority": "1A",
+      "name": "Main hospital",
+      "what": "Priority 1A. The 2024 campus map lists St. John, Strawbridge, Main and Conklin, north to south. Where each one starts isn't confirmed yet, so St. John isn't marked.",
+      "basis": "Connected complex between Prospect Ave and 2nd St on the 2024 campus map."
+    },
+    "south_block": {
+      "priority": "1B",
+      "name": "South tower of the main hospital",
+      "what": "Priority 1B. Likely Schlesinger Pavilion, the 9-story \"Pavilion\". Waiting on the nurse to confirm.",
+      "basis": "The 2024 map puts Schlesinger Pavilion at this end. Lidar shows the complex's only roof over 40 m here, in both the 2014 and the 2023 to 2025 scans."
+    },
+    "new_tower": {
+      "priority": "1C",
+      "name": "Helena Theurer Pavilion",
+      "what": "Priority 1C. Surgical and intensive care tower, opened 2023.",
+      "basis": "Position from the 2024 map (east side, along 2nd St). Lidar shows it went up between the 2014 and the 2023 to 2025 scans, about 52 m tall, which fits HMH's \"nine-story\" description."
+    },
+    "way/544168885": {
+      "name": "Medical Plaza",
+      "what": "Priority 2, a later step. \"Justice Marie Garabaldi Medical Plaza\" on the 2024 map.",
+      "basis": "Beside the main entrance on Prospect Ave on the 2024 map."
+    },
+    "way/544168884": {
+      "name": "David & Alice Jurist Research Center",
+      "what": "Priority 3, a later step (the research tower).",
+      "basis": "Prospect Ave and Atlantic St on the 2024 map."
+    },
+    "way/544168905": {
+      "name": "Women's and Children's",
+      "what": "Priority 4, a later step. Donna A. Sanzari Women's Hospital and Joseph M. Sanzari Children's Hospital on the 2024 map.",
+      "basis": "Along Atlantic St on the 2024 map."
+    },
+    "way/544168899": {
+      "name": "Women's and Children's",
+      "what": "Priority 4, a later step. Don Imus/WFAN Pediatric Center for Tomorrows Children on the 2024 map.",
+      "basis": "Along Atlantic St by 2nd St on the 2024 map."
+    },
+    "way/544168895": {
+      "name": "John Theurer Cancer Center",
+      "what": "Optional, last.",
+      "basis": "Across 2nd St at Atlantic St on the 2024 map."
+    },
+    "way/544168902": { "name": "Emergency and Trauma Center", "what": "Context, not a destination.", "basis": "2024 campus map." },
+    "way/544168907": { "name": "Imaging Center", "what": "Context, not a destination.", "basis": "2024 campus map." },
+    "way/544168886": { "name": "Main Parking Garage", "what": "Context, not a destination.", "basis": "Between Medical Plaza and Essex St on the 2024 map." },
+    "way/544168893": { "name": "Helena Theurer Pavilion Parking", "what": "Context, not a destination.", "basis": "Across 2nd St, south of Hillcrest, on the 2024 map." },
+    "way/544168894": { "name": "Hillcrest Building", "what": "Context, not a destination.", "basis": "2024 campus map." },
+    "way/544168917": { "name": "Alfred N. Sanzari Medical Arts Building", "what": "Context, not a destination.", "basis": "Across Prospect Ave on the 2024 map." },
+    "way/544168890": { "name": "Gabrellian Child Care and Learning Center", "what": "Context, not a destination.", "basis": "2024 campus map." },
+    "way/544168892": { "name": "Audrey Hepburn Children's Center", "what": "Context, not a destination.", "basis": "2024 campus map." }
+  }
+}

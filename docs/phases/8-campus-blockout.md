@@ -1,7 +1,9 @@
 # Step 5: Campus research and blockout
 
 Owner's pick, 2026-11-19, after step 3d's screen and review mode went live. Spec:
-`docs/future/3d-campus.md`. Status: **plan, waiting for the owner's OK.** No code yet.
+`docs/future/3d-campus.md`. Status: **built 2026-11-19, waiting for the owner's push and
+the nurse's look** (see Status at the bottom). Plan approved by the owner 2026-11-19,
+Three.js approved the same day.
 
 ## What it does
 A first, plain 3D model of the real campus: grey blocks with the right footprints,
@@ -35,10 +37,11 @@ Researched 2026-11-19.
   Streets are all there (Prospect Ave, Atlantic St, 2nd St, Essex St, 1st St, South
   Prospect Ave). License: ODbL, credit "© OpenStreetMap contributors".
 - **USGS 3DEP lidar** covers the campus: `NJ_NE6County_B23` (tiles K5B13 and K5B14, about
-  0.8 and 0.7 GB) and the older `NJ_New_Jersey_SANDY_LiDAR_15` (2015). US government
-  data, public domain. Heights come from the newer one; the 2015 one is a cross-check: a
-  building present in the new scan and absent in 2015 on the east side by 2nd St should be
-  Helena Theurer Pavilion, which gives its real footprint even though OSM lacks it.
+  0.8 and 0.7 GB, flown 2023 to 2025) and the older `NJ_New_Jersey_SANDY_LiDAR_15` (flown
+  2014). US government data, public domain. Heights come from the newer one; the older
+  one is a cross-check: a building present in the new scan and absent in 2014 on the east
+  side by 2nd St should be Helena Theurer Pavilion, which gives its real footprint even
+  though OSM lacks it.
 - **Official 2024 campus map** (HMH, reference only, never committed): which named
   sections make up the connected complex and where they sit.
 - **No open source splits the connected main complex into St. John, Conklin,
@@ -115,5 +118,23 @@ no open data can prevent it. Until the nurse marks it, the main complex shows as
 connected block with measured height sections and no St. John label.
 
 ## Status
-- 2026-11-19: plan written, data sources checked (OSM, USGS lidar listing). Waiting for
-  the owner's OK and the Three.js decision.
+- 2026-11-19: plan written, data sources checked (OSM, USGS lidar listing). Owner OK'd
+  the plan and Three.js.
+- 2026-11-19: built. What the data showed:
+  - Helena Theurer Pavilion: the one large building put up between the 2014 and
+    2023-2025 scans, on the east side along 2nd St, about 52 m (8,153 m² of roof).
+    Part of it sits over 2nd St as OSM draws it, about 29 m up (ambiguity log #4).
+  - The main complex is about 30 to 34 m tall along most of its length; its south end is
+    a separate block about 47 m tall in both scans, where the 2024 map prints
+    "Schlesinger Pavilion". Shown as "likely Schlesinger Pavilion" until the nurse says.
+  - St. John is not marked: the map gives the order (St. John at the north end), not
+    the boundaries. `docs/campus/nurse-sheet.svg` asks him to name the squares.
+  - Three.js 0.187.0 ships unminified only: 2.2 MB raw, about 0.43 MB compressed (the
+    plan's 0.19 MB came from a minified build of an older version).
+- Checks run 2026-11-19: `node tools/campus-check.js` all passed (trainer requests
+  nothing from `campus/`; trainer opens offline with the campus never opened; campus
+  opens offline after one visit; taps on 1A, 1B, 1C show their names; 39,606 triangles;
+  no horizontal scroll at 390 px; no script errors). `node tests/run.js`: all 3,069,138
+  checks passed. Site check: passed for `index.html` and `campus/index.html`.
+- Not verified: frame rate on a real iPhone (headless Chromium renders with software
+  WebGL, so its speed says nothing about a phone); the nurse hasn't seen it.

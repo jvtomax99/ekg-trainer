@@ -130,7 +130,7 @@ offline and usable without any of the heavy modules.
 | 3c | Start menu and opening film: a menu at each open, then a 14.5 s film with music of a nurse moving through the unit (owner's ask 2026-11-19, ahead of the campus; step 7 stays separate) | `docs/phases/6-start-menu-film.md` | done, merged to main 2026-11-19 (pull request #4); real-iPhone check pending |
 | 3d | Evidence screen, nurse review mode and a standalone pitch clip: credibility from what the nurse can check, every claim sourced (owner's ask 2026-11-19, ahead of the campus) | `docs/phases/7-evidence-and-pitch.md` | Evidence screen and review mode live 2026-11-19 (pull request #5, live site checked in Chromium); pitch clip next |
 | 4 | Photo import (optional): educational images, on-device, privacy-first | `docs/future/photo-import.md` | when rules can be met |
-| 5 | Campus research and blockout: reference boards, ambiguity log, accurate massing | `docs/future/3d-campus.md`, plan in `docs/phases/8-campus-blockout.md` | plan written 2026-11-19, waiting for the owner's OK and the Three.js decision |
+| 5 | Campus research and blockout: reference boards, ambiguity log, accurate massing | `docs/future/3d-campus.md`, plan in `docs/phases/8-campus-blockout.md` | built 2026-11-19 (blockout of 1A to 1C at lidar heights, boards, ambiguity log); waiting for the owner's push, the nurse's look and a real-iPhone check |
 | 6 | Campus mastery visualization: detailed models, lighting, mastery-driven illumination | `docs/future/3d-campus.md` | |
 | 7 | Cinematic intro video from real, finished features | `docs/future/cinematic-intro.md` | |
 | 8 | iPhone install and usage walkthrough | `docs/future/iphone-onboarding.md` | moved into 2b (owner, 2026-11-19) |
