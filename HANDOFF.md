@@ -16,8 +16,10 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
 
 ## Also done
 - Step 3b (night unit start card on Home, hallway "Rounds" in Practice) merged and live
-  2026-11-19. Details: `docs/phases/5-night-unit-start.md`. Runway has about 700 credits
-  left. Owner hasn't checked it on the real iPhone yet (does Safari start the clip?).
+  2026-11-19. Details: `docs/phases/5-night-unit-start.md`.  Owner hasn't checked it on the real iPhone yet (does Safari start the clip?).
+- Same day: the hallway got a lit look and now follows the time of day (lit 7:00 to
+  18:59, night otherwise; Settings: Auto / Lit / Night / Off). Live. Runway has about
+  395 credits left.
 
 ## Next
 - Owner chose: **step 5, campus research and blockout** (`docs/future/3d-campus.md`,

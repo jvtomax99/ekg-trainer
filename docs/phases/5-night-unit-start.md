@@ -99,3 +99,5 @@ From memory and `docs/research.md`; not re-checked on 2026-11-19.
   our choice, not a hospital rule). Settings "Unit backdrop": Auto, Lit, Night, Off.
   The scrim and text color follow the look, not the app theme. Checked at 10:00 and
   22:00 in both themes.
+- Merged and live 2026-11-19 (pull request #3); live site checked in Chromium with the
+  clock at 10:00 and 22:00. Real-iPhone check still open.
