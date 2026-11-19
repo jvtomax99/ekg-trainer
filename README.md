@@ -24,7 +24,7 @@ provider.
 - Calipers, 2x zoom and a sideways full-screen view on every strip; works offline;
   coded app icon for the Home Screen
 
-**Live:** https://chromedigi.github.io/ekg-trainer/ (GitHub Pages from `main`). On iPhone:
+**Live:** https://jvtomax99.github.io/ekg-trainer/ (GitHub Pages from `main`). On iPhone:
 open in Safari, Share, Add to Home Screen.
 
 ## Run it

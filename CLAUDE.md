@@ -81,9 +81,9 @@ changes. Dev-only Playwright scripts live in `tools/` and are never loaded by th
 ## Preview, checks and going live
 
 - **Hosting.** GitHub Pages from `main`, root folder, so merging to `main` is going live.
-  There are no branch previews. Live: https://chromedigi.github.io/ekg-trainer/. This
-  repo (`jvtomax99/ekg-trainer`) had no Pages site of its own on 2026-11-19 (404);
-  turning Pages on is a repo setting: ask Jose.
+  There are no branch previews. Live: https://jvtomax99.github.io/ekg-trainer/ (since
+  2026-11-19; the old chromedigi.github.io copy no longer gets updates, and phones keep
+  progress per address). Pages settings are repo settings: ask Jose.
 - **Preview.** Serve the repo (`python3 -m http.server 8765`) and send Playwright
   screenshots at 390 px (iPhone 13) first, then desktop, plus a short "try this" list.
   UI changes: before and after.

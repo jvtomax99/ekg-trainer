@@ -9,7 +9,8 @@ A phone web app that drills rhythm strips for a telemetry / stepdown night-shift
 read the strip, measure it, name it, then decide what to do. Works offline, installs to
 the Home Screen, no login.
 
-Live: https://chromedigi.github.io/ekg-trainer/ (GitHub Pages, from `main`).
+Live: https://jvtomax99.github.io/ekg-trainer/ (GitHub Pages, from `main`). It moved here from
+https://chromedigi.github.io/ekg-trainer/ on 2026-11-19; that old copy no longer gets updates.
 
 ## Who it's for
 - **The nurse** (the real user, not Jose): one nurse on 5 St. John (tele/stepdown,
@@ -104,7 +105,7 @@ offline and usable without any of the heavy modules.
 |---|---|---|---|
 | 0 | Foundation docs | this file, `docs/` | done |
 | 1 | Core trainer, 5 rhythms | `docs/phases/1-core-trainer.md` | done |
-| 1b | GitHub Pages deploy + verify | live at https://chromedigi.github.io/ekg-trainer/ | done; owner tested on a real iPhone, nothing to fix |
+| 1b | GitHub Pages deploy + verify | live at https://chromedigi.github.io/ekg-trainer/ | done; owner tested on a real iPhone, nothing to fix. Moved to jvtomax99.github.io 2026-11-19 |
 | 2 | Difficult rhythms: clinically accurate advanced rhythms, meaningful lookalikes, borderline strips, stronger exam prep | `docs/phases/2-difficult-rhythms.md` | done and live; nurse review pending |
 | 2b | Premium UI: app icon, icon system, design language, home dashboard, first-launch onboarding (replaces old step 8) | `docs/phases/3-premium-ui.md` | done and live; owner checked it on a real iPhone: "looks perfect" |
 | 3 | Adaptive learning: FSRS spaced repetition, mastery, contrast and boundary practice, practice vs exam tracking | `docs/phases/4-adaptive-learning.md` | done and live (merged 2026-11-19, live site checked in Chromium); real-iPhone check pending |
