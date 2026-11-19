@@ -11,14 +11,14 @@
     "south_block": {
       "priority": "1B",
       "name": "South tower of the main hospital",
-      "what": "Priority 1B. Likely Schlesinger Pavilion, the 9-story \"Pavilion\". Waiting on the nurse to confirm.",
+      "what": "Priority 1B. Likely Schlesinger Pavilion, the \"Pavilion\" (owner: about 9 stories). Waiting on the nurse to confirm.",
       "basis": "The 2024 map puts Schlesinger Pavilion at this end. Lidar shows the complex's only roof over 40 m here, in both the 2014 and the 2023 to 2025 scans."
     },
     "new_tower": {
       "priority": "1C",
       "name": "Helena Theurer Pavilion",
       "what": "Priority 1C. Surgical and intensive care tower, opened 2023.",
-      "basis": "Position from the 2024 map (east side, along 2nd St). Lidar shows it went up between the 2014 and the 2023 to 2025 scans, about 52 m tall, which fits HMH's \"nine-story\" description."
+      "basis": "Position from the 2024 map (east side, along 2nd St). Lidar shows it went up between the 2014 and the 2023 to 2025 scans, about 52 m tall, consistent with HMH's \"nine-story\" description (tall surgical floors)."
     },
     "way/544168885": {
       "name": "Medical Plaza",

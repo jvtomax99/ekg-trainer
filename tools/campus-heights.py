@@ -239,7 +239,7 @@ def terrain(ground, step=8):
     """Coarse terrain for the model: elevations every 8 m, in decimetres above the lowest point."""
     t = ground[step // 2::step, step // 2::step]
     lo = float(np.min(t))
-    return {'step_m': step, 'size': t.shape[0], 'origin_m': [-HALF + step / 2, -HALF + step / 2],
+    return {'step_m': step, 'size': t.shape[0], 'origin_m': [-HALF + (step // 2 + 0.5) * CELL, -HALF + (step // 2 + 0.5) * CELL],
             'low_m': round(lo, 1), 'dm': np.round((t - lo) * 10).astype(int).ravel().tolist()}
 
 
@@ -301,7 +301,7 @@ def derive(buildings, roofs, ground, oldroofs, oldground):
     n = roofs[1].shape[0]
     h = roofs[1] - ground
     ho = oldroofs[1] - oldground
-    new = (h > 12) & (np.nan_to_num(ho, nan=0) < h - 10)
+    new = (h > 12) & ~np.isnan(ho) & (ho < h - 10)  # no 2014 points = no evidence, not 'new'
     comp = components(new)
     tower = cells_poly(comp[0], n)
     main = next(b for b in buildings if b['osm'] == MAIN_COMPLEX)

@@ -34,6 +34,27 @@ lidar roof above the ground right beside the building, rounded.
 | 11 | Which entrance and garage does the nurse use? | Nothing | The nurse | Step 6 first camera view |
 | 12 | Facade colors and materials (Helena Theurer blue glass, columns) | Press photos only (copyrighted, reference only) | Own photos from public sidewalks | Step 6 |
 
+## Which OSM outline gets which name (all by MAP position)
+OSM names that MAP doesn't use are never shown. Confidence: high = same name and place;
+medium = place matches, name differs or the outline was cut.
+
+| OSM way | OSM name | Shown as | Basis | Confidence |
+|---|---|---|---|---|
+| 544168888 (split) | Patient Pavilion | Main hospital / South tower | MAP order of the complex plus lidar (boards 1A, 1B) | medium |
+| 544168885 | Hackensack University Medical Plaza | Medical Plaza | Beside the main entrance on Prospect Ave | high |
+| 544168884 | David Joseph Jurist Research Center for Tomorrows Children | David & Alice Jurist Research Center | Prospect Ave at Atlantic St; first names differ | medium |
+| 544168905 | Sarkis and Siran Gabrellian Women's and Children's Pavilion | Women's and Children's (Donna A. and Joseph M. Sanzari hospitals) | Along Atlantic St where MAP prints both hospitals | medium |
+| 544168899 | Don Imus/WFAN Pediatric Center for Tomorrows Children | Women's and Children's (Don Imus/WFAN) | Same name and place; its 2017 outline loses the part Helena Theurer now covers | medium |
+| 544168895 | John Theurer Cancer Center | same | Across 2nd St at Atlantic St | high |
+| 544168902 | Jeffery M. Creamer Trauma Center/Emergency Department | Emergency and Trauma Center | Same place | high |
+| 544168907 | The Creamer Family Institute for Medical Imaging | Imaging Center | Same place | high |
+| 544168886 | Visitors Parking | Main Parking Garage | Between Medical Plaza and Essex St, the only garage there | medium |
+| 544168893 | Employee Parking Garage | Helena Theurer Pavilion Parking | Across 2nd St south of Hillcrest (#7) | medium |
+| 544168894 | Hillcrest Building | same | Same name and place | high |
+| 544168917 | Alfred N. Sanzari Medical Arts Building | same | Across Prospect Ave | high |
+| 544168890 | Sarkis and Siran Gabrellian Child Care and Learning Center | Gabrellian Child Care and Learning Center | Same place | high |
+| 544168892 | The Audrey Hepburn Children's House | Audrey Hepburn Children's Center | Same place; MAP says "Center" | high |
+
 ## Settled
 - 2026-11-19: Helena Theurer Pavilion is the building that went up between L14 and L23
   on the east side along 2nd St (MAP position, HMH "nine-story", about 52 m in L23).

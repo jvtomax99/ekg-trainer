@@ -226,10 +226,18 @@ async function main() {
 
   // Tap a building: a press that barely moves.
   const ray = new THREE.Raycaster();
-  let down = null, picked = null;
-  canvas.addEventListener("pointerdown", (e) => { down = { x: e.clientX, y: e.clientY, t: performance.now() }; });
+  // A tap is one finger, start to finish: lifting a finger after a pinch is not a tap.
+  let down = null, picked = null, fingers = 0, multi = false;
+  canvas.addEventListener("pointerdown", (e) => {
+    fingers++; if (fingers > 1) multi = true;
+    down = { x: e.clientX, y: e.clientY, t: performance.now() };
+  });
+  const lift = () => { fingers = Math.max(0, fingers - 1); };
+  canvas.addEventListener("pointercancel", lift);
   canvas.addEventListener("pointerup", (e) => {
-    if (!down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 8 || performance.now() - down.t > 600) return;
+    lift();
+    const wasMulti = multi; if (!fingers) multi = false;
+    if (wasMulti || !down || Math.hypot(e.clientX - down.x, e.clientY - down.y) > 8 || performance.now() - down.t > 600) return;
     const r = canvas.getBoundingClientRect();
     ray.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
     const hit = ray.intersectObjects(pickable, false)[0];
@@ -243,6 +251,7 @@ async function main() {
     picked = d ? d.building : null;
     if (!d) { card.hidden = true; request(); return; }
     for (const m of pickable) if (m.userData.building === picked) m.material = pickMat;
+    document.querySelector(".campus-why").open = false;
     const b = d.building, info = d.info;
     document.getElementById("cardName").textContent = info ? info.name : "Campus building";
     document.getElementById("cardWhat").textContent = info ? info.what : "Name not confirmed yet, so none is shown.";

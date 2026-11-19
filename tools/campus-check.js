@@ -36,7 +36,8 @@ const ok = (cond, msg) => { console.log((cond ? "ok   " : "FAIL ") + msg); if (!
   await p.goto(BASE + "campus/");
   await p.waitForFunction(() => window.__campus, null, { timeout: 30000 });
   ok(true, "campus opens online");
-  await p.waitForTimeout(1500); // let the service worker store the files
+  // Wait until the service worker has stored the big file, not a fixed time.
+  await p.waitForFunction(async () => { const c = await caches.open("ekg-campus-v1"); return !!(await c.match("vendor/three.core.js", { ignoreSearch: true }) || (await c.keys()).some((r) => r.url.endsWith("three.core.js"))); }, null, { timeout: 30000, polling: 300 });
   await ctx.setOffline(true);
   await p.reload();
   const offlineOK = await p.waitForFunction(() => window.__campus, null, { timeout: 30000 }).then(() => true, () => false);
@@ -55,8 +56,11 @@ const ok = (cond, msg) => { console.log((cond ? "ok   " : "FAIL ") + msg); if (!
   }
   const tris = await p.evaluate(() => window.__campus.triangles());
   ok(tris < 150000, "triangles " + tris + " (budget 150,000)");
-  const sw = await p.evaluate(() => document.documentElement.scrollWidth);
-  ok(sw <= 390, "no horizontal scroll at 390 px (" + sw + ")");
+  for (const w of [390, 360]) {
+    await p.setViewportSize({ width: w, height: 740 }); await p.waitForTimeout(200);
+    const sw = await p.evaluate(() => document.documentElement.scrollWidth);
+    ok(sw <= w, "no horizontal scroll at " + w + " px (" + sw + ")");
+  }
   ok(errors.length === 0, "no script errors" + (errors.length ? ": " + errors.join(" | ") : ""));
 
   await browser.close();
