@@ -24,6 +24,11 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
   (pull request #4). Runway has 780 credits left. Owner should listen to the music and check
   it on the real iPhone.
 
+## Also merged (step 3e)
+- Buttons, outlines and alive icons (`docs/phases/8-buttons-alive-icons.md`, pull request #6):
+  one button family, one outline system per theme, icons that sweep like Home's monitor
+  strip. Owner picked look A plus the motion. Real-iPhone check pending.
+
 ## Next
 - Owner chose (2026-11-19): **step 3d, Evidence screen, review mode and pitch clip**
   (`docs/phases/7-evidence-and-pitch.md`), ahead of the campus. Evidence screen and

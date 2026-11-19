@@ -275,19 +275,19 @@
 
   function recommend() {
     const due = progress.dueItems();
-    if (due.length) return { ic: "i-review", tone: "red", title: "Review " + due.length + " due now",
+    if (due.length) return { ic: "i-review", title: "Review " + due.length + " due now",
       why: "Missed rhythms come back within minutes; ones you know come back at growing gaps.", go: function () { startSession("due"); } };
     const gs = rhythms.groups.map(function (g) { return { g: g, a: progress.accuracy(groupIds(g.id)) }; });
     const untried = gs.find(function (x) { return x.a.attempts === 0; });
     if (untried) return { ic: "i-" + untried.g.id, title: "Try " + untried.g.name + " rhythms",
       why: "You haven't answered any " + untried.g.name.toLowerCase() + " strips yet.", go: function () { goPractice(untried.g.id); } };
     const p = progress.pairs()[0];
-    if (p && p.due) return { ic: "i-review", tone: "amber", title: "Compare " + rhythms.byId[p.a].short + " and " + rhythms.byId[p.b].short,
+    if (p && p.due) return { ic: "i-review", title: "Compare " + rhythms.byId[p.a].short + " and " + rhythms.byId[p.b].short,
       why: "You've mixed these two up. Head-to-head strips teach the difference.", go: function () { startSession("pairs"); } };
     const weak = progress.weakest(ALL, 3);
-    if (weak.length) return { ic: "i-practice", tone: "amber", title: "Practice your weakest",
+    if (weak.length) return { ic: "i-practice", title: "Practice your weakest",
       why: weak.map(function (id) { return rhythms.byId[id].short; }).join(", ") + ": recent misses or low recall.", go: function () { startSession("weakest"); } };
-    return { ic: "i-timer", tone: "blue", title: "Take a timed exam",
+    return { ic: "i-timer", title: "Take a timed exam",
       why: "Nothing is due and nothing stands out as weak. Test it under the clock.", go: function () { show("exam"); } };
   }
   function ring(pct) {
@@ -355,7 +355,7 @@
     const rc = recommend();
     v.append(h("div", { class: "stack", style: "gap:8px" }, h("div", { class: "eyebrow", text: "Suggested next" }),
       h("button", { type: "button", class: "card rec", onclick: rc.go },
-        h("span", { class: "ic-chip" + (rc.tone ? " " + rc.tone : "") }, icon(rc.ic)),
+        h("span", { class: "ic-chip" }, icon(rc.ic)),
         h("span", { class: "grow" }, h("strong", { text: rc.title }), h("p", { class: "why", text: rc.why })),
         icon("i-chevron", "chev"))));
 
@@ -368,9 +368,9 @@
       const stat = function (n, label) { return h("div", { class: "tstat" }, h("b", { text: String(n) }), h("span", { text: label })); };
       const weak = progress.weakest(ALL, 3, now);
       const pairsN = progress.pairs(now).length;
-      const tileS = function (ic, tone, label, sub, go) {
+      const tileS = function (ic, label, sub, go) {
         return h("button", { type: "button", class: "tile-btn sess", onclick: go },
-          h("span", { class: "ic-chip" + (tone ? " " + tone : "") }, icon(ic)), h("span", { text: label }), h("span", { class: "sub", text: sub }));
+          h("span", { class: "ic-chip" }, icon(ic)), h("span", { text: label }), h("span", { class: "sub", text: sub }));
       };
       v.append(h("div", { class: "card stack" },
         h("div", { class: "row-between" }, h("h3", { text: "Today" }),
@@ -384,10 +384,10 @@
               rhythms.byId[id].lethal ? icon("i-lethal", "danger sm") : null, rhythms.byId[id].short);
           }))) : null,
         h("div", { class: "shortcuts two" },
-          tileS("i-practice", "amber", "Weakest", weak.length ? weak.length + " rhythms" : "none yet", function () { startSession("weakest"); }),
-          tileS("i-review", "blue", "Likely to forget", progress.likelyToForget(ALL, 5, now).length + " in review", function () { startSession("forget"); }),
-          tileS("i-mastery", "red", "Confused pairs", pairsN ? pairsN + " pair" + (pairsN > 1 ? "s" : "") : "none yet", function () { startSession("pairs"); }),
-          tileS("i-measure", null, "Near the cutoffs", "rate, PR, QRS", function () { startSession("edge"); }))));
+          tileS("i-practice", "Weakest", weak.length ? weak.length + " rhythms" : "none yet", function () { startSession("weakest"); }),
+          tileS("i-review", "Likely to forget", progress.likelyToForget(ALL, 5, now).length + " in review", function () { startSession("forget"); }),
+          tileS("i-mastery", "Confused pairs", pairsN ? pairsN + " pair" + (pairsN > 1 ? "s" : "") : "none yet", function () { startSession("pairs"); }),
+          tileS("i-measure", "Near the cutoffs", "rate, PR, QRS", function () { startSession("edge"); }))));
     }
 
     // Accuracy by group (rings). Unseen groups say "not tried yet", never 0%.
@@ -398,16 +398,12 @@
         "aria-label": "Practice " + g.name + ": " + (a.pct == null ? "not tried yet" : a.pct + "% accuracy over your last " + a.n + " answers") },
         h("span", { class: "ring" }, ring(a.pct), h("span", { class: "in" }, groupIcon(g.id))),
         h("span", { class: "nm", text: g.name }),
-        h("span", { class: "pc" + (a.pct == null ? " none" : ""), text: a.pct == null ? "not tried yet" : a.pct + "%" })));
+        h("span", { class: "pc" + (a.pct == null ? " none" : ""), text: a.pct == null ? "not tried yet" : a.pct + "%" }),
+        icon("i-chevron", "chev")));
     });
     v.append(h("div", { class: "card stack" },
       h("div", { class: "row-between" }, h("h3", { text: "Accuracy by group" }), h("span", { class: "small muted", text: "last 20 answers" })),
       rings));
-
-    v.append(h("div", { class: "shortcuts" },
-      h("button", { type: "button", class: "tile-btn", onclick: function () { show("learn"); } }, h("span", { class: "ic-chip blue" }, icon("i-learn")), "Learn"),
-      h("button", { type: "button", class: "tile-btn", onclick: function () { show("practice"); } }, h("span", { class: "ic-chip" }, icon("i-practice")), "Practice"),
-      h("button", { type: "button", class: "tile-btn", onclick: function () { show("exam"); } }, h("span", { class: "ic-chip amber" }, icon("i-timer")), "Exam")));
 
     const last = st.exams[0];
     if (last) v.append(h("p", { class: "small muted", style: "margin:0", text: "Last exam: " + last.pct + "% (" + (last.passed ? "pass" : "not yet") + "), " + new Date(last.at).toLocaleDateString() }));
@@ -431,7 +427,7 @@
     clear(v);
     const steps = h("ol", { class: "steps" });
     rhythms.approach.forEach(function (s) { steps.append(h("li", null, h("b", { text: s[0] + ". " }), s[1])); });
-    v.append(h("div", { class: "card" }, h("div", { class: "row" }, h("span", { class: "ic-chip blue" }, icon("i-learn")), h("h2", { text: "Same 5 steps, every strip" })), steps,
+    v.append(h("div", { class: "card" }, h("div", { class: "row" }, h("span", { class: "ic-chip" }, icon("i-learn")), h("h2", { text: "Same 5 steps, every strip" })), steps,
       h("p", { class: "small muted", style: "margin:10px 0 0", text: "Paper at 25 mm/s: 1 small box = 0.04 s, 1 big box = 0.20 s, a 6-second strip = 30 big boxes. Height: 10 small boxes = 1 mV (the square calibration pulse at the start)." })));
 
     v.append(h("p", { class: "small muted", text: "Tap a group to open it. Every card's strip is new each time." }));
@@ -553,7 +549,7 @@
     if (s && s.n >= SESSION_LEN) { sessionDone(v); renderPracticeHeader(); return; }
     // Rounds: the hallway moves one step as each new card comes up, then holds still.
     const banner = !(s && s.ids && !s.ids.length) && unit.roundsBanner();
-    if (banner) { v.append(banner); practiceHeader.firstElementChild.classList.add("on-unit", unit.lookName()); if (s && !s.n) unit.restart(); unit.step(); }
+    if (banner) { v.append(banner); Array.prototype.forEach.call(practiceHeader.children, function (row) { row.classList.add("on-unit", unit.lookName()); }); if (s && !s.n) unit.restart(); unit.step(); }
     if (s && s.ids && !s.ids.length) {
       pr.strip = { empty: true };
       v.append(h("div", { class: "card empty" },
@@ -620,7 +616,7 @@
     const save = function () { f.exam = e; progress.savePrefs(f); };
     const last = progress.stats(ALL).exams[0];
     v.append(h("div", { class: "card stack" },
-      h("div", { class: "row" }, h("span", { class: "ic-chip blue" }, icon("i-timer")), h("h2", { text: "Exam simulation" })),
+      h("div", { class: "row" }, h("span", { class: "ic-chip" }, icon("i-timer")), h("h2", { text: "Exam simulation" })),
       h("p", { class: "small muted", text: "Timed, no feedback until the end, like a hospital rhythm test. Not a copy of any specific exam." }),
       h("div", { class: "setting" }, h("span", { class: "lbl", text: "Rhythms" }),
         seg([{ value: "all", label: "All 26" }, { value: "core", label: "Core 5" }], e.set, function (x) { e.set = x; save(); }, "Rhythm set")),
@@ -755,7 +751,7 @@
     const v = views.progress;
     clear(v);
     const st = progress.stats(ALL);
-    v.append(h("div", { class: "row" }, h("span", { class: "ic-chip blue" }, icon("i-progress")), h("h2", { text: "Progress" })));
+    v.append(h("div", { class: "row" }, h("span", { class: "ic-chip" }, icon("i-progress")), h("h2", { text: "Progress" })));
     if (!st.total) {
       v.append(h("div", { class: "card empty" }, h("p", { text: "No answers yet." }), h("p", { class: "small muted", text: "Practice or take an exam and your mastery, trends and exam history show up here." })));
       return;
