@@ -334,7 +334,7 @@
         ? h("button", { type: "button", class: "btn primary block hero-cta", onclick: function () { startSession("due"); } }, icon("i-play"), "Review " + dueNow + " due now")
         : h("button", { type: "button", class: "btn primary block hero-cta", onclick: function () { goPractice(pr.mode); } }, icon("i-play"), "Continue studying");
     const unitBg = unit.homeLayer();
-    v.append(h("div", { class: "card hero" + (unitBg ? " unit" : "") }, unitBg, monitor,
+    v.append(h("div", { class: "card hero" + (unitBg ? " unit " + unit.lookName() : "") }, unitBg, monitor,
       h("div", { class: "hero-body" },
         h("div", null, h("div", { class: "eyebrow warm", text: greeting() }),
           h("h2", { text: st.total ? overall.pct + "% accuracy" : "Ready when you are" }),
@@ -549,7 +549,7 @@
     if (s && s.n >= SESSION_LEN) { sessionDone(v); renderPracticeHeader(); return; }
     // Rounds: the hallway moves one step as each new card comes up, then holds still.
     const banner = !(s && s.ids && !s.ids.length) && unit.roundsBanner();
-    if (banner) { v.append(banner); practiceHeader.firstElementChild.classList.add("on-unit"); if (s && !s.n) unit.restart(); unit.step(); }
+    if (banner) { v.append(banner); practiceHeader.firstElementChild.classList.add("on-unit", unit.lookName()); if (s && !s.n) unit.restart(); unit.step(); }
     if (s && s.ids && !s.ids.length) {
       pr.strip = { empty: true };
       v.append(h("div", { class: "card empty" },
@@ -888,19 +888,21 @@
       h("p", { class: "small muted", style: "margin:0", text: "Paper: red grid on light ECG paper. Green and Amber: dark monitor screen. Auto uses paper in the light theme and green in the dark theme. Same scale either way: 25 mm/s, 10 mm/mV." }),
       preview.el,
       h("div", { class: "setting" }, h("span", { class: "lbl", text: "Unit backdrop" }),
-        seg([{ value: "on", label: "On" }, { value: "off", label: "Off" }], f.unit === "off" ? "off" : "on", function (x) {
+        seg([{ value: "auto", label: "Auto" }, { value: "lit", label: "Lit" }, { value: "night", label: "Night" }, { value: "off", label: "Off" }],
+          f.unit === "off" || f.unit === "lit" || f.unit === "night" ? f.unit : "auto", function (x) {
           const g = progress.prefs(); g.unit = x; progress.savePrefs(g);
-          if (x === "off") { unit.off(); document.querySelectorAll(".on-unit").forEach(function (n) { n.classList.remove("on-unit"); }); }
+          unit.off(); document.querySelectorAll(".on-unit").forEach(function (n) { n.classList.remove("on-unit", "lit", "night"); });
           if (current === "home") renderHome();
         }, "Unit backdrop")),
-      h("p", { class: "small muted", style: "margin:0", text: "A night-shift hallway behind Home's start card, and a short walk between practice strips. Computer generated, not a real unit. Never shown in exams. It also stays still when your phone is set to Reduce Motion." }));
+      h("p", { class: "small muted", style: "margin:0", text: "A unit hallway behind Home's start card, and a short walk between practice strips. Auto goes by the clock: lights on from 7 in the morning to 7 at night, dimmed overnight. Computer generated, not a real unit. Never shown in exams. It also stays still when your phone is set to Reduce Motion." }));
   }
   document.getElementById("settingsBtn").addEventListener("click", function () { renderSettings(); settings.showModal(); });
   settings.querySelector("[data-close]").addEventListener("click", function () { settings.close(); });
   window.EKG.theme.onChange(function () {
     widgets.forEach(function (w) { if (!w.el.isConnected) widgets.delete(w); else w.redraw(); });
     if (expanded) S.draw(expandCanvas, expanded, {});
-    if (stopLive) { stopLive(); if (current === "home") renderHome(); }
+    if (stopLive) stopLive();
+    if (current === "home") renderHome();
   });
 
   function startTour() {

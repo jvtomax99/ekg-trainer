@@ -86,4 +86,16 @@ From memory and `docs/research.md`; not re-checked on 2026-11-19.
   store; a dark scrim sits under the Practice header text.
 - Runway usage policy (runway.com/safety/usage-policy, read 2026-11-19): no rule against
   publishing your own outputs and no labeling requirement.
+- Merged and live 2026-11-19 (pull request #2); live site checked in Chromium at 390 px.
 - Not checked: a real iPhone (Safari autoplay of the muted clip, battery).
+- 2026-11-19, the nurse's feedback on the first version: a hospital hallway is lit, so the
+  dark one fits a dark mode but not the default. Added a second look of the same hallway
+  with the lights on (the dark still relit with Runway, then its own 10 s walk). The light
+  theme shows the lit hallway with a light scrim and dark text; the dark theme keeps the
+  night look. Files: `img/unit/unit-lit.webp`, `img/unit/walk-lit.mp4`. About 305 more
+  Runway credits (about 395 left).
+- 2026-11-19, owner: both pictures, chosen by time of day instead of by app theme. Auto
+  goes by the phone's clock: lit from 7:00 to 18:59, night look otherwise (the hours are
+  our choice, not a hospital rule). Settings "Unit backdrop": Auto, Lit, Night, Off.
+  The scrim and text color follow the look, not the app theme. Checked at 10:00 and
+  22:00 in both themes.

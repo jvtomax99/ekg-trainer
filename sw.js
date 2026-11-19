@@ -1,6 +1,6 @@
 /* Offline support: serve from cache, refresh the cache in the background.
    Bump VERSION whenever app files change so phones pick up the update. */
-const VERSION = "ekg-v5";
+const VERSION = "ekg-v7";
 const MEDIA = "ekg-media-v1"; // the hallway clip, stored by js/unit.js; kept across updates
 const FILES = [
   "./", "index.html", "styles.css", "manifest.webmanifest",
@@ -8,7 +8,7 @@ const FILES = [
   "icons/icon.svg", "icons/favicon.svg", "icons/favicon-32.png", "icons/apple-touch-icon.png",
   "icons/icon-192.png", "icons/icon-512.png", "icons/icon-maskable-512.png",
   "img/tour/home.webp", "img/tour/learn.webp", "img/tour/practice.webp", "img/tour/exam.webp", "img/tour/progress.webp",
-  "img/unit/unit.webp"
+  "img/unit/unit.webp", "img/unit/unit-lit.webp"
 ];
 
 self.addEventListener("install", (e) => {
@@ -26,7 +26,7 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
-  if (url.pathname.endsWith("/img/unit/walk.mp4")) return; // js/unit.js stores this one itself
+  if (/\/img\/unit\/walk[\w-]*\.mp4$/.test(url.pathname)) return; // js/unit.js stores this one itself
   e.respondWith(
     caches.open(VERSION).then((cache) =>
       cache.match(e.request, { ignoreSearch: true }).then((hit) => {

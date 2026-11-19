@@ -469,6 +469,16 @@ dialog.sheet::backdrop { background: var(--scrim); backdrop-filter: blur(4px); -
 }
 .rounds video, .rounds img { filter: brightness(0.6); transition: opacity 300ms ease, filter 500ms ease; }
 .rounds.moving video { filter: brightness(0.85); }
+/* The lit (daytime) look: a light scrim and dark text, in either app theme. */
+.unit-bg.lit, .rounds.lit { background: #e9eef2; }
+.hero.unit.lit .hero-body {
+  --text: #0f1d2b; --muted: #33465a; --orange-text: #a84508;
+  background: linear-gradient(180deg, rgba(243, 246, 249, 0) 0, rgba(243, 246, 249, 0.82) 32%, rgba(243, 246, 249, 0.96) 60%);
+}
+.rounds.lit video, .rounds.lit img { filter: brightness(0.95) saturate(0.85); }
+.rounds.lit.moving video { filter: brightness(1.05); }
+.rounds.lit::after { background: linear-gradient(rgba(243, 246, 249, 0.86), rgba(243, 246, 249, 0.7) 70%, rgba(243, 246, 249, 0)); }
+.on-unit.lit { --text: #0f1d2b; --muted: #33465a; text-shadow: 0 0 10px rgba(255, 255, 255, 0.9); }
 .rounds::after { content: ""; position: absolute; inset: 0 0 auto; height: 72px; background: linear-gradient(rgba(6, 10, 16, 0.7), rgba(6, 10, 16, 0.45) 70%, rgba(6, 10, 16, 0)); }
 .on-unit { --text: #e8eef4; --muted: #c3ced9; color: var(--text); text-shadow: 0 1px 8px rgba(0, 0, 0, 0.8); }
 .on-unit .select, .on-unit .btn { text-shadow: none; }

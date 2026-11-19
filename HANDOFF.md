@@ -14,6 +14,11 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
   Mastery/Trends/Exams. Details, verification and gaps: `docs/phases/4-adaptive-learning.md`.
 - Owner hasn't checked step 3 on the real iPhone yet.
 
+## Also done
+- Step 3b (night unit start card on Home, hallway "Rounds" in Practice) merged and live
+  2026-11-19. Details: `docs/phases/5-night-unit-start.md`. Runway has about 700 credits
+  left. Owner hasn't checked it on the real iPhone yet (does Safari start the clip?).
+
 ## Next
 - Owner chose: **step 5, campus research and blockout** (`docs/future/3d-campus.md`,
   prompt in docs/prompts.md). Video comes after the campus so it's made once with real
