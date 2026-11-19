@@ -931,10 +931,6 @@
     for (let i = 2; i < arguments.length; i++) add(sec, arguments[i]);
     return sec;
   }
-  function usDate(iso) {
-    const p = String(iso).split("-").map(Number);
-    return new Date(p[0], p[1] - 1, p[2]).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
-  }
   function renderEvidence() {
     const body = document.getElementById("evidenceBody");
     clear(body);
@@ -943,12 +939,12 @@
       h("p", { class: "muted", style: "margin-top:0", text: "What's behind the strips and the answers, so you can check it yourself." }),
       evSec("i-sources", "Every rhythm rule cites a reference",
         h("p", { text: E.refSentence(st) }),
-        h("p", { class: "small muted", text: "Each rhythm card in Learn links to its own references; About lists them all. LITFL is a free emergency and critical care reference written by clinicians. It is not formally peer-reviewed." })),
-      evSec("i-measure", "Every strip is checked by a second program",
-        h("p", { text: "Strips are drawn by code, never copied from a book or website. Each full test run draws " + E.strips().toLocaleString("en-US") + " strips (" + T.perRhythm + " of each rhythm) and measures every one from the waveform itself: rate, the 1500-rule rate, PR, QRS and regularity. If a number shown on screen crosses a published cutoff, the run fails." }),
-        h("p", { class: "small muted", text: "Last full run: " + usDate(T.lastRun) + ", passed. This shows the strips match the app's criteria. Whether the criteria are right is what the references and the nurse review are for." })),
+        h("p", { class: "small muted", text: "Each rhythm card in Learn links to its own references; About lists them all. LITFL is a free online emergency and critical care reference. It is not a peer-reviewed journal." })),
+      evSec("i-measure", "The strip maker is tested on " + E.strips().toLocaleString("en-US") + " strips",
+        h("p", { text: "Strips are drawn by code, never copied from a book or website. Each full test run draws " + E.strips().toLocaleString("en-US") + " strips (" + T.perRhythm + " of each rhythm) and checks every one. Its rate (6-second count and 1500 rule), PR, QRS and regularity must fit its rhythm's published criteria, and no number shown on screen may cross a cutoff. Every beat must be visible in the drawn waveform. No other rhythm's criteria may fit it." }),
+        h("p", { class: "small muted", text: "The strips you practice on are new ones from the same code, not those exact strips. A shorter run of these checks runs on every proposed update before it goes live. This shows the strips match the app's criteria; whether the criteria are right is what the references and the nurse review are for." })),
       evSec("i-review", "Why missed rhythms come back",
-        h("p", { text: "In the PULSE trial (3,013 nurses, 65 cardiac units, 17 hospitals), online ECG monitoring education raised nurses' knowledge scores right away, but the gain had not held 15 months later." }),
+        h("p", { text: "In the PULSE trial (3,013 nurses, 65 cardiac units, 17 hospitals), online ECG monitoring education plus changes to unit practice raised nurses' knowledge scores right away, but the knowledge gain had not held 15 months later. Observed accuracy of rhythm interpretation on the units improved and stayed improved." }),
         h("p", { text: "In studies of word and text recall, spacing practice out over time, and recalling an answer instead of rereading it, improve long-term memory. So this app schedules every rhythm with FSRS-6, an open-source spaced-repetition scheduler, and brings back the ones you miss." }),
         h("p", { class: "small muted", text: "The AHA's 2017 practice standards for ECG monitoring in hospitals include a section on staff education. None of these studies tested this app." }),
         srcLinks(["S31", "S32", "S33", "S30"])),
@@ -959,7 +955,7 @@
         h("button", { type: "button", id: "reviewOpen", class: "btn block", onclick: openReview }, icon("i-check"), "Review the cards")),
       evSec("i-more", "Not covered yet",
         h("p", { text: "Pacing wires and post-op heart surgery strips (CTICU), ACLS next-step scenarios, and 12-lead ECGs. Each will come with its own references." })),
-      h("p", { class: "small muted ev-foot", text: "Study aid only. Not affiliated with or endorsed by any hospital, exam provider or professional organization. Not for patient care decisions. Follow your unit's protocols and provider orders." }));
+      h("p", { class: "small muted ev-foot", text: "Study aid only. Not affiliated with or endorsed by any hospital, exam provider or professional organization, and not clinically validated. Not for patient care decisions. Follow your unit's protocols and provider orders." }));
   }
   function showEvidence() { renderEvidence(); evDlg.showModal(); evDlg.scrollTop = 0; document.getElementById("evidenceTitle").focus({ preventScroll: true }); }
   // Shown once by itself (after the film and the first-launch intro), then from About.
@@ -988,8 +984,13 @@
     rvDlg.showModal(); rvDlg.scrollTop = 0; document.getElementById("reviewTitle").focus({ preventScroll: true });
   }
   function markedCount(marks) { return rhythms.list.filter(function (r) { return marks[r.id] && marks[r.id].ok != null; }).length; }
-  function renderReview() {
-    if (stopLive) stopLive();
+  // Stop a monitor view only if it is the review card's own (Home's monitor keeps running).
+  function stopReviewLive() {
+    if (stopLive && document.querySelector("#reviewBody .strip-wrap:not([hidden]) canvas[aria-label='Live monitor view']")) stopLive();
+  }
+  // focusSel: what to focus after the card changes, so keyboard and VoiceOver keep their place.
+  function renderReview(focusSel) {
+    stopReviewLive();
     const body = document.getElementById("reviewBody");
     clear(body);
     const RV = progress.review(), marks = RV.marks, list = rhythms.list, R = list[rvIdx];
@@ -1004,7 +1005,7 @@
       jump.append(h("option", { value: String(k), text: (m && m.ok === true ? "\u2713 " : m && m.ok === false ? "\u2717 " : "\u2003 ") + r.name }));
     });
     jump.value = String(rvIdx);
-    jump.addEventListener("change", function () { rvIdx = Number(jump.value); renderReview(); body.parentElement.scrollTop = 0; });
+    jump.addEventListener("change", function () { rvIdx = Number(jump.value); renderReview("select"); body.parentElement.scrollTop = 0; });
     const note = h("textarea", { class: "note-input", rows: "3", maxlength: "600", "aria-label": "Note on " + R.name, placeholder: "What's wrong or missing? Optional if it looks right." });
     note.value = cur.note || "";
     note.addEventListener("input", function () {
@@ -1024,7 +1025,7 @@
     }
     okBtn.addEventListener("click", function () { mark(true); });
     offBtn.addEventListener("click", function () { mark(false); });
-    function go(d) { rvIdx = (rvIdx + d + list.length) % list.length; renderReview(); body.parentElement.scrollTop = 0; }
+    function go(d) { rvIdx = (rvIdx + d + list.length) % list.length; renderReview(d < 0 ? ".review-nav button:first-child" : ".review-nav button:last-child"); body.parentElement.scrollTop = 0; }
     paintStatus();
     body.append(
       h("p", { class: "small muted", style: "margin-top:0", text: "For a nurse checking the content: is each card's description, criteria and strip right? Your marks stay on this phone. \u201cCopy my review\u201d copies them as text for you to send; the app sends nothing." }),
@@ -1037,6 +1038,7 @@
         h("div", { class: "review-nav" },
           h("button", { type: "button", class: "btn small", onclick: function () { go(-1); } }, h("span", { "aria-hidden": "true", text: "\u2039 " }), "Previous"),
           h("button", { type: "button", class: "btn small", onclick: function () { go(1); } }, "Next", h("span", { "aria-hidden": "true", text: " \u203a" })))));
+    if (focusSel) { const f = body.querySelector(focusSel); if (f) f.focus({ preventScroll: true }); }
   }
   function copyReview() {
     const today = new Date();
@@ -1056,7 +1058,8 @@
   document.getElementById("reviewCopy").addEventListener("click", copyReview);
   rvDlg.querySelector("[data-close]").addEventListener("click", function () { rvDlg.close(); });
   rvDlg.addEventListener("close", function () {
-    if (stopLive) stopLive();
+    stopReviewLive();
+    if (current === "home") renderHome(); // its monitor stops if one was started in review
     document.getElementById("reviewCopyMsg").textContent = "";
     document.getElementById("reviewCopyText").hidden = true;
   });

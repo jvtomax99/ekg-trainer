@@ -32,10 +32,9 @@ Status: see the bottom of this file.
 film or intro. Every line is a fact with a source link or a number computed from the code:
 1. *Every rhythm rule cites a published reference.* Count and kinds computed from
    `js/rhythms.js` sources (ACC/AHA guidelines, StatPearls, LITFL), each card links to them.
-2. *Every strip is checked by a second program.* Each test run draws 20,800 strips (800
-   for each of 26 rhythms) and measures them from the waveform: rate, 1500-rule rate, PR,
-   QRS, regularity. Any strip whose on-screen numbers cross a published cutoff fails the
-   run. Numbers come from the latest `node tests/run.js` and carry its date. Never "3
+2. *The strip maker is tested on 20,800 strips* (800 for each of 26 rhythms): rate,
+   1500-rule rate, PR, QRS and regularity must fit the rhythm's criteria and never cross a
+   cutoff on screen; every beat must be visible in the waveform; no other rhythm may fit. Never "3
    million checks": that counts assertions and means nothing to a nurse.
 3. *Why missed rhythms come back.* In the PULSE trial (3,013 nurses, 65 cardiac units,
    17 hospitals), online ECG education raised nurses' scores right away, but the gain was
@@ -134,6 +133,16 @@ shares it. Jose sends the clip.
   errors; the screen shows once and not after a reload; marks and notes survive a reload;
   review reopens at the first unmarked card; "Copy my review" puts the grouped text on the
   clipboard; typing digits in a note doesn't touch practice. `node tests/run.js`
-  (3,069,139 checks) and the site check pass.
+  (3,069,138 checks after the review fixes) and the site check pass.
 - Not checked: a real iPhone (Safari clipboard, the sticky buttons with the keyboard up).
 - C (the clip) not started.
+- Reviewer (fresh subagent) findings fixed: the strip-test text said strips are measured
+  "from the waveform itself", but rate, PR and QRS come from the generator's beat timings;
+  the waveform checks are that every beat is visible and no extra peaks show. Now worded
+  exactly, and it says practice strips are new ones from the same code, not the tested
+  ones. PULSE now also gives the half that cuts the other way (observed rhythm
+  interpretation improved and stayed improved). The typed "last full run" date was
+  dropped (not computed, would go stale). The PMC source is called a "review article
+  (PubMed Central)", not "peer-reviewed"; LITFL is "not a peer-reviewed journal"; the footer
+  keeps "not clinically validated". Review mode no longer freezes Home's live monitor, and
+  focus stays on Previous, Next or the card list when the card changes.

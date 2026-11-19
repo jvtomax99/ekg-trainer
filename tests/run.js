@@ -173,7 +173,6 @@ ok(rhythms.list.length === 26, "26 rhythms");
 // Evidence screen: every number it shows is computed and true.
 ok(evidence.TESTS.perRhythm === DEFAULT_N, "Evidence screen strip count matches the full test run");
 ok(evidence.strips() === DEFAULT_N * rhythms.list.length, "Evidence total strips");
-ok(/^\d{4}-\d{2}-\d{2}$/.test(evidence.TESTS.lastRun), "Evidence last run is a date");
 {
   const st = evidence.refStats(), k = st.kinds;
   const cited = new Set(); rhythms.list.forEach((R) => R.sources.forEach((s) => cited.add(s)));

@@ -8,9 +8,9 @@
 
   // Bump VERSION when the screen changes enough to be worth showing once more.
   const VERSION = 1;
-  // The full test run: tests/run.js draws perRhythm strips of every rhythm (its default N).
-  // lastRun is the date of the last full run that passed; update it after running one.
-  const TESTS = { perRhythm: 800, lastRun: "2026-11-19" };
+  // The full test run: tests/run.js draws perRhythm strips of every rhythm (its default N,
+  // checked there).
+  const TESTS = { perRhythm: 800 };
 
   // What kind of reference each cited source is, from its label in js/rhythms.js.
   function kindOf(label) {
@@ -41,7 +41,7 @@
     const k = st.kinds, parts = [];
     if (k.guideline) parts.push(plural(k.guideline, "ACC/AHA guideline", "ACC/AHA guidelines"));
     if (k.statpearls) parts.push(plural(k.statpearls, "StatPearls chapter", "StatPearls chapters"));
-    if (k.review) parts.push(plural(k.review, "peer-reviewed review article", "peer-reviewed review articles"));
+    if (k.review) parts.push(plural(k.review, "review article (PubMed Central)", "review articles (PubMed Central)"));
     if (k.litfl) parts.push(plural(k.litfl, "LITFL ECG Library page", "LITFL ECG Library pages"));
     if (k.other) parts.push(plural(k.other, "other reference", "other references"));
     const list = parts.length > 1 ? parts.slice(0, -1).join(", ") + " and " + parts[parts.length - 1] : parts.join("");

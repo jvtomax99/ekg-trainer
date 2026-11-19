@@ -28,8 +28,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
 - `js/evidence.js` (step 3d): data and plain functions for the "How this was built"
   screen (reference counts computed from the cards, the test-run facts `TESTS`, review
   counts) and the nurse's review text. `tests/run.js` checks `TESTS.perRhythm` against its
-  own default, so the screen can't drift from the real run; update `TESTS.lastRun` after a
-  full run passes.
+  own default, so the screen can't drift from the real run.
 - `js/theme.js`: app theme and strip colors from the prefs.
 - `js/tour.js`: the first-launch intro (8 cards, screenshots in `img/tour/`).
 - `js/unit.js`: the night unit backdrop (step 3b): the picture behind Home's start card
