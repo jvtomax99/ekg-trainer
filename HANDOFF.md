@@ -25,16 +25,23 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
   it on the real iPhone.
 
 ## Next
-- Owner chose (2026-11-19): **step 3d, Evidence screen, review mode and pitch clip**
-  (`docs/phases/7-evidence-and-pitch.md`), ahead of the campus. Evidence screen and
-  review mode merged and live (pull request #5). The nurse can start reviewing (About,
-  How this was built, Review the cards).
-  Next: the pitch clip (real Playwright recordings, ffmpeg, the film's score). Then step 5, campus research and blockout
-  (`docs/future/3d-campus.md`); Three.js needs owner approval as the first dependency.
-- "3,069,123 checks" = assertions in one full `node tests/run.js`: 20,800 generated strips
-  (800 x 26 rhythms) measured from the waveform, plus quiz and FSRS tests. Proves strips
-  match the app's criteria, not that the criteria are right. Don't show the raw number to
-  nurses.
+- **Now: step 5, campus research and blockout** (owner's pick 2026-11-19, after step 3d's
+  screen and review mode went live). Read `docs/future/3d-campus.md` and its prompt in
+  `docs/prompts.md` first. It is a big feature: compare 2 or 3 similar tools, plan mode,
+  wait for the owner's OK. Three.js would be the app's first dependency: ask with buttons
+  before adding it, log it in `docs/decisions.md`. Campus facts only from the verified
+  table; never invent buildings or positions. The campus loads separately and the trainer
+  must stay fast and offline without it.
+- Step 3d leftovers (not urgent): the pitch clip (part C of
+  `docs/phases/7-evidence-and-pitch.md`: Playwright recordings, ffmpeg, the film's score,
+  captions from the doc's table). Waiting on the nurse's review via About, How this was
+  built, Review the cards; when his copied review arrives, record each card as
+  `reviewed: { by: "a telemetry RN", date: "<Mon YYYY>" }` in `js/rhythms.js` and fix what he
+  flags first.
+- "3,069,138 checks" = assertions in one full `node tests/run.js`: 20,800 generated strips
+  (800 x 26 rhythms). Rate, PR and QRS are checked from the generator's beat timings; the
+  waveform checks are that every beat is visible and no extra peaks show. Proves strips
+  match the app's criteria, not that the criteria are right. Never show the raw number.
 - PubMed abstracts: `curl "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=<PMID>&rettype=abstract&retmode=text"`
   works when pubmed.ncbi.nlm.nih.gov shows a cookie check.
 - Video tools: HyperFrames compose/render are disabled from Claude Code; Canva is
