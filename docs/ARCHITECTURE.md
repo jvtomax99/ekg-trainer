@@ -28,7 +28,8 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
 - `js/unit.js`: the night unit backdrop (step 3b): the picture behind Home's start card
   and "Rounds", the hallway clip that moves one step between practice cards. Files in
   `img/unit/`: `unit.webp` (precached) and `walk.mp4` (fetched after the app is open,
-  kept by the offline cache on first use, never required).
+  stored by `unit.js` itself in the `ekg-media-v1` offline store, which survives app
+  updates; never required).
 - `js/app.js` (about 900 lines): all the screens. Sections by banner comment
   (`// ---------- Exam ----------`): helpers, strip widget, feedback, tabs, Home
   dashboard, adaptive sessions, Learn, Practice, Exam, Progress (Mastery, Trends, Exams),

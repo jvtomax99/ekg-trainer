@@ -183,6 +183,7 @@
   let current = "home", stopLive = null;
   function show(v) {
     if (stopLive) stopLive();
+    if (v !== "home") unit.leaveHome(); // the Home walk never runs behind another tab
     current = v;
     Object.keys(views).forEach(function (k) { views[k].hidden = k !== v; });
     document.querySelectorAll(".tabs button").forEach(function (b) {
@@ -889,6 +890,7 @@
       h("div", { class: "setting" }, h("span", { class: "lbl", text: "Unit backdrop" }),
         seg([{ value: "on", label: "On" }, { value: "off", label: "Off" }], f.unit === "off" ? "off" : "on", function (x) {
           const g = progress.prefs(); g.unit = x; progress.savePrefs(g);
+          if (x === "off") { unit.off(); document.querySelectorAll(".on-unit").forEach(function (n) { n.classList.remove("on-unit"); }); }
           if (current === "home") renderHome();
         }, "Unit backdrop")),
       h("p", { class: "small muted", style: "margin:0", text: "A night-shift hallway behind Home's start card, and a short walk between practice strips. Computer generated, not a real unit. Never shown in exams. It also stays still when your phone is set to Reduce Motion." }));

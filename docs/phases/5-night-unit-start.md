@@ -20,7 +20,9 @@ feel like his shift, calm, never hype.
 - No real HUMC buildings, unit names, signage or logos in the footage. The hallway is a
   generic unit and is never labeled St. John (the campus spec bans real interiors, and
   unverified details are never invented).
-- No movement while a strip is being read. Movement only between cards.
+- No ongoing movement while a strip is being read. The hallway moves for the first
+  second as a new card comes up, then holds still. (The answer clock starts with the
+  card as before; the second of movement is the same on every card.)
 - Nothing in Exam: the exam screen stays plain, like the real exam.
 - No sound.
 - No readable monitor screens or text in the footage (generated rhythms are nonsense; the
@@ -40,8 +42,9 @@ From memory and `docs/research.md`; not re-checked on 2026-11-19.
 
 ## Rules it must keep
 - The app opens instantly and works offline even if the picture or clip never loads.
-  The still is small (WebP, under 150 KB) and precached; the clips are fetched after the
-  app is open, cached on first use, and are NOT in `sw.js` `FILES` (a failed download
+  The still is small (WebP, under 150 KB) and precached; the clip is fetched after the
+  app is open, stored on first use in its own offline store (`ekg-media-v1`, kept across
+  app updates), and is NOT in `sw.js` `FILES` (a failed download
   must not break install). Budget: each clip under 3 MB.
 - `prefers-reduced-motion`: still picture only, no clip, no Rounds.
 - A Settings switch ("Unit backdrop": on / off), stored in `ekg.prefs.v1` (additive).
@@ -76,7 +79,11 @@ From memory and `docs/research.md`; not re-checked on 2026-11-19.
 - Checked in Chromium at 390 px, 360 px and desktop, light and dark: Home picture and
   slow walk; hallway moves one second per card and stops (10 stops, then starts over);
   nothing in Exam; picture only with Reduce Motion; nothing with the switch off; app,
-  picture and clip load with the network off once the clip has been fetched on a visit
-  after the first. `node tests/run.js` (3,069,123 checks) and the site check pass.
-- Not checked: a real iPhone (Safari autoplay of the muted clip, battery). Runway's usage
-  policy page was not read.
+  picture and clip load with the network off after one online visit. `node tests/run.js` (3,069,123 checks) and the site check pass.
+- Reviewer (fresh subagent) findings fixed: the clip no longer waits for a load event
+  iPhones may never send; the Home walk stops when another tab is open or the app is in
+  the background; the off switch clears the screen at once; the clip has its own offline
+  store; a dark scrim sits under the Practice header text.
+- Runway usage policy (runway.com/safety/usage-policy, read 2026-11-19): no rule against
+  publishing your own outputs and no labeling requirement.
+- Not checked: a real iPhone (Safari autoplay of the muted clip, battery).
