@@ -6,7 +6,7 @@
      item = FSRS card (js/fsrs.js) + { reps, lapses, hist: last 5 ok flags,
                okDays: recent distinct days with a correct answer, lastOkG: grade of last correct }
    ekg.progress.v1 (old) is read once, replayed into v2 in time order, and left untouched.
-   ekg.prefs.v1    = { ack, tour, theme, strip, exam: { count, seconds, passMark, lethal, showTimer, set, edge } } */
+   ekg.prefs.v1    = { ack, tour, theme, strip, unit, exam: { count, seconds, passMark, lethal, showTimer, set, edge } } */
 (function (root) {
   "use strict";
   const F = root.EKG.fsrs;

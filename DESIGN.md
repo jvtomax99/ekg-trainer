@@ -100,6 +100,16 @@ A high-contrast strip theme is a later option.
 - `prefers-reduced-motion` turns every animation and transition off; live sweeps (Home
   header, Monitor view) become static strips.
 
+## Night unit backdrop (step 3b)
+- Home's start card sits on a generated picture of a generic unit at night (`img/unit/`).
+  The card is always dark with light text (`#e8eef4`, muted `#b9c5d1`) over a scrim
+  (`rgba(6,10,16)` from 0 to 0.93), in both app themes; text stays 4.5:1 or better.
+- Rounds in Practice: the hallway sits behind the header only (168 px, fading out at the
+  bottom), so it adds no height and the answers stay in reach. Dimmed to 60% while a
+  strip is read, brighter for the one second it moves. Header text over it is light.
+- Movement only between cards. Nothing in Exam or Learn. Off with Reduce Motion, Data
+  Saver or the Settings switch.
+
 ## Sound
 - Off by default. Optional soft beep per QRS in live mode, phase 7.
 

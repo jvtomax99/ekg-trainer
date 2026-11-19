@@ -9,7 +9,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   first paint has the right theme), holds the SVG icon sprite (`<symbol id="i-...">`), one
   `<section id="view-...">` per tab (home, learn, practice, exam, progress), the tab bar
   and dialogs, then the other scripts in this order: rhythms, ecg, quiz, strip, fsrs,
-  progress, tour, app. Each script adds itself to `window.EKG`.
+  progress, tour, unit, app. Each script adds itself to `window.EKG`.
 - `styles.css`: the whole look. Tokens on `:root` per theme (`data-theme`, `data-strip`);
   values come from `DESIGN.md`.
 - `js/rhythms.js`: the rhythm library, data only (criteria, generator ranges, teaching
@@ -25,12 +25,17 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
 - `js/progress.js`: everything stored (keys below), mastery, trends.
 - `js/theme.js`: app theme and strip colors from the prefs.
 - `js/tour.js`: the first-launch intro (8 cards, screenshots in `img/tour/`).
+- `js/unit.js`: the night unit backdrop (step 3b): the picture behind Home's start card
+  and "Rounds", the hallway clip that moves one step between practice cards. Files in
+  `img/unit/`: `unit.webp` (precached) and `walk.mp4` (fetched after the app is open,
+  stored by `unit.js` itself in the `ekg-media-v1` offline store, which survives app
+  updates; never required).
 - `js/app.js` (about 900 lines): all the screens. Sections by banner comment
   (`// ---------- Exam ----------`): helpers, strip widget, feedback, tabs, Home
   dashboard, adaptive sessions, Learn, Practice, Exam, Progress (Mastery, Trends, Exams),
   dialogs (About, Settings), start.
 - `sw.js`: the offline copy. `FILES` lists every file the app loads; bump `VERSION`
-  (`ekg-v4` now) whenever an app file changes, or phones keep the old one.
+  (`ekg-v5` now) whenever an app file changes, or phones keep the old one.
 - `manifest.webmanifest`, `icons/`: install info and app icons (made by
   `tools/make-icons.js`).
 - `tests/run.js`: the checks (`node tests/run.js`, `N=200` for a quick run).
@@ -56,7 +61,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
     sessions, and FSRS items (`r:<rhythm>`, `b:<rhythm>` near a cutoff, confused pairs).
   - `ekg.progress.v1`: the old key, replayed once into v2 and left untouched.
   - `ekg.prefs.v1`: disclaimer seen, intro version seen, theme, strip theme, exam
-    settings. New fields are additive with defaults, so no key bump.
+    settings, unit backdrop on or off. New fields are additive with defaults, so no key bump.
 - **Offline**: `sw.js` caches `FILES` on install, then serves from the cache and
   refreshes it in the background.
 - No accounts, no names, no patient data, no network calls besides loading the app.
