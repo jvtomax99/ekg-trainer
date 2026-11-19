@@ -37,5 +37,5 @@ rhythm has one) and checks each against its criteria, the answer key and rhythm-
 rules (about 3 million checks). `N=100 node tests/run.js` for a quick run.
 
 ## Docs
-`docs/plan.md` (roadmap), `docs/spec.md` (look), `docs/sources.md` (clinical references),
+`SPEC.md` (what, who, roadmap), `DESIGN.md` (look), `docs/ARCHITECTURE.md` (file map), `docs/sources.md` (clinical references),
 `docs/phases/` (per-phase status).

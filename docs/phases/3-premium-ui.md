@@ -16,7 +16,7 @@ sophisticated iPhone app, not a functioning quiz website. Preserve everything th
 Substantial features go on their own branches. Keep improving clinical accuracy throughout.
 
 ## 3a. App icon
-- Starting point: the icon concept in `docs/spec.md` (near-black, luminous monitor-green
+- Starting point: the icon concept in `DESIGN.md` (near-black, luminous monitor-green
   trace, faint dark red grid). Refine it professionally.
 - Real P-QRS-T morphology, readable at Home Screen size, no lettering, no HMH branding.
 - Assets: apple-touch-icon 180, PWA 192 and 512 (plus maskable 512 with safe zone),
@@ -30,7 +30,7 @@ Substantial features go on their own branches. Keep improving clinical accuracy 
   icon libraries, no emojis, works offline): Learn, Practice, Exam, Progress, Campus,
   each rhythm group (sinus, atrial, junctional, ventricular, AV blocks), measure, zoom,
   timer, review/missed, mastery, achievement, lethal, sources, settings/about, monitor.
-- Design tokens extended in `docs/spec.md`: type scale, spacing, radii, elevation, motion
+- Design tokens extended in `DESIGN.md`: type scale, spacing, radii, elevation, motion
   durations and easings. Monitor-inspired, not an outdated device.
 - Buttons, cards, menus, segmented controls, progress rings and bars restyled.
 - Micro-animations: tab and view transitions, answer feedback (correct pulse, wrong
@@ -84,7 +84,7 @@ effects. Built on the same branch, keeping all earlier 2b work.
 - 3a icon: done. `tools/make-icons.js`; manifest has 192, 512, maskable 512 and SVG;
   `<head>` has apple-touch-icon, SVG and 32 px favicons. Checked at 512, 60 pt, 40, 32 and
   16 px, iOS rounded mask and Android circle crop (complex inside the safe zone).
-- 3b icons and design language: done. 30-icon sprite, tokens in `docs/spec.md`, restyled
+- 3b icons and design language: done. 30-icon sprite, tokens in `DESIGN.md`, restyled
   cards, buttons, segmented controls, choices, tags, tables, sheets. Micro-animations:
   view entrance, correct pulse, wrong shake, press scale, ring and bar fill; all off under
   reduced motion. Strip: thicker trace, bigger labels, tighter side padding, new

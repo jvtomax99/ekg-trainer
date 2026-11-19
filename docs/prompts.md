@@ -1,10 +1,10 @@
 # Build prompts
 
-Paste one to start a step. Each assumes Claude reads CLAUDE.md, docs/plan.md and the
-step's spec first. Order follows the delivery sequence in docs/plan.md.
+Paste one to start a step. Each assumes Claude reads CLAUDE.md, SPEC.md and the
+step's spec first. Order follows the delivery sequence in SPEC.md.
 
 ## Step 2: Difficult rhythms
-"Start step 2 of docs/plan.md. Write docs/phases/2-difficult-rhythms.md first. Keep the
+"Start step 2 of SPEC.md. Write docs/phases/2-difficult-rhythms.md first. Keep the
 phase 1 architecture. Add clinically accurate harder rhythms with sources read directly
 (LITFL, StatPearls, AHA): heart blocks (1st, 2nd type I and II, 3rd), atrial flutter, SVT,
 junctional rhythms, PACs, PVCs and patterns, VF, asystole, torsades. Meaningful lookalike
@@ -13,10 +13,10 @@ rhythm, everything tagged pending nurse review. Include fixes from the owner's i
 Screenshot at phone width, verify the live site after push."
 
 ## Step 2b: Premium UI, icon, dashboard, onboarding
-"Start step 2b. Read CLAUDE.md, docs/handoff.md and docs/phases/3-premium-ui.md. New
+"Start step 2b. Read CLAUDE.md, HANDOFF.md and docs/phases/3-premium-ui.md. New
 branch. Build, in order: the SVG app icon and all icon assets (apple-touch-icon, PWA
 192/512/maskable, favicon) with manifest and head updated; one custom SVG icon sprite and
-extended design tokens in docs/spec.md; restyled components and micro-animations; a Home
+extended design tokens in DESIGN.md; restyled components and micro-animations; a Home
 dashboard tab with honest data; skippable onboarding with real screenshots and Replay.
 Keep every existing feature and test passing. Verify at iPhone 13 and SE sizes in
 Chromium, standalone manifest, offline, contrast. Then the owner's push."

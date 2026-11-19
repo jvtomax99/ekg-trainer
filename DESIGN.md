@@ -1,4 +1,4 @@
-# Spec: look and feel
+# DESIGN: look and feel
 
 Inspiration: a bedside cardiac monitor at night. Black screen, glowing trace, bright
 numbers, nothing else competing. Calm until something is wrong.

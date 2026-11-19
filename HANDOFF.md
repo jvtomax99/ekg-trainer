@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-19. Read CLAUDE.md, then docs/plan.md, then this.
+Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
 
 ## Done
 - Phase 1 and 2 live at https://chromedigi.github.io/ekg-trainer/ (26 rhythms, exam).
