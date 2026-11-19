@@ -54,7 +54,7 @@ changes. Dev-only Playwright scripts live in `tools/` and are never loaded by th
 ## Data
 
 - Everything lives in the browser's `localStorage`. Keys are versioned:
-  `ekg.progress.v2` (migrated from v1), `ekg.prefs.v1`. If a shape changes, bump the version and migrate,
+  `ekg.progress.v2` (migrated from v1), `ekg.prefs.v1`, `ekg.review.v1` (the nurse's content review). If a shape changes, bump the version and migrate,
   so progress is never lost.
 - No accounts, no names, no patient information, ever. Nothing leaves the phone.
 

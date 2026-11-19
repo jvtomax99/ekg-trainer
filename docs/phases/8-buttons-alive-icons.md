@@ -1,4 +1,4 @@
-# Step 3d: buttons, outlines and alive icons
+# Step 3e: buttons, outlines and alive icons
 
 Owner's ask (2026-11-19): change the look of the buttons and the outline of the app, and
 make it "more alive, like Home's live monitor strip". He compared three mocked directions
@@ -38,7 +38,7 @@ thumb reach) are why it was not picked.
   a bordered card, no empty grid cell on Home. Checked in Chromium (before/after screenshots).
 - With Reduce Motion on, every icon is whole and still (checked: dash pattern and animation
   both `none`).
-- `node tests/run.js` and the site check pass. `sw.js` VERSION bumped (ekg-v9).
+- `node tests/run.js` and the site check pass. `sw.js` VERSION bumped (ekg-v10).
 - Owner checks it on the real iPhone.
 
 ## Status

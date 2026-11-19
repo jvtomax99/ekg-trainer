@@ -1,6 +1,7 @@
 /* Rhythm library: data only. Criteria, generator settings, teaching text, sources.
    Every clinical statement cites ids from docs/sources.md. review: "pending" until the
-   nurse checks it. Normal generator ranges keep a margin from every cutoff; "edge"
+   nurse checks it; a checked card gets reviewed: { by: "a telemetry RN", date: "Dec 2026" }
+   (a role and a month, never a name) and review becomes "reviewed". Normal generator ranges keep a margin from every cutoff; "edge"
    ranges are the borderline strips (just inside a cutoff, on purpose). */
 (function (root) {
   "use strict";
@@ -16,7 +17,7 @@
   //   shape:  organized | mono | twist | chaotic | flat
   const D = { ectopy: ["none"], shape: ["organized"] };
   function rh(o) {
-    o.review = "pending";
+    o.review = o.reviewed && o.reviewed.by && o.reviewed.date ? "reviewed" : "pending";
     o.lethal = !!o.lethal;
     o.criteria = Object.assign({}, D, o.criteria);
     return o;
@@ -354,7 +355,12 @@
     S26: { label: L + "Sinus Arrhythmia", url: "https://litfl.com/sinus-arrhythmia-ecg-library/" },
     S27: { label: L + "Sinoatrial Exit Block (sinus pause and arrest)", url: "https://litfl.com/sinoatrial-exit-block-ecg-library/" },
     S28: { label: L + "Ventricular Tachycardia, monomorphic", url: "https://litfl.com/ventricular-tachycardia-monomorphic-ecg-library/" },
-    S29: { label: "StatPearls: Asystole (NCBI Bookshelf)", url: "https://www.ncbi.nlm.nih.gov/books/NBK430866/" }
+    S29: { label: "StatPearls: Asystole (NCBI Bookshelf)", url: "https://www.ncbi.nlm.nih.gov/books/NBK430866/" },
+    // Evidence behind the app's design (the "How this was built" screen), not rhythm criteria.
+    S30: { label: "AHA 2017 scientific statement: Practice Standards for ECG Monitoring in Hospital Settings (PubMed)", url: "https://pubmed.ncbi.nlm.nih.gov/28974521/" },
+    S31: { label: "PULSE trial 2017: ECG monitoring education, nurses' knowledge and patient outcomes (PubMed)", url: "https://pubmed.ncbi.nlm.nih.gov/28174175/" },
+    S32: { label: "Cepeda et al. 2006: distributed practice meta-analysis (PubMed)", url: "https://pubmed.ncbi.nlm.nih.gov/16719566/" },
+    S33: { label: "Roediger and Karpicke 2006: test-enhanced learning (PubMed)", url: "https://pubmed.ncbi.nlm.nih.gov/16507066/" }
   };
 
   const approach = [

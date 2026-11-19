@@ -60,7 +60,7 @@ A high-contrast strip theme is a later option.
 - Elevation: `--elev-1` (light cards), `--elev-2` (sheets, intro screenshots), `--glow-brand`
   (primary button only).
 
-## Buttons and outlines (step 3d, owner's pick 2026-11-19)
+## Buttons and outlines (step 3e, owner's pick 2026-11-19)
 - One outline system per theme: light cards float on a shadow with no border; dark cards get a
   1 px `--line` border and no shadow (`--card-line`, `--card-shadow`). Progress tiles follow it.
 - No boxes inside boxes: inside a card, items are rows with hairline dividers (Accuracy by
@@ -116,7 +116,7 @@ A high-contrast strip theme is a later option.
 - `prefers-reduced-motion` turns every animation and transition off; live sweeps (Home
   header, Monitor view) become static strips, and the alive icons below stay whole and still.
 
-## Alive icons (step 3d, owner's ask 2026-11-19: "more alive, like Home's live monitor strip")
+## Alive icons (step 3e, owner's ask 2026-11-19: "more alive, like Home's live monitor strip")
 - Icons move the way the monitor strip does: a trace with a small erase gap sweeping left to
   right, soft teal glow (`--brand-glow`). Every sprite shape has `pathLength="100"` so one dash
   pattern (`88 12`, or `100 100` to draw in) fits every icon.

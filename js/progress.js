@@ -6,11 +6,15 @@
      item = FSRS card (js/fsrs.js) + { reps, lapses, hist: last 5 ok flags,
                okDays: recent distinct days with a correct answer, lastOkG: grade of last correct }
    ekg.progress.v1 (old) is read once, replayed into v2 in time order, and left untouched.
-   ekg.prefs.v1    = { ack, tour, theme, strip, unit, exam: { count, seconds, passMark, lethal, showTimer, set, edge } } */
+   ekg.prefs.v1    = { ack, tour, theme, strip, unit, film, evidence, exam: { count, seconds, passMark, lethal, showTimer, set, edge } }
+     evidence: version of the "How this was built" screen already shown once (additive).
+   ekg.review.v1   = { v: 1, marks: { <rhythm id>: { ok: true|false, note, at } } }
+     A nurse's content review (review mode in About). Separate from progress: "Reset
+     progress" leaves it alone. Stays on this phone; only copied out by the nurse. */
 (function (root) {
   "use strict";
   const F = root.EKG.fsrs;
-  const PKEY = "ekg.progress.v2", OLD = "ekg.progress.v1", FKEY = "ekg.prefs.v1";
+  const PKEY = "ekg.progress.v2", OLD = "ekg.progress.v1", FKEY = "ekg.prefs.v1", RKEY = "ekg.review.v1";
   const MAX_ANSWERS = 5000, MAX_SESSIONS = 200, SPEED_N = 20;
   const DAY = F.DAY;
 
@@ -293,6 +297,20 @@
 
   function reset() { P = emptyState(); SP = {}; save(); }
 
+  // Content review marks. Anything malformed is dropped rather than trusted.
+  function readReview() {
+    const raw = readRaw(RKEY), marks = {};
+    if (raw && raw.marks && typeof raw.marks === "object") {
+      for (const id in raw.marks) {
+        const m = raw.marks[id];
+        if (!m || typeof m !== "object" || (m.ok !== true && m.ok !== false && m.ok != null)) continue;
+        marks[id] = { ok: m.ok === true ? true : m.ok === false ? false : null, note: typeof m.note === "string" ? m.note.slice(0, 600) : "", at: Number(m.at) || 0 };
+      }
+    }
+    return { v: 1, marks: marks };
+  }
+  let RV = readReview();
+
   root.EKG = root.EKG || {};
   root.EKG.progress = {
     record: record, addSession: addSession, accuracy: accuracy, recentMisses: recentMisses, reviewIds: reviewIds,
@@ -300,6 +318,9 @@
     likelyToForget: likelyToForget, pairs: pairs, mastery: mastery, groupMastery: groupMastery, trends: trends,
     grade: grade, migrated: function () { return P.migrated || 0; },
     prefs: function () { return Fp; },
-    savePrefs: function (f) { Fp = f; write(FKEY, Fp); }
+    savePrefs: function (f) { Fp = f; write(FKEY, Fp); },
+    review: function () { return RV; },
+    // Returns false if the phone refused to save (storage full or blocked).
+    saveReview: function (r) { RV = r; return write(RKEY, RV); }
   };
 })(typeof window !== "undefined" ? window : globalThis);

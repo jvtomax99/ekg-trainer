@@ -41,6 +41,22 @@ themselves when the nurse reviews.
 S11 to S28 were fetched and read directly from litfl.com on 2026-11-19. NCBI Bookshelf,
 PMC and AHA Journals returned bot checks to the build environment that day.
 
+## Evidence behind the app's design (Evidence screen, not rhythm criteria)
+Read 2026-11-19 from the PubMed abstracts, fetched through NCBI E-utilities (the PubMed
+web pages show a cookie check to this environment). **Abstracts only**: re-read the full
+text before quoting anything past what is listed here.
+
+| Id | Source | Verified for |
+|---|---|---|
+| S30 | Sandau KE, Funk M, et al. Update to Practice Standards for Electrocardiographic Monitoring in Hospital Settings: A Scientific Statement From the American Heart Association. Circulation 2017;136(19):e273-e344. doi:10.1161/CIR.0000000000000527, https://pubmed.ncbi.nlm.nih.gov/28974521/ | AHA-commissioned, interprofessional review of continuous ECG monitoring of hospitalized patients; 5 sections, one of them "Organizational Aspects: Alarm Management, Education of Staff, and Documentation"; the authors say many recommendations rest on limited data. AACN endorsement seen in secondary sources only |
+| S31 | Funk M, et al. PULSE Trial. Circ Cardiovasc Qual Outcomes 2017;10(2):e003132. doi:10.1161/CIRCOUTCOMES.116.003132, https://pubmed.ncbi.nlm.nih.gov/28174175/ | Randomized trial with crossover, 65 cardiac units in 17 hospitals, 3,013 nurses tested with a validated 20-item online test; online ECG monitoring education plus practice-change strategies. Nurses' knowledge rose right after the intervention but **was not sustained 15 months later**; accurate rhythm interpretation (observed quality of care) improved and was sustained |
+| S32 | Cepeda NJ, et al. Distributed practice in verbal recall tasks: a review and quantitative synthesis. Psychol Bull 2006;132(3):354-380. https://pubmed.ncbi.nlm.nih.gov/16719566/ | Meta-analysis, 839 assessments in 317 experiments; spaced study sessions and their timing affect retention, and the best gap grows with how long it must be remembered. Verbal recall, not ECG |
+| S33 | Roediger HL, Karpicke JD. Test-enhanced learning. Psychol Sci 2006;17(3):249-255. https://pubmed.ncbi.nlm.nih.gov/16507066/ | Recall testing gave substantially better retention at 2 days and 1 week than restudying, while restudying raised confidence more. Prose passages, not ECG |
+
+Use: S30 frames why staff ECG education matters, S31 is the reason missed rhythms come
+back over months, S32 and S33 are the design reasons for spaced, recall-based sessions.
+None of them tested this app or ECG strip reading with spacing; never say they did.
+
 ## Generator choices that are not shown to the user as facts
 - AFib f-wave frequency 6 to 9 Hz (360 to 540/min): inside the commonly taught 350 to
   600/min, not verified against a primary source this session.
@@ -58,4 +74,8 @@ PMC and AHA Journals returned bot checks to the build environment that day.
 
 ## Still to add
 - AHA ACLS adult algorithms (phase 5 "what now").
+- AACN Practice Alert "Accurate Dysrhythmia Monitoring in Adults" (published 2016-12-01,
+  evidence update 2018-05-17), https://www.aacn.org/clinical-resources/practice-alerts/dysrhythmia-monitoring.
+  Full text needs a free AACN login and the page timed out from this environment; only
+  secondary summaries read so far. Not cited until someone reads it.
 - Temporary epicardial pacing and post-op AFib reviews (phase 6).
