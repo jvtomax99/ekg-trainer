@@ -1,9 +1,10 @@
 # Handoff
 
-Updated 2026-11-19. Read CLAUDE.md, then docs/plan.md, then this.
+Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
 
 ## Done
-- Phase 1 and 2 live at https://chromedigi.github.io/ekg-trainer/ (26 rhythms, exam).
+- Live at https://jvtomax99.github.io/ekg-trainer/ since 2026-11-19 (moved from https://chromedigi.github.io/ekg-trainer/, which no longer gets updates).
+- Phase 1 and 2 live (26 rhythms, exam).
 - Step 2b (premium UI, icon, light/dark, strip themes, Home dashboard, intro) merged to main
   and live. Owner checked it on a real iPhone: "looks perfect".
 

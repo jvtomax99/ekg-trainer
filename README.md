@@ -24,7 +24,7 @@ provider.
 - Calipers, 2x zoom and a sideways full-screen view on every strip; works offline;
   coded app icon for the Home Screen
 
-**Live:** https://chromedigi.github.io/ekg-trainer/ (GitHub Pages from `main`). On iPhone:
+**Live:** https://jvtomax99.github.io/ekg-trainer/ (GitHub Pages from `main`). On iPhone:
 open in Safari, Share, Add to Home Screen.
 
 ## Run it
@@ -37,5 +37,5 @@ rhythm has one) and checks each against its criteria, the answer key and rhythm-
 rules (about 3 million checks). `N=100 node tests/run.js` for a quick run.
 
 ## Docs
-`docs/plan.md` (roadmap), `docs/spec.md` (look), `docs/sources.md` (clinical references),
+`SPEC.md` (what, who, roadmap), `DESIGN.md` (look), `docs/ARCHITECTURE.md` (file map), `docs/sources.md` (clinical references),
 `docs/phases/` (per-phase status).

@@ -1,6 +1,6 @@
 # Phase 2: Difficult rhythms
 
-Owner request 2026-11-19 (step 2 of `docs/plan.md`). Real-iPhone test of phase 1: owner
+Owner request 2026-11-19 (step 2 of `SPEC.md`). Real-iPhone test of phase 1: owner
 reported nothing to fix.
 
 ## What it does

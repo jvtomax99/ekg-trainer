@@ -1,7 +1,11 @@
 # CLAUDE.md
 
-Guidance for Claude Code when working in this repository. Read this first, then
-`docs/plan.md`, `docs/spec.md` and the current phase doc before touching code.
+Guidance for Claude Code when working in this repository.
+
+Read first: `HANDOFF.md` if there is one, `SPEC.md` (what, who, "Done when", phases),
+`docs/ARCHITECTURE.md` (map of files and how data moves), `DESIGN.md` (look), then the
+current phase doc. The rules shared by all of Jose's projects are in
+`.claude/rules/general.md`; where this file differs, this file wins.
 
 ## Project
 
@@ -16,29 +20,20 @@ Plain HTML, CSS and JavaScript. No framework, no dependencies, no build step, no
 
 - **HTML** (`index.html`): structure and content. What is on the screen.
 - **CSS** (`styles.css`): the look. Colors, fonts, layout. All colors are CSS variables
-  per theme (`data-theme`, `data-strip`); values come from `docs/spec.md`.
+  per theme (`data-theme`, `data-strip`); values come from `DESIGN.md`.
 - **JavaScript** (`js/*.js`): what the app does. Drawing strips, quizzes, scoring, saving.
 - **Security**: built in from the start, not added last. No backend means no server to
   attack; the rules below cover the rest.
 
-### Planned files (create as phases need them)
-
-- `js/rhythms.js`: rhythm library as data (criteria, rate range, regularity, P, PR, QRS,
-  explanation, source ids). No drawing code in here.
-- `js/ecg.js`: waveform generator. Builds P-QRS-T beats from a rhythm's parameters with
-  random variation, so every strip is new. Samples in mV against time.
-- `js/strip.js`: draws strips on `<canvas>` (grid, trace, live sweep, calipers).
-- `js/drill.js`, `js/exam.js`, `js/scenarios.js`: practice modes.
-- `js/fsrs.js`: FSRS-6 scheduler (port of py-fsrs, checked against its numbers).
-- `js/progress.js`: answers, FSRS items, mastery, trends (`ekg.progress.v2`).
-- `js/tour.js`: first-launch intro (real screenshots in `img/tour/`).
-- `sw.js` + `manifest.webmanifest` + `icons/`: offline + Add to Home Screen.
-- `tools/`: dev-only Playwright scripts (icons, intro screenshots). Never loaded by the app.
+### Files
+Every file and what it does: `docs/ARCHITECTURE.md`. Update it when the structure
+changes. Dev-only Playwright scripts live in `tools/` and are never loaded by the app.
 
 ### Roadmap and future modules
-- Roadmap and delivery order: `docs/plan.md`. Future specs: `docs/future/` (3D campus,
-  adaptive learning, photo import, cinematic intro, iPhone onboarding). Read the relevant
-  one before working on it; don't start a future module early.
+- Roadmap and delivery order: the Phases table in `SPEC.md`. Future specs:
+  `docs/future/` (3D campus, adaptive learning, photo import, cinematic intro, iPhone
+  onboarding). Read the relevant one before working on it; don't start a future module
+  early.
 - Heavy modules (3D campus, video) are optional and load separately. The trainer must stay
   fast and work offline without them. Never rebuild or replace the working trainer.
 - UI naming: "Medical Plaza" (never "Mediplex"). Campus buildings and facts follow the
@@ -75,8 +70,30 @@ Plain HTML, CSS and JavaScript. No framework, no dependencies, no build step, no
 - Insert any text that isn't hard-coded with `textContent`, never `innerHTML`.
 - Phone first: usable one-handed at 360 px wide, tap targets at least 44 px, no
   horizontal scroll. Light and dark themes (System default); strip colors are a separate
-  setting (see docs/spec.md).
+  setting (see `DESIGN.md`).
 - Commit identity uses the GitHub no-reply email; don't change it.
+- Bump `VERSION` in `sw.js` whenever a file it caches changes, and add any new file the
+  app loads to its `FILES` list, or phones keep the old app.
+- Paid raw files (fonts, models, sounds) can't be committed to a public repo
+  (`docs/assets.md`, section 9). Before any purchase ask Jose: free assets, or GitHub
+  Pro or a move to Vercel so the repo can go private. Every asset goes in `CREDITS.md`.
+
+## Preview, checks and going live
+
+- **Hosting.** GitHub Pages from `main`, root folder, so merging to `main` is going live.
+  There are no branch previews. Live: https://jvtomax99.github.io/ekg-trainer/ (since
+  2026-11-19; the old chromedigi.github.io copy no longer gets updates, and phones keep
+  progress per address). Pages settings are repo settings: ask Jose.
+- **Preview.** Serve the repo (`python3 -m http.server 8765`) and send Playwright
+  screenshots at 390 px (iPhone 13) first, then desktop, plus a short "try this" list.
+  UI changes: before and after.
+- **Checks.** `node tests/run.js` (full, about 3 million checks) and
+  `node .github/site-check.cjs index.html`. GitHub runs a quick test run and the site
+  check on every pull request (`.github/workflows/site-check.yml`); both must be green
+  before asking Jose to push. A new page goes into that workflow's list.
+- **Into `main`.** A pull request, a phone notification naming the change and saying it
+  needs his "push", and buttons ("Push" first). On "Push", merge it, check the live site
+  in Playwright, then one line on how to undo it.
 
 ## Working style
 
@@ -92,13 +109,16 @@ Plain HTML, CSS and JavaScript. No framework, no dependencies, no build step, no
 
 ### Run it like an engineering team
 - Knowledge lives in `docs/`, not chat history:
-  - `docs/plan.md`: purpose, who it's for, phases, what v1 will NOT do
-  - `docs/spec.md`: look and feel (colors, fonts, sizes, layout)
+  - `SPEC.md`: purpose, who it's for, "Done when" per feature, Not in v1, Later, phases
+  - `DESIGN.md`: look and feel (colors, fonts, sizes, layout)
+  - `docs/ARCHITECTURE.md`: map of files and how data moves
   - `docs/decisions.md`: key decisions + why
   - `docs/research.md`: the unit, the exam, similar apps
   - `docs/sources.md`: clinical references with ids
   - `docs/phases/<n>-<name>.md`: spec + status per phase
   - `docs/prompts.md`: the prompt to start each phase
+  - `docs/assets.md`, `docs/design-rules.md`, `docs/cleanup-audit.md`,
+    `docs/refactor.md`: Jose's shared working rules (same in every repo)
 - Per phase: 1) write/update the phase doc, 2) read docs + relevant code, build only that
   phase, 3) review the diff, run the app, test at phone width, 4) update docs, commit,
   offer the next prompt as a clickable choice.
@@ -107,15 +127,25 @@ Plain HTML, CSS and JavaScript. No framework, no dependencies, no build step, no
 
 ### Context handoff
 - When the chat is heavy (about 40% of context used, or it has been compacted), first
-  write `docs/handoff.md` (what's done, what's in progress, next step, open questions),
-  commit it, then ask once with buttons: "Start a new chat for me" (Recommended) /
-  "Keep going here". Never hand off automatically.
+  write `HANDOFF.md` at the repo root (what's done, what's in progress, next step, open
+  questions, files to read first), commit and push it, then ask once with buttons:
+  "Start a new chat for me" (Recommended) / "Keep going here". Never hand off automatically.
 
 ### Efficiency
 - Read only the files needed. Small, focused changes and commits.
-- Use Haiku helpers for repetitive work (searching, summaries, checking lists); keep
-  decisions and code on the main model and check helper results.
+- Use helpers for repetitive work; keep decisions, clinical content and code on the
+  main model and check helper results. The agents are in `.claude/agents/`: `scout`
+  (Haiku, finding things), `test-runner` (Haiku, running checks, failures only),
+  `builder` (Sonnet, exactly specified text edits, never clinical content or logic).
 
 ### Visuals
-- For logos and icons, write a description to paste into ChatGPT instead of drawing a
-  weak one here. The current icon prompt is in `docs/spec.md`.
+- The app icon is drawn in code (`tools/make-icons.js`, decision of 2026-11-19); change
+  it there and re-run the script. Look rules: `DESIGN.md` and `docs/design-rules.md`.
+
+## Tools
+
+- **Taste skill** (`.claude/skills/taste/`): it asks for the Playwright MCP server. In a
+  cloud session use the installed Playwright instead and run its
+  `references/extract.js` with `page.evaluate`.
+- **Refactor.** `docs/refactor.md`, run when Jose asks for "Refactor: CLEANUP.md items
+  ...". `docs/cleanup-audit.md` writes `docs/CLEANUP.md` (none yet).

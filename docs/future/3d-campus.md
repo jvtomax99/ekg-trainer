@@ -1,6 +1,6 @@
 # Future module: 3D HUMC campus
 
-Status: **documented only.** Starts after phases 2 to 4 are stable (see `docs/plan.md`).
+Status: **documented only.** Starts after phases 2 to 4 are stable (see `SPEC.md`).
 Optional and loaded separately: the trainer must stay fast and work offline without it.
 
 ## Goal

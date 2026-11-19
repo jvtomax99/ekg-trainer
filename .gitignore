@@ -1,0 +1,12 @@
+# Secrets never go in git.
+.env
+.env.*
+*.pem
+# Installed packages and tool folders (the app itself has none).
+node_modules/
+.venv/
+venv/
+__pycache__/
+# Screenshots and scratch files from checks.
+shots/
+.DS_Store
