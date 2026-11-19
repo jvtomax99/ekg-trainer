@@ -1,7 +1,7 @@
 /* UI: tabs, Learn, Practice, Exam, Progress. All user-visible text set via textContent. */
 (function () {
   "use strict";
-  const { rhythms, ecg, quiz, strip: S, progress } = window.EKG;
+  const { rhythms, ecg, quiz, strip: S, progress, unit } = window.EKG;
   const ALL = rhythms.list.map(function (r) { return r.id; });
 
   // ---------- helpers ----------
@@ -332,7 +332,8 @@
       : dueNow
         ? h("button", { type: "button", class: "btn primary block hero-cta", onclick: function () { startSession("due"); } }, icon("i-play"), "Review " + dueNow + " due now")
         : h("button", { type: "button", class: "btn primary block hero-cta", onclick: function () { goPractice(pr.mode); } }, icon("i-play"), "Continue studying");
-    v.append(h("div", { class: "card hero" }, monitor,
+    const unitBg = unit.homeLayer();
+    v.append(h("div", { class: "card hero" + (unitBg ? " unit" : "") }, unitBg, monitor,
       h("div", { class: "hero-body" },
         h("div", null, h("div", { class: "eyebrow warm", text: greeting() }),
           h("h2", { text: st.total ? overall.pct + "% accuracy" : "Ready when you are" }),
@@ -545,6 +546,9 @@
     v.append(practiceHeader);
 
     if (s && s.n >= SESSION_LEN) { sessionDone(v); renderPracticeHeader(); return; }
+    // Rounds: the hallway moves one step as each new card comes up, then holds still.
+    const banner = !(s && s.ids && !s.ids.length) && unit.roundsBanner();
+    if (banner) { v.append(banner); practiceHeader.firstElementChild.classList.add("on-unit"); if (s && !s.n) unit.restart(); unit.step(); }
     if (s && s.ids && !s.ids.length) {
       pr.strip = { empty: true };
       v.append(h("div", { class: "card empty" },
@@ -881,7 +885,13 @@
       h("div", { class: "setting" }, h("span", { class: "lbl", text: "Strip colors" }),
         seg([{ value: "auto", label: "Auto" }, { value: "paper", label: "Paper" }, { value: "green", label: "Green" }, { value: "amber", label: "Amber" }], cur.strip, function (x) { set("strip", x); }, "Strip colors")),
       h("p", { class: "small muted", style: "margin:0", text: "Paper: red grid on light ECG paper. Green and Amber: dark monitor screen. Auto uses paper in the light theme and green in the dark theme. Same scale either way: 25 mm/s, 10 mm/mV." }),
-      preview.el);
+      preview.el,
+      h("div", { class: "setting" }, h("span", { class: "lbl", text: "Unit backdrop" }),
+        seg([{ value: "on", label: "On" }, { value: "off", label: "Off" }], f.unit === "off" ? "off" : "on", function (x) {
+          const g = progress.prefs(); g.unit = x; progress.savePrefs(g);
+          if (current === "home") renderHome();
+        }, "Unit backdrop")),
+      h("p", { class: "small muted", style: "margin:0", text: "A night-shift hallway behind Home's start card, and a short walk between practice strips. Computer generated, not a real unit. Never shown in exams. It also stays still when your phone is set to Reduce Motion." }));
   }
   document.getElementById("settingsBtn").addEventListener("click", function () { renderSettings(); settings.showModal(); });
   settings.querySelector("[data-close]").addEventListener("click", function () { settings.close(); });

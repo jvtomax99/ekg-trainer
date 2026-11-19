@@ -8,9 +8,9 @@ Status: see the bottom of this file.
 1. **Home start card.** A generated "tele unit at night" picture, later a slow video loop,
    sits behind the existing Home start card (monitor, greeting, Start button). Home stays
    the start screen; there is no extra screen and no extra tap.
-2. **Rounds.** In practice sessions, a hallway clip plays about one second forward each
-   time a card changes, then freezes and dims while the strip is read. A 10-strip session
-   is one walk down the hallway with 10 stops.
+2. **Rounds.** In Practice (sessions and free practice), a hallway clip behind the header
+   plays about one second forward each time a card changes, then freezes and dims while
+   the strip is read. A 10-strip session is one walk down the hallway with 10 stops.
 
 ## Who it's for
 The one telemetry / stepdown nurse, on night-shift breaks, with test anxiety. It should
@@ -67,5 +67,16 @@ From memory and `docs/research.md`; not re-checked on 2026-11-19.
 - `node tests/run.js` and the site check pass.
 
 ## Status
-- 2026-11-19: direction chosen, this doc written. Draft stills next; build after the
-  owner picks a look. Clips wait for Runway credits.
+- 2026-11-19: built. Look B (wider corridor, brighter station), one 10 s walk generated
+  with Runway (about 310 credits in all, 700 left). Shipped files: `img/unit/unit.webp`
+  (13 KB, the clip's first frame) and `img/unit/walk.mp4` (467 KB, cropped to the middle
+  band, 540 x 604, no sound).
+- Changed from the plan: Rounds is not a banner. A banner pushed the fourth answer off
+  the screen at 390 px, so the hallway sits behind the Practice header and takes no room.
+- Checked in Chromium at 390 px, 360 px and desktop, light and dark: Home picture and
+  slow walk; hallway moves one second per card and stops (10 stops, then starts over);
+  nothing in Exam; picture only with Reduce Motion; nothing with the switch off; app,
+  picture and clip load with the network off once the clip has been fetched on a visit
+  after the first. `node tests/run.js` (3,069,123 checks) and the site check pass.
+- Not checked: a real iPhone (Safari autoplay of the muted clip, battery). Runway's usage
+  policy page was not read.
