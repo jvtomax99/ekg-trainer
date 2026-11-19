@@ -67,9 +67,12 @@ A high-contrast strip theme is a later option.
   group, Today's numbers) or flat `--bg-2` tiles with no border or shadow.
 - Three button levels, nothing else: primary (`.btn.primary`, brand gradient, white text, one
   per screen area), secondary (`.btn`, `--brand-dim` tint, `--brand` text, no border), tertiary
-  (`.btn.ghost`, text only). A pressed toggle is solid `--brand` with white text.
+  (`.btn.ghost`, text only). A pressed toggle uses the same gradient as primary.
 - Things you pick keep a 1.5 px `--line` border: answer choices and the rhythm-set select.
 - Header buttons are plain icons with a 44 px tap area (no circle); a press shows a soft circle.
+- Over the hallway picture (Rounds in Practice), the select and non-primary buttons get a solid
+  fill (dark at 62% for night, white at 88% for lit) and the light or dark text of that look.
+- A pressed toggle uses the brand gradient with white text (4.9:1 or better in both themes).
 - Icon chips are one tint (`--brand-dim` / `--brand`) everywhere; color is not used to tell
   them apart.
 - Home no longer repeats the tab bar (the Learn / Practice / Exam tiles were removed).

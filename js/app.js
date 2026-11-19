@@ -545,7 +545,7 @@
     if (s && s.n >= SESSION_LEN) { sessionDone(v); renderPracticeHeader(); return; }
     // Rounds: the hallway moves one step as each new card comes up, then holds still.
     const banner = !(s && s.ids && !s.ids.length) && unit.roundsBanner();
-    if (banner) { v.append(banner); practiceHeader.firstElementChild.classList.add("on-unit", unit.lookName()); if (s && !s.n) unit.restart(); unit.step(); }
+    if (banner) { v.append(banner); Array.prototype.forEach.call(practiceHeader.children, function (row) { row.classList.add("on-unit", unit.lookName()); }); if (s && !s.n) unit.restart(); unit.step(); }
     if (s && s.ids && !s.ids.length) {
       pr.strip = { empty: true };
       v.append(h("div", { class: "card empty" },
