@@ -86,4 +86,5 @@ From memory and `docs/research.md`; not re-checked on 2026-11-19.
   store; a dark scrim sits under the Practice header text.
 - Runway usage policy (runway.com/safety/usage-policy, read 2026-11-19): no rule against
   publishing your own outputs and no labeling requirement.
+- Merged and live 2026-11-19 (pull request #2); live site checked in Chromium at 390 px.
 - Not checked: a real iPhone (Safari autoplay of the muted clip, battery).
