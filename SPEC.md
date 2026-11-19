@@ -109,6 +109,7 @@ offline and usable without any of the heavy modules.
 | 2 | Difficult rhythms: clinically accurate advanced rhythms, meaningful lookalikes, borderline strips, stronger exam prep | `docs/phases/2-difficult-rhythms.md` | done and live; nurse review pending |
 | 2b | Premium UI: app icon, icon system, design language, home dashboard, first-launch onboarding (replaces old step 8) | `docs/phases/3-premium-ui.md` | done and live; owner checked it on a real iPhone: "looks perfect" |
 | 3 | Adaptive learning: FSRS spaced repetition, mastery, contrast and boundary practice, practice vs exam tracking | `docs/phases/4-adaptive-learning.md` | done and live (merged 2026-11-19, live site checked in Chromium); real-iPhone check pending |
+| 3b | Night unit start screen and Rounds: generated unit-at-night backdrop on Home, hallway movement between practice cards (owner's pick 2026-11-19, ahead of the campus) | `docs/phases/5-night-unit-start.md` | in progress: look being chosen |
 | 4 | Photo import (optional): educational images, on-device, privacy-first | `docs/future/photo-import.md` | when rules can be met |
 | 5 | Campus research and blockout: reference boards, ambiguity log, accurate massing | `docs/future/3d-campus.md` | next (owner's pick) |
 | 6 | Campus mastery visualization: detailed models, lighting, mastery-driven illumination | `docs/future/3d-campus.md` | |
