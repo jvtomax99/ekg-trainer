@@ -919,12 +919,25 @@
     });
   }
   document.getElementById("replayBtn").addEventListener("click", function () { about.close(); startTour(); });
-  document.getElementById("filmBtn").addEventListener("click", function () { about.close(); window.EKG.start.replay(); });
+  // The opening film replays from Home only, so it never covers a running strip or exam.
+  // If js/start.js didn't load, the app must still open: drop the cover theme.js put up.
+  const start = window.EKG.start || { active: function () { return false; }, whenDone: function (fn) { fn(); }, replay: function () {} };
+  if (!window.EKG.start) document.documentElement.classList.remove("start-on");
+  const filmBtn = document.getElementById("filmBtn");
+  document.getElementById("aboutBtn").addEventListener("click", function () {
+    filmBtn.disabled = current !== "home";
+    filmBtn.lastChild.textContent = current === "home" ? "Play the opening film" : "Play the opening film (from Home)";
+  });
+  filmBtn.addEventListener("click", function () {
+    if (current !== "home") return;
+    about.close(); unit.leaveHome(); start.replay();
+    start.whenDone(function () { if (current === "home") renderHome(); document.getElementById("aboutBtn").focus({ preventScroll: true }); });
+  });
 
   // Number keys 1 to 4 pick a choice (handy on a laptop).
   document.addEventListener("keydown", function (ev) {
     const n = Number(ev.key);
-    if (!(n >= 1 && n <= 4)) return;
+    if (!(n >= 1 && n <= 4) || start.active()) return;
     const v = views[current];
     const btns = v.querySelectorAll(".choice:not(:disabled)");
     if (btns[n - 1]) btns[n - 1].click();
@@ -933,7 +946,9 @@
   // ---------- start ----------
   show("home");
   // The first-launch intro waits for the start menu and the opening film to finish.
-  if ((progress.prefs().tour || 0) < window.EKG.tour.VERSION && document.getElementById("tourDlg").showModal) window.EKG.start.whenDone(startTour);
+  if ((progress.prefs().tour || 0) < window.EKG.tour.VERSION && document.getElementById("tourDlg").showModal) start.whenDone(startTour);
+  // Home's hallway walk starts once the start menu is out of the way.
+  if (start.active()) start.whenDone(function () { if (current === "home") renderHome(); });
   if ("serviceWorker" in navigator && /^https?:/.test(location.protocol)) {
     navigator.serviceWorker.register("sw.js").catch(function () { /* offline install is optional */ });
   }

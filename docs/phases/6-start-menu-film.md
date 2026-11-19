@@ -86,3 +86,13 @@ The one telemetry / stepdown nurse. It should feel like his shift.
   loud is it), and nobody has listened to the music: it was picked by its loudness shape.
 - In the walk shot the nurse glances to the side for a moment, so part of a profile shows
   at a distance. Kept; a retake costs 150 credits if the owner wants none at all.
+- Reviewer (fresh subagent) findings fixed: Replay could be opened over a running exam or
+  practice strip while its clock ran and number keys still answered (Replay now works from
+  Home only, and the keys are off while the menu or film is up); a film paused by the phone
+  never ended (it now carries on, or the app opens); the title was hard to read over the
+  lit doorway (the picture darkens more under it); a film that failed to start used up
+  "once a day"; Home's hallway clip loaded and played under the menu (it now waits).
+  Also: Replay from About plays even on Reduce Motion, since it was asked for by name, and
+  the app still opens if `js/start.js` fails to load.
+- Known and left: the film is downloaded twice on the very first visit (once to play, once
+  to store, about 4 MB in all).

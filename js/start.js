@@ -44,14 +44,15 @@
   const saver = function () { const c = root.navigator && root.navigator.connection; return !!(c && c.saveData); };
   const today = function () { const d = new Date(); return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); };
 
-  let timers = [], raf = 0, stopLive = null, moved = 0, lastT = -1, replayed = false, stored = false, blobUrl = null;
+  let timers = [], raf = 0, stopLive = null, moved = 0, lastT = -1, replayed = false, stored = false, blobUrl = null, began = false, tint = null;
+  const meta = doc.querySelector('meta[name="theme-color"]');
   const later = function (fn, ms) { timers.push(root.setTimeout(fn, ms)); };
   const clearTimers = function () { timers.forEach(root.clearTimeout); timers = []; };
 
   // The film plays unless Settings says once a day and today's showing is done.
   function wanted() {
+    if (replayed) return true; // asked for by name in About, so it plays even on Reduce Motion
     if (reduce() || saver()) return false;
-    if (replayed) return true;
     const f = prefs();
     return !(f.film === "day" && f.filmDay === today());
   }
@@ -82,7 +83,8 @@
 
   function open(fromReplay) {
     clearTimers();
-    replayed = !!fromReplay; state = "menu";
+    replayed = !!fromReplay; state = "menu"; began = false;
+    if (meta) { tint = meta.getAttribute("content"); meta.setAttribute("content", "#05090d"); }
     html.classList.add("start-on");
     el.classList.remove("is-film", "is-wait", "is-title"); el.style.opacity = "";
     menu.inert = false; skipBtn.hidden = true;
@@ -109,7 +111,7 @@
     try { vid.muted = !withSound; vid.volume = 1; p = vid.play(); } catch (e) { return finish(); }
     const begin = function () {
       if (state !== "starting") return;
-      state = "film"; clearTimers();
+      state = "film"; began = true; clearTimers();
       el.classList.remove("is-wait"); el.classList.add("is-film");
       vid.classList.add("on");
       skipBtn.hidden = false; skipBtn.focus({ preventScroll: true });
@@ -128,7 +130,7 @@
     raf = root.requestAnimationFrame(tick);
     const t = vid.currentTime;
     if (t !== lastT) { lastT = t; moved = now; }
-    else if (now - moved > 3000 && !vid.paused) return leave(true); // frozen
+    else if (now - moved > 3000) return leave(true); // frozen, or paused by the phone and not coming back
     let line = "";
     FILM.caps.forEach(function (c) { if (t >= c[0] && t < c[1]) line = c[2]; });
     if (line) { if (cap.textContent !== line) cap.textContent = line; cap.classList.add("on"); } else cap.classList.remove("on");
@@ -157,14 +159,14 @@
   }
   function finish() {
     clearTimers(); root.cancelAnimationFrame(raf);
-    const played = state === "film" || state === "leaving";
-    state = "idle";
+    const played = began;
+    state = "idle"; began = false;
     try { vid.pause(); vid.muted = true; } catch (e) { /* nothing playing */ }
     html.classList.remove("start-on");
     el.style.transition = ""; el.style.opacity = "";
     others.forEach(function (n) { n.inert = false; });
     reset();
-    if (root.EKG.theme) root.EKG.theme.apply();
+    if (meta && tint) meta.setAttribute("content", tint);
     if (played && !replayed) { const f = prefs(); if (f.filmDay !== today()) { f.filmDay = today(); root.EKG.progress.savePrefs(f); } }
     if (wanted() || played) store();
     waiting.splice(0).forEach(function (fn) { fn(); });
@@ -180,6 +182,11 @@
   });
   vid.addEventListener("ended", function () { if (state === "film") later(function () { leave(false); }, FILM.hold); });
   vid.addEventListener("error", function () { if (state === "film" || state === "starting") leave(true); });
+  // Paused by the phone (a call, headphones off) while still on screen: carry on, or open the app.
+  vid.addEventListener("pause", function () {
+    if (state !== "film" || doc.hidden || vid.ended) return;
+    const p = vid.play(); if (p && p.catch) p.catch(function () { leave(true); });
+  });
   // Back from another app: the phone paused the film; carry on.
   doc.addEventListener("visibilitychange", function () {
     if (doc.hidden || state !== "film") return;
@@ -188,9 +195,5 @@
   });
 
   api.replay = function () { if (state === "idle") open(true); };
-  if (html.classList.contains("start-on")) {
-    open(false);
-    const m = doc.querySelector('meta[name="theme-color"]');
-    if (m) m.setAttribute("content", "#05090d");
-  }
+  if (html.classList.contains("start-on")) open(false);
 })(window);

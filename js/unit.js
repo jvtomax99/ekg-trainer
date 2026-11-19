@@ -27,7 +27,8 @@
   function enabled() { return prefs().unit !== "off"; }
   function reduceMotion() { return !!(root.matchMedia && root.matchMedia("(prefers-reduced-motion: reduce)").matches); }
   function saveData() { const c = root.navigator && root.navigator.connection; return !!(c && c.saveData); }
-  function canMove() { return enabled() && !reduceMotion() && !saveData(); }
+  function underStart() { return !!(root.EKG.start && root.EKG.start.active()); } // the start menu or the opening film is up
+  function canMove() { return enabled() && !reduceMotion() && !saveData() && !underStart(); }
 
   // The clip is fetched whole, kept in the phone's offline store and played from memory
   // (a phone asks for video in pieces, which a stored copy can't answer).
