@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
+Updated 2026-11-19 (step 5 built). Read CLAUDE.md, then SPEC.md, then this.
 
 ## Done
 - Live at https://jvtomax99.github.io/ekg-trainer/ since 2026-11-19 (moved from https://chromedigi.github.io/ekg-trainer/, which no longer gets updates).
@@ -25,13 +25,19 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
   it on the real iPhone.
 
 ## Next
-- **Now: step 5, campus research and blockout** (owner's pick 2026-11-19, after step 3d's
-  screen and review mode went live). Read `docs/future/3d-campus.md` and its prompt in
-  `docs/prompts.md` first. It is a big feature: compare 2 or 3 similar tools, plan mode,
-  wait for the owner's OK. Three.js would be the app's first dependency: ask with buttons
-  before adding it, log it in `docs/decisions.md`. Campus facts only from the verified
-  table; never invent buildings or positions. The campus loads separately and the trainer
-  must stay fast and offline without it.
+- **Step 5, campus blockout: built 2026-11-19, pull request waiting for the owner's push.**
+  `docs/phases/8-campus-blockout.md` (Status at the bottom). Separate page `campus/`, opened
+  from About; Three.js 0.187.0 vendored (owner approved). Data: `tools/campus-heights.py`
+  (OSM outlines + USGS lidar, flown 2014 and 2023-2025). Docs: `docs/campus/` (boards,
+  ambiguity log, `nurse-sheet.svg`). Checks: `node tools/campus-check.js`.
+  Waiting on the nurse (send him `docs/campus/nurse-sheet.svg`): which squares are
+  St. John, which way 5 St. John faces, is the south tower "the Pavilion" (likely
+  Schlesinger), real fountain, his entrance and garage. Then record answers in
+  `docs/campus/ambiguity-log.md` and `campus/data/labels.json`.
+  Re-running the data needs the lidar tiles again (about 1.5 GB; the USGS server throttles
+  each connection to about 115 KB/s and answers 40+ parallel requests with a "wait" page:
+  4 MB ranged pieces, 14 connections per file worked, about 15 minutes).
+- Step 6 (campus detail, lighting, mastery) only after the nurse's answers.
 - Step 3d leftovers (not urgent): the pitch clip (part C of
   `docs/phases/7-evidence-and-pitch.md`: Playwright recordings, ffmpeg, the film's score,
   captions from the doc's table). Waiting on the nurse's review via About, How this was
@@ -63,4 +69,4 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
 - Which exam HUMC uses, its format and pass mark.
 - Which rhythms feel wrong or too easy on the real monitor.
 - Mastery rules: are 21 days and 3 days the right bar for this nurse's exam timeline?
-- Campus: is "the Pavilion" Schlesinger Pavilion; St. John height; real fountain location.
+- Campus: see `docs/campus/ambiguity-log.md` (12 open items).

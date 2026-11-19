@@ -30,11 +30,18 @@
     <p id="campusStatus" class="campus-status" role="status">Loading the campus…</p>
 
     <section id="campusCard" class="campus-card" hidden aria-live="polite">
-      <h2 id="cardName"></h2>
-      <p id="cardWhat" class="muted"></p>
-      <p id="cardHeight"></p>
-      <p id="cardBasis" class="muted small"></p>
-      <button type="button" id="cardClose" class="btn block">Close</button>
+      <div class="campus-card-head">
+        <h2 id="cardName"></h2>
+        <button type="button" id="cardClose" class="btn ghost campus-x" aria-label="Close">
+          <svg class="ic" aria-hidden="true" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></svg>
+        </button>
+      </div>
+      <p id="cardWhat" class="small"></p>
+      <p id="cardHeight" class="small muted"></p>
+      <details class="campus-why">
+        <summary>How we know</summary>
+        <p id="cardBasis" class="small muted"></p>
+      </details>
     </section>
   </main>
 

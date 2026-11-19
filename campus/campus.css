@@ -48,8 +48,14 @@ a.campus-back .ic { width: 22px; height: 22px; fill: none; stroke: currentColor;
   padding: var(--sp-4);
 }
 .campus-card[hidden] { display: none; }
-.campus-card h2 { font-size: var(--fs-md); margin: 0 0 var(--sp-1); }
-.campus-card p { margin: 0 0 var(--sp-2); }
+.campus-card { padding: var(--sp-3) var(--sp-4); }
+.campus-card-head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-2); }
+.campus-card h2 { font-size: var(--fs-md); margin: 10px 0 var(--sp-1); }
+.campus-card p { margin: 0 0 var(--sp-1); line-height: 1.35; }
+.campus-x { min-height: 44px; min-width: 44px; padding: 0; flex: none; margin-right: -10px; }
+.campus-x .ic { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; }
+.campus-why summary { min-height: 44px; display: flex; align-items: center; color: var(--brand); font-size: var(--fs-sm); cursor: pointer; }
+.campus-why p { margin-bottom: var(--sp-1); }
 .campus-foot {
   padding: var(--sp-2) var(--sp-4) calc(var(--safe-b) + var(--sp-2));
   border-top: 1px solid var(--line-soft);
