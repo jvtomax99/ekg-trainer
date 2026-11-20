@@ -87,8 +87,10 @@ A high-contrast strip theme is a later option.
   `<svg class="ic"><use href="#i-name"/></svg>`; decorative icons are `aria-hidden`, icon-only
   buttons carry `aria-label`.
 - Set: home, learn, practice, exam, progress, sinus, atrial, junctional, ventricular, blocks,
-  measure, zoom, expand, timer, review, mastery, achievement, lethal, sources, about,
+  measure, zoom, expand, timer, review, mastery, achievement, lethal, info, sources, about,
   settings, monitor, campus, check, x, chevron, play, share, addhome, more.
+- `lethal` (the warning triangle) means a lethal rhythm only. For limits and cautions that are
+  not about a rhythm (no backup, not yet reviewed), use `info`.
 - Group icons are tiny waveforms (sinus P-QRS-T, flutter sawtooth, junctional inverted P,
   wide ventricular complex, P waves with a dropped beat).
 

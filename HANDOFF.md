@@ -29,6 +29,12 @@ Updated 2026-11-19 (step 5 built). Read CLAUDE.md, then SPEC.md, then this.
   one button family, one outline system per theme, icons that sweep like Home's monitor
   strip. Owner picked look A plus the motion. Real-iPhone check pending.
 
+## Also built (2026-11-20)
+- Intro rewrite, branch `intro-one-line-cards`: 9 one-line cards, offline and data-limits card,
+  new `info` icon (DESIGN.md), sw.js `ekg-v14`. Design reference: Claude Design canvas
+  "EKG Trainer onboarding" and the "EKG Trainer" Design System artifact (tokens, components,
+  icons from this repo at ce54284). Waiting for the owner's push.
+
 ## Next
 - **Step 5, campus blockout: built 2026-11-19, pull request waiting for the owner's push.**
   `docs/phases/9-campus-blockout.md` (Status at the bottom). Separate page `campus/`, opened

@@ -1,4 +1,4 @@
-/* First-launch intro: 8 swipeable cards with real screenshots of this app.
+/* First-launch intro: 9 swipeable cards with real screenshots of this app.
    Skip on every card; Replay from About. All text is hard-coded or set via textContent. */
 (function (root) {
   "use strict";
@@ -38,41 +38,51 @@
   function cards(opts) {
     return [
       [h("img", { class: "tour-hero", src: "icons/icon-512.png", alt: "" }),
-        h("h2", { text: "Read rhythm strips faster, with less guessing" }),
-        h("p", { text: "Practice for telemetry and stepdown rhythm exams: name the rhythm, measure it, and see why the other answers are wrong." }),
+        h("h2", { text: "Read rhythm strips faster" }),
+        h("p", { text: "Practice for telemetry and stepdown rhythm exams, on strips made fresh every time." }),
         h("p", { class: "small", text: "A study tool with computer-generated strips. Not for patient care decisions. Follow your unit's protocols and provider orders." })],
       [shot("home.webp", "Home tab: monitor header, continue studying, suggested next, accuracy by group"),
         h("h2", { text: "Five tabs, one thumb" }),
-        h("p", { text: "Home picks up where you left off. Learn teaches, Practice drills, Exam times you, Progress shows your accuracy." })],
+        h("p", { text: "Home picks up where you left off." })],
       [shot("learn.webp", "Learn tab: the 5-step method and rhythm groups"),
         h("h2", { text: "Same 5 steps on every strip" }),
-        h("p", { text: "Rate, regularity, P waves, PR, QRS. Every rhythm card lists its criteria and sources, with a new strip each time." })],
+        h("p", { text: "Rate, rhythm, P waves, PR, QRS." })],
       [shot("practice.webp", "Practice: calipers measuring an R-R interval, answer feedback below"),
         h("h2", { text: "Every answer explains itself" }),
-        h("p", { text: "Feedback is measured from the strip on screen, including why each other choice doesn't fit. Measure drops calipers; Zoom and full screen make the strip bigger." })],
-      [shot("exam.webp", "Exam: timed strip with countdown bar"),
-        h("h2", { text: "Practice the clock" }),
-        h("p", { text: "Timed strips, no hints until the end, a pass mark and a lethal-rhythm rule. Hide the countdown if it rattles you." })],
+        h("p", { text: "See what the strip shows and why the other choices don't fit." })],
       [shot("progress.webp", "Progress: mastery by rhythm group with recall and next review"),
         h("h2", { text: "Misses come back until you own them" }),
-        h("p", { text: "A missed rhythm comes back within minutes, then at growing gaps once you know it. Mastery is only claimed after correct answers on several days." })],
+        h("p", { text: "A miss returns in minutes, then at longer gaps." })],
+      [shot("exam.webp", "Exam: timed strip with countdown bar"),
+        h("h2", { text: "Practice the clock" }),
+        h("p", { text: "Timed strips, a pass mark and a lethal-rhythm rule." })],
       [h("span", { class: "ic-chip", style: "width:64px;height:64px;border-radius:18px;margin-top:3dvh" }, icon("i-sources")),
         h("h2", { text: "What this is, and what it isn't" }),
         h("ul", { class: "tour-list" },
           item("i-check", "Criteria cite published references (LITFL, StatPearls, ACC/AHA guidelines), listed in About."),
           item("i-check", "Strips are generated fresh by code, so you can't memorize them."),
           item("i-check", "Explanations come from each strip's own measurements."),
-          item("i-lethal", "Content is still pending review by a practicing nurse.", "no"),
-          item("i-lethal", "Not clinically validated, not endorsed by any hospital or exam provider, and not a copy of any exam.", "no"))],
-      [h("img", { class: "tour-hero", src: "icons/icon-512.png", alt: "", style: "width:84px;height:84px;border-radius:19px" }),
-        h("h2", { text: opts.standalone ? "You're on the Home Screen" : "Put it on your Home Screen" }),
-        opts.standalone
-          ? h("p", { text: "You opened EKG Trainer from its icon. It works offline, and your progress stays on this phone." })
-          : h("ul", { class: "tour-list tour-steps" },
+          item("i-info", "Content is still pending review by a practicing nurse.", "no"),
+          item("i-info", "Not clinically validated, not endorsed by any hospital or exam provider, and not a copy of any exam.", "no"))],
+      opts.standalone
+        ? [h("img", { class: "tour-hero", src: "icons/icon-512.png", alt: "", style: "width:84px;height:84px;border-radius:19px" }),
+          h("h2", { text: "You're on the Home Screen" }),
+          h("p", { text: "You opened EKG Trainer from its icon. Keep using it from there." })]
+        : [h("img", { class: "tour-hero", src: "icons/icon-512.png", alt: "", style: "width:84px;height:84px;border-radius:19px" }),
+          h("h2", { text: "Put it on your Home Screen" }),
+          h("p", { text: "Thirty seconds now, one tap every shift after." }),
+          h("ul", { class: "tour-list tour-steps" },
             step("i-share", "In Safari, tap Share (on newer iOS it may be under •••)."),
             step("i-addhome", "Tap Add to Home Screen, then Add."),
-            step("i-play", "Open it from the icon. It works offline after the first visit.")),
-        h("p", { class: "small", text: "Progress stays on this phone. Safari and the Home Screen app keep separate progress, so stick with the icon." })]
+            step("i-play", "Open EKG Trainer from its icon."))],
+      [h("span", { class: "ic-chip", style: "width:64px;height:64px;border-radius:18px;margin-top:3dvh" }, icon("i-info")),
+        h("h2", { text: "Works offline, stays on this phone" }),
+        h("p", { text: "Know these before you rely on it." }),
+        h("ul", { class: "tour-list" },
+          item("i-check", "Works offline after this first visit. Updates arrive next time you have signal."),
+          item("i-info", "No sync or backup yet.", "no"),
+          item("i-info", "Safari and the Home Screen app keep separate progress. Stick with the icon.", "no"),
+          item("i-info", "Clearing Safari website data erases your progress.", "no"))]
     ];
   }
 

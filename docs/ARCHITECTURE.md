@@ -30,7 +30,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   counts) and the nurse's review text. `tests/run.js` checks `TESTS.perRhythm` against its
   own default, so the screen can't drift from the real run.
 - `js/theme.js`: app theme and strip colors from the prefs.
-- `js/tour.js`: the first-launch intro (8 cards, screenshots in `img/tour/`).
+- `js/tour.js`: the first-launch intro (9 cards, one line each, screenshots in `img/tour/`).
 - `js/unit.js`: the night unit backdrop (step 3b): the picture behind Home's start card
   and "Rounds", the hallway clip that moves one step between practice cards. Files in
   `img/unit/`: `unit.webp` and `unit-lit.webp` (precached; night look and lit look, picked by time of day or
