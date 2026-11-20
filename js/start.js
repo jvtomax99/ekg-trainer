@@ -1,8 +1,9 @@
 /* Start menu and opening film (step 3c, docs/phases/6-start-menu-film.md).
    The menu shows each time the app opens: the film's first frame (hands on the unit doors), the name,
    and two buttons. The tap is what a phone needs before it will play sound.
-   Then the film (img/film/open.mp4, cut by tools/make-open-film.sh): doors, the walk, the station,
-   a strip, the dash, the title. The strip is not in the footage: this file draws it with the app's
+   Then the film (img/film/open-dawn.mp4, cut by tools/make-open-film.sh): doors, the walk, the station,
+   a calm strip, dawn at the end of the shift, the title. Calm on purpose (2026-11-20): no running, no
+   lethal rhythm, no music hit; it plays before study, and test anxiety is what the app trains against. The strip is not in the footage: this file draws it with the app's
    own generator over a blurred stretch of the film, and every word is real text, on the film's clock
    (FILM below must match the cut).
    Optional in every way: Home is drawn underneath from the start. No film on Reduce Motion or data
@@ -24,13 +25,14 @@
   if (!el) { html.classList.remove("start-on"); return; }
 
   const FILM = {
-    src: "img/film/open.mp4",
-    caps: [[0.5, 2.2, "Night shift."], [2.7, 5.0, "Every room has a rhythm."], [5.4, 6.7, "One just changed."], [10.5, 12.4, "Know it. Move."]],
+    src: "img/film/open-dawn.mp4",
+    old: ["img/film/open.mp4"], // earlier cuts, dropped from the phone's store so they never play again
+    caps: [[0.5, 2.2, "Night shift."], [2.7, 5.0, "Every room has a rhythm."], [5.4, 6.7, "Take a breath."], [10.5, 12.4, "One strip at a time."]],
     mon: [6.8, 10.1],   // the blurred stretch where the strip is drawn
     pre: 3,             // seconds of sweep already on the screen when the strip appears
     ans: 8.8,           // the question turns into the rhythm's name
     title: 12.8,
-    rhythm: "vt",
+    rhythm: "nsr",
     wait: 2500,         // how long a tap waits for the film to start, in ms
     hold: 700           // the last frame is held this long, in ms
   };
@@ -63,7 +65,10 @@
     if (!wanted() || vid.getAttribute("src")) { if (vid.error) vid.load(); return; }
     const stream = function () { if (!vid.getAttribute("src")) { vid.src = FILM.src; vid.load(); } };
     if (!root.caches) return stream();
-    root.caches.open(MEDIA).then(function (c) { return c.match(FILM.src); }).then(function (hit) {
+    root.caches.open(MEDIA).then(function (c) {
+      FILM.old.forEach(function (u) { c.delete(u).catch(function () {}); });
+      return c.match(FILM.src);
+    }).then(function (hit) {
       if (!hit) return stream();
       stored = true;
       return hit.blob().then(function (b) {

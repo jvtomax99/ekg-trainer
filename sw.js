@@ -1,6 +1,6 @@
 /* Offline support: serve from cache, refresh the cache in the background.
    Bump VERSION whenever app files change so phones pick up the update. */
-const VERSION = "ekg-v12";
+const VERSION = "ekg-v13";
 const MEDIA = "ekg-media-v1"; // the hallway clips (js/unit.js) and the opening film (js/start.js); kept across updates
 // The campus preview (campus/, step 5) is never precached, so it never slows the trainer's
 // install or updates. Its files are stored here the first time it's opened, kept across
@@ -30,7 +30,7 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
-  if (/\/img\/(unit\/walk[\w-]*|film\/open)\.mp4$/.test(url.pathname)) return; // js/unit.js and js/start.js store these themselves
+  if (/\/img\/(unit\/walk[\w-]*|film\/open[\w-]*)\.mp4$/.test(url.pathname)) return; // js/unit.js and js/start.js store these themselves
   const store = url.pathname.includes("/campus/") ? CAMPUS : VERSION;
   e.respondWith(
     caches.open(store).then((cache) =>
