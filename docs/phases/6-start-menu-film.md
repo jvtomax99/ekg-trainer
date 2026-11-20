@@ -96,3 +96,7 @@ The one telemetry / stepdown nurse. It should feel like his shift.
   the app still opens if `js/start.js` fails to load.
 - Known and left: the film is downloaded twice on the very first visit (once to play, once
   to store, about 4 MB in all).
+- 2026-11-20: owner asked for a line under the tagline on the start menu: "Built from
+  medical guidelines and the format hospital EKG tests use." It says where the app comes
+  from without naming any hospital's test (the exam provider is still unconfirmed,
+  `docs/research.md`). `sw.js` VERSION ekg-v12.

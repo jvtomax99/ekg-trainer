@@ -1,6 +1,6 @@
 /* Offline support: serve from cache, refresh the cache in the background.
    Bump VERSION whenever app files change so phones pick up the update. */
-const VERSION = "ekg-v11";
+const VERSION = "ekg-v12";
 const MEDIA = "ekg-media-v1"; // the hallway clips (js/unit.js) and the opening film (js/start.js); kept across updates
 // The campus preview (campus/, step 5) is never precached, so it never slows the trainer's
 // install or updates. Its files are stored here the first time it's opened, kept across
