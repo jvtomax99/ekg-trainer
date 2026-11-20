@@ -1,7 +1,11 @@
 /* Offline support: serve from cache, refresh the cache in the background.
    Bump VERSION whenever app files change so phones pick up the update. */
-const VERSION = "ekg-v10";
+const VERSION = "ekg-v11";
 const MEDIA = "ekg-media-v1"; // the hallway clips (js/unit.js) and the opening film (js/start.js); kept across updates
+// The campus preview (campus/, step 5) is never precached, so it never slows the trainer's
+// install or updates. Its files are stored here the first time it's opened, kept across
+// app updates, and refreshed in the background like the rest.
+const CAMPUS = "ekg-campus-v1";
 const FILES = [
   "./", "index.html", "styles.css", "manifest.webmanifest",
   "js/rhythms.js", "js/ecg.js", "js/quiz.js", "js/strip.js", "js/fsrs.js", "js/progress.js", "js/evidence.js", "js/theme.js", "js/tour.js", "js/unit.js", "js/start.js", "js/app.js",
@@ -18,7 +22,7 @@ self.addEventListener("install", (e) => {
 self.addEventListener("activate", (e) => {
   e.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== MEDIA).map((k) => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== VERSION && k !== MEDIA && k !== CAMPUS).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -27,8 +31,9 @@ self.addEventListener("fetch", (e) => {
   const url = new URL(e.request.url);
   if (e.request.method !== "GET" || url.origin !== location.origin) return;
   if (/\/img\/(unit\/walk[\w-]*|film\/open)\.mp4$/.test(url.pathname)) return; // js/unit.js and js/start.js store these themselves
+  const store = url.pathname.includes("/campus/") ? CAMPUS : VERSION;
   e.respondWith(
-    caches.open(VERSION).then((cache) =>
+    caches.open(store).then((cache) =>
       cache.match(e.request, { ignoreSearch: true }).then((hit) => {
         const net = fetch(e.request).then((res) => {
           if (res.ok) cache.put(e.request, res.clone());

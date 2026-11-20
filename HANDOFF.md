@@ -1,6 +1,6 @@
 # Handoff
 
-Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
+Updated 2026-11-19 (step 5 built). Read CLAUDE.md, then SPEC.md, then this.
 
 ## Done
 - Live at https://jvtomax99.github.io/ekg-trainer/ since 2026-11-19 (moved from https://chromedigi.github.io/ekg-trainer/, which no longer gets updates).
@@ -30,15 +30,29 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
   strip. Owner picked look A plus the motion. Real-iPhone check pending.
 
 ## Next
-- Owner chose (2026-11-19): **step 3d, Evidence screen, review mode and pitch clip**
-  (`docs/phases/7-evidence-and-pitch.md`), ahead of the campus. Evidence screen and
-  review mode built on `claude/adoring-ptolemy-xoi9ka`, waiting for the owner's "push".
-  Next: the pitch clip (real Playwright recordings, ffmpeg, the film's score). Then step 5, campus research and blockout
-  (`docs/future/3d-campus.md`); Three.js needs owner approval as the first dependency.
-- "3,069,123 checks" = assertions in one full `node tests/run.js`: 20,800 generated strips
-  (800 x 26 rhythms) measured from the waveform, plus quiz and FSRS tests. Proves strips
-  match the app's criteria, not that the criteria are right. Don't show the raw number to
-  nurses.
+- **Step 5, campus blockout: built 2026-11-19, pull request waiting for the owner's push.**
+  `docs/phases/9-campus-blockout.md` (Status at the bottom). Separate page `campus/`, opened
+  from About; Three.js 0.187.0 vendored (owner approved). Data: `tools/campus-heights.py`
+  (OSM outlines + USGS lidar, flown 2014 and 2023-2025). Docs: `docs/campus/` (boards,
+  ambiguity log, `nurse-sheet.svg`). Checks: `node tools/campus-check.js`.
+  Waiting on the nurse (send him `docs/campus/nurse-sheet.svg`): which squares are
+  St. John, which way 5 St. John faces, is the south tower "the Pavilion" (likely
+  Schlesinger), real fountain, his entrance and garage. Then record answers in
+  `docs/campus/ambiguity-log.md` and `campus/data/labels.json`.
+  Re-running the data needs the lidar tiles again (about 1.5 GB; the USGS server throttles
+  each connection to about 115 KB/s and answers 40+ parallel requests with a "wait" page:
+  4 MB ranged pieces, 14 connections per file worked, about 15 minutes).
+- Step 6 (campus detail, lighting, mastery) only after the nurse's answers.
+- Step 3d leftovers (not urgent): the pitch clip (part C of
+  `docs/phases/7-evidence-and-pitch.md`: Playwright recordings, ffmpeg, the film's score,
+  captions from the doc's table). Waiting on the nurse's review via About, How this was
+  built, Review the cards; when his copied review arrives, record each card as
+  `reviewed: { by: "a telemetry RN", date: "<Mon YYYY>" }` in `js/rhythms.js` and fix what he
+  flags first.
+- "3,069,138 checks" = assertions in one full `node tests/run.js`: 20,800 generated strips
+  (800 x 26 rhythms). Rate, PR and QRS are checked from the generator's beat timings; the
+  waveform checks are that every beat is visible and no extra peaks show. Proves strips
+  match the app's criteria, not that the criteria are right. Never show the raw number.
 - PubMed abstracts: `curl "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&id=<PMID>&rettype=abstract&retmode=text"`
   works when pubmed.ncbi.nlm.nih.gov shows a cookie check.
 - Video tools: HyperFrames compose/render are disabled from Claude Code; Canva is
@@ -60,4 +74,4 @@ Updated 2026-11-19. Read CLAUDE.md, then SPEC.md, then this.
 - Which exam HUMC uses, its format and pass mark.
 - Which rhythms feel wrong or too easy on the real monitor.
 - Mastery rules: are 21 days and 3 days the right bar for this nurse's exam timeline?
-- Campus: is "the Pavilion" Schlesinger Pavilion; St. John height; real fountain location.
+- Campus: see `docs/campus/ambiguity-log.md` (12 open items).

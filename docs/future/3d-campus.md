@@ -1,6 +1,7 @@
 # Future module: 3D HUMC campus
 
-Status: **documented only.** Starts after phases 2 to 4 are stable (see `SPEC.md`).
+Status: **step 5 blockout built** (`docs/phases/9-campus-blockout.md`, 2026-11-19): grey
+blocks at lidar heights, boards and ambiguity log in `docs/campus/`. Step 6 next.
 Optional and loaded separately: the trainer must stay fast and work offline without it.
 
 ## Goal
@@ -14,8 +15,8 @@ and recognizable exterior features all matter. Fewer accurate buildings beat man
 | Priority | Building | Owner notes | Verified so far |
 |---|---|---|---|
 | 1A | Main hospital at 30 Prospect Ave, including **St. John** | Geographic centerpiece. St. John is one of the oldest parts of the connected main hospital, about 6 stories, NOT a freestanding or modern tower and NOT the newest entrance. Connected sections include St. John, Conklin, Strawbridge and others. The nurse works on 5 St. John | Official 2024 map labels St. John Building, Strawbridge Building, Main Building, Conklin Building and Schlesinger Pavilion as one connected complex between Prospect Ave and Second St. HMH visitor page: "Ground Floor St. John". Height: not verified |
-| 1B | The existing ~9-story **Pavilion** | Separate, prominent part of the connected complex, about equal priority to 1A. Distinct from Helena Theurer Pavilion | **Ambiguous:** the map's only other "Pavilion" in the complex is **Schlesinger Pavilion** (south end, by Second St). Confirm with the nurse that this is the building meant |
-| 1C | **Helena Theurer Pavilion** | Showpiece. Blue glass facade, sweeping geometry, elevated structure, supporting columns, roadway relationship, architectural lighting; stunning at night | HMH page: "A Nine-Story Surgical and Intensive Care Tower". Map: east side along Second St, curved west face, own parking structure across Second St. Press: 530,000 sq ft, opened Feb 2023, architects RSC Architects and Page. Blue glass and columns: confirm from photos |
+| 1B | The existing ~9-story **Pavilion** | Separate, prominent part of the connected complex, about equal priority to 1A. Distinct from Helena Theurer Pavilion | **Ambiguous:** the map's only other "Pavilion" in the complex is **Schlesinger Pavilion** (south end, by Second St). Lidar (step 5): that south end is the complex's only part over 40 m (about 47 m, in 2014 and now), which fits. Confirm with the nurse |
+| 1C | **Helena Theurer Pavilion** | Showpiece. Blue glass facade, sweeping geometry, elevated structure, supporting columns, roadway relationship, architectural lighting; stunning at night | HMH page: "A Nine-Story Surgical and Intensive Care Tower". Map: east side along Second St, curved west face, own parking structure across Second St. Press: 530,000 sq ft, opened Feb 2023, architects RSC Architects and Page. Blue glass and columns: confirm from photos. Lidar (step 5): built between the 2014 and 2023-2025 scans, about 52 m, partly over 2nd St (to confirm) |
 | 2 | **Medical Plaza**, 20 Prospect Ave | Near the front of the complex. UI name: "Medical Plaza" (never "Mediplex") | Map: "Justice Marie Garabaldi Medical Plaza" (spelling as printed) beside the main entrance on Prospect Ave. Address 20 Prospect: not verified |
 | 3 | **Research tower**, 40 Prospect Ave | Independent mastery destination | Map: "David & Alice Jurist Research Center" at Prospect Ave and Atlantic St. Likely the same building; address not verified |
 | 4 | **Women's and Children's** | One unified destination, not split by service | Map: Donna A. Sanzari Women's Hospital, Joseph M. Sanzari Children's Hospital, Don Imus/WFAN Pediatric Center for Tomorrows Children, along Atlantic St, connected to the main complex |

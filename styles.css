@@ -247,6 +247,7 @@ main {
 .btn.small { min-height: 44px; padding: 6px 12px; font-size: 15px; font-weight: 550; border-radius: var(--r-md); gap: 6px; }
 .btn.small .ic { width: 18px; height: 18px; }
 .btn.block { width: 100%; }
+a.btn { text-decoration: none; box-sizing: border-box; }
 .btn:disabled { opacity: 0.5; }
 .btn:focus-visible, .choice:focus-visible, .seg button:focus-visible, .tabs button:focus-visible,
 .icon-btn:focus-visible, .tile-btn:focus-visible, .ring-btn:focus-visible, .chip:focus-visible, summary:focus-visible {
