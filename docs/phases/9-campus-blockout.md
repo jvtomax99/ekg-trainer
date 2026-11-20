@@ -1,8 +1,8 @@
 # Step 5: Campus research and blockout
 
 Owner's pick, 2026-11-19, after step 3d's screen and review mode went live. Spec:
-`docs/future/3d-campus.md`. Status: **built 2026-11-19, waiting for the owner's push and
-the nurse's look** (see Status at the bottom). Plan approved by the owner 2026-11-19,
+`docs/future/3d-campus.md`. Status: **live 2026-11-20 (pull request #7), waiting for the
+nurse's look** (see Status at the bottom). Plan approved by the owner 2026-11-19,
 Three.js approved the same day.
 
 ## What it does

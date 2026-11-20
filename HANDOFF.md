@@ -30,7 +30,7 @@ Updated 2026-11-19 (step 5 built). Read CLAUDE.md, then SPEC.md, then this.
   strip. Owner picked look A plus the motion. Real-iPhone check pending.
 
 ## Next
-- **Step 5, campus blockout: built 2026-11-19, pull request waiting for the owner's push.**
+- **Step 5, campus blockout: live 2026-11-20 (pull request #7; `node tools/campus-check.js https://jvtomax99.github.io/ekg-trainer/` passed).**
   `docs/phases/9-campus-blockout.md` (Status at the bottom). Separate page `campus/`, opened
   from About; Three.js 0.187.0 vendored (owner approved). Data: `tools/campus-heights.py`
   (OSM outlines + USGS lidar, flown 2014 and 2023-2025). Docs: `docs/campus/` (boards,
