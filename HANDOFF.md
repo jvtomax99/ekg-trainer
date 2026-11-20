@@ -24,9 +24,14 @@ Updated 2026-11-19 (step 5 built). Read CLAUDE.md, then SPEC.md, then this.
   (pull request #4). Runway has 780 credits left. Owner should listen to the music and check
   it on the real iPhone.
 
+## Also merged (step 3e)
+- Buttons, outlines and alive icons (`docs/phases/8-buttons-alive-icons.md`, pull request #6):
+  one button family, one outline system per theme, icons that sweep like Home's monitor
+  strip. Owner picked look A plus the motion. Real-iPhone check pending.
+
 ## Next
 - **Step 5, campus blockout: built 2026-11-19, pull request waiting for the owner's push.**
-  `docs/phases/8-campus-blockout.md` (Status at the bottom). Separate page `campus/`, opened
+  `docs/phases/9-campus-blockout.md` (Status at the bottom). Separate page `campus/`, opened
   from About; Three.js 0.187.0 vendored (owner approved). Data: `tools/campus-heights.py`
   (OSM outlines + USGS lidar, flown 2014 and 2023-2025). Docs: `docs/campus/` (boards,
   ambiguity log, `nurse-sheet.svg`). Checks: `node tools/campus-check.js`.

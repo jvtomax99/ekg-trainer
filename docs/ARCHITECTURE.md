@@ -50,7 +50,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   dashboard, adaptive sessions, Learn, Practice, Exam, Progress (Mastery, Trends, Exams),
   dialogs (About, Settings), How this was built (Evidence), review mode, start.
 - `sw.js`: the offline copy. `FILES` lists every file the app loads; bump `VERSION`
-  (`ekg-v10` now) whenever an app file changes, or phones keep the old one. Files under
+  (`ekg-v11` now) whenever an app file changes, or phones keep the old one. Files under
   `campus/` are never precached: they go into their own cache (`ekg-campus-v1`, kept
   across updates) the first time the campus is opened.
 - `campus/` (step 5): the campus preview, a separate page opened from About (`campus/`

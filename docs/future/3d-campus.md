@@ -1,6 +1,6 @@
 # Future module: 3D HUMC campus
 
-Status: **step 5 blockout built** (`docs/phases/8-campus-blockout.md`, 2026-11-19): grey
+Status: **step 5 blockout built** (`docs/phases/9-campus-blockout.md`, 2026-11-19): grey
 blocks at lidar heights, boards and ambiguity log in `docs/campus/`. Step 6 next.
 Optional and loaded separately: the trainer must stay fast and work offline without it.
 
