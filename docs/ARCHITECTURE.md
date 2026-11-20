@@ -39,7 +39,7 @@ Pages serves `main` from the root folder. Nothing leaves the phone.
   updates; never required).
 - `js/start.js`: the start menu and the opening film (step 3c). The menu covers the app on
   each open (`js/theme.js` adds `start-on` to `<html>` before the first paint unless the
-  film is off in Settings; `?start=0` skips it). The film is `img/film/open.mp4` (14.5 s,
+  film is off in Settings; `?start=0` skips it). The film is `img/film/open-dawn.mp4` (14.5 s, calm cut of 2026-11-20,
   with its music; cut by `tools/make-open-film.sh`): streamed the first time, then stored in
   `ekg-media-v1` and played from there. The menu picture `img/film/open.webp` is the film's
   first frame (precached). The strip and every word in the film are drawn by `start.js`

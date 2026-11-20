@@ -100,3 +100,14 @@ The one telemetry / stepdown nurse. It should feel like his shift.
   medical guidelines and the format hospital EKG tests use." It says where the app comes
   from without naming any hospital's test (the exam provider is still unconfirmed,
   `docs/research.md`). `sw.js` VERSION ekg-v12.
+- 2026-11-20, calm cut (the nurse's ask, in person: not stressful or traumatic for nurses
+  studying). Out: the dash shot, VT, "One just changed.", "Know it. Move." and the music's
+  big hit. In: the strip is normal sinus rhythm (`nsr`, existing content), captions "Night
+  shift." / "Every room has a rhythm." / "Take a breath." / "One strip at a time.", a new
+  dawn shot (v5: the same corridor at the end of the shift, morning light at the window;
+  one Runway still and one 5 s shot, about 150 credits), and a calm ElevenLabs take with
+  timed sections (soft piano and pads, brightens at dawn, no drums or hits). Same 14.5 s
+  and the same FILM times, so the strip and words still line up. Shipped as
+  `img/film/open-dawn.mp4`; the old `open.mp4` is removed from the repo and from phones'
+  store. Owner kept "every start". Not verified: how the music sounds (Claude can't hear
+  it; measured only for loudness, no jump at the cut to dawn), and the real iPhone.
