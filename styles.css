@@ -660,6 +660,7 @@ html.start-on body { overflow: hidden; }
 @keyframes stDraw { 0% { stroke-dashoffset: 100; } 62% { stroke-dashoffset: 0; } 88% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
 .st-name-app { margin: 4px 0 0; font: 750 var(--fs-2xl)/1.1 var(--font-display); letter-spacing: -0.01em; color: var(--st-text); }
 .st-tag { margin: 8px 0 0; font-size: var(--fs-base); color: var(--st-soft); }
+.st-src { margin: 10px auto 0; max-width: 300px; font-size: var(--fs-sm); line-height: 1.4; color: var(--st-soft); }
 .st-actions { display: flex; flex-direction: column; gap: 12px; }
 .st-actions .btn { min-height: 54px; font-size: var(--fs-md); }
 .st-quiet { background: rgba(8, 14, 20, 0.6); border: 1px solid var(--st-line); color: var(--st-text); box-shadow: none; }
