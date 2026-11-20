@@ -1,6 +1,12 @@
 # Future module: iPhone onboarding walkthrough
 
-Status: **documented only.** Separate from the cinematic intro: this one is practical.
+Status: **built into the first-launch intro (`js/tour.js`), 2026-11-20.** 9 cards, one line each:
+welcome, tabs, Learn, Practice, misses, Exam, "what this is and isn't", Home Screen, offline and
+your data (all three limits below). Designed first on a Claude Design canvas ("EKG Trainer
+onboarding"). Not done: Monitor view and Exam settings get no card of their own; the 9th card
+is over the 6 to 8 below because the honesty card stays until the nurse review is finished.
+
+Original status: documented only. Separate from the cinematic intro: this one is practical.
 Build after the features it teaches exist, using real screen captures.
 
 ## Steps (short, replayable from About or Help)

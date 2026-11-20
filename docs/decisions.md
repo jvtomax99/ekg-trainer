@@ -64,3 +64,12 @@
 | 2026-11-19 | Campus heights come from USGS 3DEP lidar (NJ_NE6County_B23, flown 2023 to 2025; the 2014 Sandy scan as a cross-check), footprints from OpenStreetMap; no St. John label until the nurse marks it | OSM has no heights for any campus building and no split of the main complex; a wrong St. John label is the error staff would spot first |
 | 2026-11-20 | The opening film is calm: no running, no lethal rhythm (the strip is normal sinus rhythm), no music hit; it ends at dawn ("One strip at a time."). Still plays at every start | The nurse asked in person: an intro shouldn't be stressful or traumatic for nurses who study with it. It plays right before study, and test anxiety is his real problem with the exam. Owner kept "every start" after Claude suggested once a day |
 | 2026-11-20 | A changed film ships under a new file name (`open-dawn.mp4`) and `js/start.js` deletes the old name from `ekg-media-v1` | Phones store the film by name; overwriting `open.mp4` would leave the old film playing on every phone that already had it |
+
+## 2026-11-20: intro cards cut to one line, 9 cards
+- Owner picked a tighter intro designed on a Claude Design canvas: one line per card, a new
+  "Works offline, stays on this phone" card with the three data limits, misses before Exam.
+- The "What this is, and what it isn't" card stays (owner's call) while content is pending
+  nurse review, so the intro is 9 cards, one over the 6 to 8 in the onboarding spec.
+- New `info` icon. The warning triangle (`lethal`) now means a lethal rhythm only.
+- Tour VERSION stays 1: people who already saw the intro are not shown it again; Replay the
+  intro in About shows the new one.
